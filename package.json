@@ -1,6 +1,6 @@
 {
   "name": "@wsapichat/client",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A TypeScript SDK for integrating with the WSApi API, enabling developers to send WhatsApp messages, manage groups and chats, and receive real-time events via Webhooks or Server-Sent Events (SSE).",
   "license": "MIT",
   "repository": {
