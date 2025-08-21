@@ -3,14 +3,14 @@
  */
 export interface MessageMedia {
   /**
-   * The type of media (image, video, audio, etc.).
+   * The media ID that should be used to download the binary content
    */
-  mediaType: string;
+  id: string;
 
   /**
-   * The URL where the media can be accessed.
-   */
-  url: string;
+ * The type of media (image, video, audio, etc.).
+ */
+  mediaType: string;
 
   /**
    * The MIME type of the media file.
@@ -21,21 +21,6 @@ export interface MessageMedia {
    * The length of the file in bytes.
    */
   fileLength: number;
-
-  /**
-   * SHA256 hash of the file.
-   */
-  fileSHA256?: string;
-
-  /**
-   * SHA256 hash of the encrypted file.
-   */
-  fileEncSHA256?: string;
-
-  /**
-   * The media key for decryption.
-   */
-  mediaKey?: string;
 
   /**
    * Caption text for the media.
@@ -56,11 +41,6 @@ export interface MessageMedia {
    * JPEG thumbnail as base64 string.
    */
   jpegThumbnail?: string;
-
-  /**
-   * Direct path to the media file.
-   */
-  directPath?: string;
 
   /**
    * Duration of the media (for audio/video) in seconds.

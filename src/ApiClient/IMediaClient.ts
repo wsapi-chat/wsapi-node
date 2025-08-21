@@ -1,5 +1,4 @@
 import type { ApiResponse } from './ApiResponse.js';
-import type { MediaDownloadRequest } from '../Models/index.js';
 
 /**
  * Interface for the Media API client.
@@ -8,16 +7,16 @@ import type { MediaDownloadRequest } from '../Models/index.js';
 export interface IMediaClient {
   /**
    * Downloads media from WhatsApp servers.
-   * @param mediaDownloadRequest The media download request
+   * @param mediaId The ID of the media to download
    * @returns Promise that resolves to the media file bytes
    * @throws {ApiException} When the request fails
    */
-  downloadAsync(mediaDownloadRequest: MediaDownloadRequest): Promise<ArrayBuffer>;
+  downloadAsync(mediaId: string): Promise<ArrayBuffer>;
 
   /**
    * Downloads media from WhatsApp servers with error handling.
-   * @param mediaDownloadRequest The media download request
+   * @param mediaId The ID of the media to download
    * @returns Promise that resolves to an ApiResponse containing the media bytes or error details
    */
-  tryDownloadAsync(mediaDownloadRequest: MediaDownloadRequest): Promise<ApiResponse<ArrayBuffer>>;
+  tryDownloadAsync(mediaId: string): Promise<ApiResponse<ArrayBuffer>>;
 }
