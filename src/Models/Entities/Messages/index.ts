@@ -5,3 +5,5 @@ export { type MessageContact } from './MessageContact.js';
 export { type MessageReaction } from './MessageReaction.js';
 export { type MessageEdit } from './MessageEdit.js';
 export { type MessageReplyTo } from './MessageReplyTo.js';
+export { type MessagePin } from './MessagePin.js';
+export { type MessageExtendedText } from './MessageExtendedText.js';
