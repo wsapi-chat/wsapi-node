@@ -129,7 +129,3 @@ await sseClient.start();
 ## License
 
 MIT
-
-## Repository
-
-https://github.com/wsapi-chat/wsapi-node

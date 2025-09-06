@@ -130,6 +130,3 @@ await sseClient.start();
 
 MIT
 
-## Repository
-
-https://github.com/wsapi-chat/wsapi-node
