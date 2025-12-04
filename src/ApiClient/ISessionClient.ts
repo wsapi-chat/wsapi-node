@@ -1,5 +1,5 @@
 import type { ApiResponse } from './ApiResponse.js';
-import type { SessionStatus, SessionPairCode } from '../Models/index.js';
+import type { SessionStatus, SessionPairCode, SessionQRCode } from '../Models/index.js';
 
 /**
  * Interface for the Session API client.
@@ -14,11 +14,11 @@ export interface ISessionClient {
   getLoginQRImageAsync(): Promise<ArrayBuffer>;
 
   /**
-   * Gets the QR code string for login.
-   * @returns Promise that resolves to the QR code string
+   * Gets the QR code for login.
+   * @returns Promise that resolves to the QR code response
    * @throws {ApiException} When the request fails
    */
-  getLoginQRCodeAsync(): Promise<string>;
+  getLoginQRCodeAsync(): Promise<SessionQRCode>;
 
   /**
    * Gets a pairing code for phone-based login.
@@ -49,10 +49,10 @@ export interface ISessionClient {
   tryGetLoginQRImageAsync(): Promise<ApiResponse<ArrayBuffer>>;
 
   /**
-   * Gets the QR code string for login with error handling.
-   * @returns Promise that resolves to an ApiResponse containing the QR code string or error details
+   * Gets the QR code for login with error handling.
+   * @returns Promise that resolves to an ApiResponse containing the QR code response or error details
    */
-  tryGetLoginQRCodeAsync(): Promise<ApiResponse<string>>;
+  tryGetLoginQRCodeAsync(): Promise<ApiResponse<SessionQRCode>>;
 
   /**
    * Gets a pairing code for phone-based login with error handling.

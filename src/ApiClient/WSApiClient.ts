@@ -8,7 +8,7 @@ import { MediaClient } from './MediaClient';
 import { MessagesClient } from './MessagesClient';
 import { SessionClient } from './SessionClient';
 import { UsersClient } from './UsersClient';
-import { HttpClient } from './HttpClient';
+import { HttpClient, type WSApiClientOptions as HttpWSApiClientOptions } from './HttpClient';
 import { SSEClient } from '../SSE/SSEClient';
 import { EventFactory, WSApiEvent } from '../Events/EventFactory';
 import { EventTypes } from '../Models/Constants/EventTypes';
@@ -77,16 +77,16 @@ export class WSApiClient implements IWSApiClient {
       throw new Error('instanceId is required');
     }
 
-    // Create HTTP client
-    this.httpClient = new HttpClient({
+    // Create HTTP client using WSApiClientOptions overload
+    const httpClientOptions: HttpWSApiClientOptions = {
+      instanceId: options.instanceId,
+      apiKey: options.apiKey,
       baseUrl: options.baseUrl,
-      timeout: options.httpOptions?.timeout || 30000,
-      headers: {
-        'Authorization': `Bearer ${options.apiKey}`,
-        'X-Instance-Id': options.instanceId,
-        ...options.httpOptions?.defaultHeaders
-      }
-    });
+    };
+    if (options.httpOptions?.timeout !== undefined) {
+      httpClientOptions.timeout = options.httpOptions.timeout;
+    }
+    this.httpClient = new HttpClient(httpClientOptions);
 
     // Initialize API clients
     this.instance = new InstanceClient(this.httpClient);
@@ -104,7 +104,7 @@ export class WSApiClient implements IWSApiClient {
     const sseOptions = {
       baseUrl: options.baseUrl,
       headers: {
-        'Authorization': `Bearer ${options.apiKey}`,
+        'X-API-Key': options.apiKey,
         'X-Instance-Id': options.instanceId
       },
       ...options.sseOptions?.sseConfig

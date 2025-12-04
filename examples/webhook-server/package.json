@@ -1,0 +1,18 @@
+{
+  "name": "wsapi-webhook-server-example",
+  "version": "1.0.0",
+  "description": "Example webhook server for receiving and parsing WSApi events",
+  "type": "module",
+  "scripts": {
+    "start": "node --loader ts-node/esm server.ts",
+    "dev": "node --loader ts-node/esm --watch server.ts"
+  },
+  "dependencies": {
+    "@wsapichat/client": "file:../.."
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0",
+    "typescript": "^5.0.0"
+  }
+}

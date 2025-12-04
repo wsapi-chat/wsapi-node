@@ -1,7 +1,7 @@
 import type { HttpClient } from './HttpClient.js';
 import type { ApiResponse } from './ApiResponse.js';
 import type { IChatsClient } from './IChatsClient.js';
-import type { ChatInfo } from '../Models/Entities/Chats/ChatInfo.js';
+import type { ChatInfo, ChatPicture, ChatBusinessProfile } from '../Models/Entities/Chats/index.js';
 import type {
   ChatUpdatePresenceRequest,
   ChatUpdateEphemeralExpirationRequest,
@@ -28,8 +28,20 @@ export class ChatsClient implements IChatsClient {
     return await this.httpClient.get<ChatInfo>(`/chats/${chatId}`);
   }
 
-  async updatePresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<void> {
-    await this.httpClient.putVoid(`/chats/${chatId}/presence`, request);
+  async getPictureAsync(chatId: string): Promise<ChatPicture> {
+    return await this.httpClient.get<ChatPicture>(`/chats/${chatId}/picture`);
+  }
+
+  async getBusinessProfileAsync(chatId: string): Promise<ChatBusinessProfile> {
+    return await this.httpClient.get<ChatBusinessProfile>(`/chats/${chatId}/business`);
+  }
+
+  async setPresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<void> {
+    await this.httpClient.putVoid(`/chats/${chatId}/presence/set`, request);
+  }
+
+  async subscribePresenceAsync(chatId: string): Promise<void> {
+    await this.httpClient.putVoid(`/chats/${chatId}/presence/subscribe`);
   }
 
   async updateEphemeralAsync(chatId: string, request: ChatUpdateEphemeralExpirationRequest): Promise<void> {
@@ -66,8 +78,20 @@ export class ChatsClient implements IChatsClient {
     return await this.httpClient.tryGet<ChatInfo>(`/chats/${chatId}`);
   }
 
-  async tryUpdatePresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/chats/${chatId}/presence`, request);
+  async tryGetPictureAsync(chatId: string): Promise<ApiResponse<ChatPicture>> {
+    return await this.httpClient.tryGet<ChatPicture>(`/chats/${chatId}/picture`);
+  }
+
+  async tryGetBusinessProfileAsync(chatId: string): Promise<ApiResponse<ChatBusinessProfile>> {
+    return await this.httpClient.tryGet<ChatBusinessProfile>(`/chats/${chatId}/business`);
+  }
+
+  async trySetPresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<ApiResponse> {
+    return await this.httpClient.tryPutVoid(`/chats/${chatId}/presence/set`, request);
+  }
+
+  async trySubscribePresenceAsync(chatId: string): Promise<ApiResponse> {
+    return await this.httpClient.tryPutVoid(`/chats/${chatId}/presence/subscribe`);
   }
 
   async tryUpdateEphemeralAsync(chatId: string, request: ChatUpdateEphemeralExpirationRequest): Promise<ApiResponse> {

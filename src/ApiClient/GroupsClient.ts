@@ -3,15 +3,16 @@ import type { ApiResponse } from './ApiResponse.js';
 import type { IGroupsClient } from './IGroupsClient.js';
 import type {
   GroupInfo,
-  GroupPictureInfo,
   GroupCreated,
   GroupPictureUpdated,
+  GroupInviteInfo,
 } from '../Models/Entities/Groups/index.js';
 import type {
   GroupCreateRequest,
   GroupUpdateDescriptionRequest,
   GroupUpdateNameRequest,
   GroupUpdatePictureRequest,
+  GroupUpdateRequestParticipantsRequest,
 } from '../Models/Requests/Groups/index.js';
 
 /**
@@ -22,7 +23,7 @@ export class GroupsClient implements IGroupsClient {
   constructor(private readonly httpClient: HttpClient) {}
 
   // Throwing methods (throw ApiException on error)
-  
+
   async listAsync(): Promise<GroupInfo[]> {
     return await this.httpClient.get<GroupInfo[]>('/groups');
   }
@@ -31,8 +32,8 @@ export class GroupsClient implements IGroupsClient {
     return await this.httpClient.get<GroupInfo>(`/groups/${groupId}`);
   }
 
-  async getPictureAsync(groupId: string): Promise<GroupPictureInfo> {
-    return await this.httpClient.get<GroupPictureInfo>(`/groups/${groupId}/picture`);
+  async deleteAsync(groupId: string): Promise<void> {
+    await this.httpClient.deleteVoid(`/groups/${groupId}`);
   }
 
   async createAsync(request: GroupCreateRequest): Promise<GroupCreated> {
@@ -51,8 +52,20 @@ export class GroupsClient implements IGroupsClient {
     return await this.httpClient.post<GroupPictureUpdated>(`/groups/${groupId}/picture`, request);
   }
 
-  async leaveGroupAsync(groupId: string): Promise<void> {
-    await this.httpClient.putVoid(`/groups/${groupId}/leave`);
+  async getInviteLinkAsync(groupId: string): Promise<string> {
+    return await this.httpClient.get<string>(`/groups/${groupId}/invite-link`);
+  }
+
+  async getJoinRequestsAsync(groupId: string): Promise<string[]> {
+    return await this.httpClient.get<string[]>(`/groups/${groupId}/requests`);
+  }
+
+  async updateParticipantsAsync(groupId: string, request: GroupUpdateRequestParticipantsRequest): Promise<void> {
+    await this.httpClient.putVoid(`/groups/${groupId}/participants`, request);
+  }
+
+  async getInviteInfoAsync(inviteCode: string): Promise<GroupInviteInfo> {
+    return await this.httpClient.get<GroupInviteInfo>(`/group-invites/${inviteCode}`);
   }
 
   // Non-throwing methods (return ApiResponse with success/error info)
@@ -65,8 +78,8 @@ export class GroupsClient implements IGroupsClient {
     return await this.httpClient.tryGet<GroupInfo>(`/groups/${groupId}`);
   }
 
-  async tryGetPictureAsync(groupId: string): Promise<ApiResponse<GroupPictureInfo>> {
-    return await this.httpClient.tryGet<GroupPictureInfo>(`/groups/${groupId}/picture`);
+  async tryDeleteAsync(groupId: string): Promise<ApiResponse> {
+    return await this.httpClient.tryDeleteVoid(`/groups/${groupId}`);
   }
 
   async tryCreateAsync(request: GroupCreateRequest): Promise<ApiResponse<GroupCreated>> {
@@ -85,7 +98,19 @@ export class GroupsClient implements IGroupsClient {
     return await this.httpClient.tryPost<GroupPictureUpdated>(`/groups/${groupId}/picture`, request);
   }
 
-  async tryLeaveGroupAsync(groupId: string): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/groups/${groupId}/leave`);
+  async tryGetInviteLinkAsync(groupId: string): Promise<ApiResponse<string>> {
+    return await this.httpClient.tryGet<string>(`/groups/${groupId}/invite-link`);
+  }
+
+  async tryGetJoinRequestsAsync(groupId: string): Promise<ApiResponse<string[]>> {
+    return await this.httpClient.tryGet<string[]>(`/groups/${groupId}/requests`);
+  }
+
+  async tryUpdateParticipantsAsync(groupId: string, request: GroupUpdateRequestParticipantsRequest): Promise<ApiResponse> {
+    return await this.httpClient.tryPutVoid(`/groups/${groupId}/participants`, request);
+  }
+
+  async tryGetInviteInfoAsync(inviteCode: string): Promise<ApiResponse<GroupInviteInfo>> {
+    return await this.httpClient.tryGet<GroupInviteInfo>(`/group-invites/${inviteCode}`);
   }
 }

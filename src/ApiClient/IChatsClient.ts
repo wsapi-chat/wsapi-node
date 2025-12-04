@@ -1,5 +1,5 @@
 import type { ApiResponse } from './ApiResponse.js';
-import type { ChatInfo } from '../Models/Entities/Chats/ChatInfo.js';
+import type { ChatInfo, ChatPicture, ChatBusinessProfile } from '../Models/Entities/Chats/index.js';
 import type {
   ChatUpdatePresenceRequest,
   ChatUpdateEphemeralExpirationRequest,
@@ -17,7 +17,10 @@ export interface IChatsClient {
   // Throwing methods (throw ApiException on error)
   listAsync(): Promise<ChatInfo[]>;
   getAsync(chatId: string): Promise<ChatInfo>;
-  updatePresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<void>;
+  getPictureAsync(chatId: string): Promise<ChatPicture>;
+  getBusinessProfileAsync(chatId: string): Promise<ChatBusinessProfile>;
+  setPresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<void>;
+  subscribePresenceAsync(chatId: string): Promise<void>;
   updateEphemeralAsync(chatId: string, request: ChatUpdateEphemeralExpirationRequest): Promise<void>;
   updateMuteAsync(chatId: string, request: ChatUpdateMuteRequest): Promise<void>;
   updatePinAsync(chatId: string, request: ChatUpdatePinRequest): Promise<void>;
@@ -28,7 +31,10 @@ export interface IChatsClient {
   // Non-throwing methods (return ApiResponse with success/error info)
   tryListAsync(): Promise<ApiResponse<ChatInfo[]>>;
   tryGetAsync(chatId: string): Promise<ApiResponse<ChatInfo>>;
-  tryUpdatePresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<ApiResponse>;
+  tryGetPictureAsync(chatId: string): Promise<ApiResponse<ChatPicture>>;
+  tryGetBusinessProfileAsync(chatId: string): Promise<ApiResponse<ChatBusinessProfile>>;
+  trySetPresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<ApiResponse>;
+  trySubscribePresenceAsync(chatId: string): Promise<ApiResponse>;
   tryUpdateEphemeralAsync(chatId: string, request: ChatUpdateEphemeralExpirationRequest): Promise<ApiResponse>;
   tryUpdateMuteAsync(chatId: string, request: ChatUpdateMuteRequest): Promise<ApiResponse>;
   tryUpdatePinAsync(chatId: string, request: ChatUpdatePinRequest): Promise<ApiResponse>;

@@ -1,7 +1,7 @@
 import type { HttpClient } from './HttpClient.js';
 import type { ISessionClient } from './ISessionClient.js';
 import type { ApiResponse } from './ApiResponse.js';
-import type { SessionStatus, SessionPairCode } from '../Models/index.js';
+import type { SessionStatus, SessionPairCode, SessionQRCode } from '../Models/index.js';
 
 /**
  * Client for the Session API.
@@ -20,12 +20,12 @@ export class SessionClient implements ISessionClient {
   }
 
   /**
-   * Gets the QR code string for login.
-   * @returns Promise that resolves to the QR code string
+   * Gets the QR code for login.
+   * @returns Promise that resolves to the QR code response
    * @throws {ApiException} When the request fails
    */
-  async getLoginQRCodeAsync(): Promise<string> {
-    return await this.httpClient.get<string>('/session/login/qr/code');
+  async getLoginQRCodeAsync(): Promise<SessionQRCode> {
+    return await this.httpClient.get<SessionQRCode>('/session/login/qr/code');
   }
 
   /**
@@ -65,11 +65,11 @@ export class SessionClient implements ISessionClient {
   }
 
   /**
-   * Gets the QR code string for login with error handling.
-   * @returns Promise that resolves to an ApiResponse containing the QR code string or error details
+   * Gets the QR code for login with error handling.
+   * @returns Promise that resolves to an ApiResponse containing the QR code response or error details
    */
-  async tryGetLoginQRCodeAsync(): Promise<ApiResponse<string>> {
-    return await this.httpClient.tryGet<string>('/session/login/qr/code');
+  async tryGetLoginQRCodeAsync(): Promise<ApiResponse<SessionQRCode>> {
+    return await this.httpClient.tryGet<SessionQRCode>('/session/login/qr/code');
   }
 
   /**

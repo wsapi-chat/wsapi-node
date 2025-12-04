@@ -5,3 +5,5 @@ export { type ChatMute } from './ChatMute.js';
 export { type ChatPin } from './ChatPin.js';
 export { type ChatRead } from './ChatRead.js';
 export { type ChatArchive } from './ChatArchive.js';
+export { type ChatPicture } from './ChatPicture.js';
+export { type ChatBusinessProfile, type ChatBusinessCategory, type ChatBusinessHours } from './ChatBusinessProfile.js';
