@@ -68,6 +68,10 @@ export class ChatsClient implements IChatsClient {
     await this.httpClient.deleteVoid(`/chats/${chatId}`);
   }
 
+  async clearAsync(chatId: string): Promise<void> {
+    await this.httpClient.putVoid(`/chats/${chatId}/clear`);
+  }
+
   // Non-throwing methods (return ApiResponse with success/error info)
 
   async tryListAsync(): Promise<ApiResponse<ChatInfo[]>> {
@@ -116,5 +120,9 @@ export class ChatsClient implements IChatsClient {
 
   async tryDeleteChatAsync(chatId: string): Promise<ApiResponse> {
     return await this.httpClient.tryDeleteVoid(`/chats/${chatId}`);
+  }
+
+  async tryClearAsync(chatId: string): Promise<ApiResponse> {
+    return await this.httpClient.tryPutVoid(`/chats/${chatId}/clear`);
   }
 }

@@ -1,66 +1,49 @@
 // Session events
-export { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent } from './Session/SessionEvents';
+export { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent, InitialSyncFinishedEvent } from './Session/SessionEvents';
 
 // Message events
-export { 
-  MessageEvent, 
-  MessageDeleteEvent, 
-  MessageHistorySyncEvent, 
-  MessageReadEvent, 
-  MessageStarEvent 
+export {
+  MessageEvent,
+  MessageDeleteEvent,
+  MessageHistorySyncEvent,
+  MessageReadEvent,
+  MessageStarEvent,
+  type MessageType,
+  type ReceiptType
 } from './Messages/MessageEvents';
 
 // Chat events
-export { ChatPresenceEvent, ChatSettingEvent } from './Chats/ChatEvents';
+export {
+  ChatPresenceEvent,
+  ChatSettingEvent,
+  ChatPushNameEvent,
+  ChatStatusEvent,
+  ChatPictureEvent,
+  type ChatPresenceState,
+  type ChatSettingType,
+  type EphemeralExpiration,
+  type ChatMuteSetting,
+  type ChatPinSetting,
+  type ChatReadSetting,
+  type ChatArchiveSetting,
+  type ChatEphemeralSetting
+} from './Chats/ChatEvents';
 
 // Contact events
 export { ContactEvent } from './Contacts/ContactEvents';
 
 // User events
-export { 
-  UserPushNameEvent, 
-  UserPictureEvent, 
-  UserPresenceEvent, 
-  UserStatusEvent 
-} from './Users/UserEvents';
+export { UserPresenceEvent, type UserPresenceStatus } from './Users/UserEvents';
+
+// Group events
+export { GroupEvent, type GroupDescriptionChange } from './Groups/GroupEvents';
 
 // Call events
-export { CallOfferEvent, CallAcceptEvent, CallTerminateEvent } from './Calls/CallEvents';
+export { CallOfferEvent, CallAcceptEvent, CallTerminateEvent, type CallTerminateReason } from './Calls/CallEvents';
 
 // Base event and constants
 export { BaseEvent } from './BaseEvent';
 export { EventTypes, EventType } from './Constants/EventTypes';
 
 // Event Factory
-export { EventFactory, RawEventData } from './EventFactory';
-
-// Import all event types for union type
-import { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent } from './Session/SessionEvents';
-import { MessageEvent, MessageDeleteEvent, MessageHistorySyncEvent, MessageReadEvent, MessageStarEvent } from './Messages/MessageEvents';
-import { ChatPresenceEvent, ChatSettingEvent } from './Chats/ChatEvents';
-import { ContactEvent } from './Contacts/ContactEvents';
-import { UserPushNameEvent, UserPictureEvent, UserPresenceEvent, UserStatusEvent } from './Users/UserEvents';
-import { CallOfferEvent, CallAcceptEvent, CallTerminateEvent } from './Calls/CallEvents';
-
-/**
- * Union type of all possible WhatsApp Business API events
- */
-export type WSApiEvent = 
-  | SessionLoggedInEvent
-  | SessionLoggedOutEvent
-  | SessionLoggedErrorEvent
-  | MessageEvent
-  | MessageDeleteEvent
-  | MessageHistorySyncEvent
-  | MessageReadEvent
-  | MessageStarEvent
-  | ChatPresenceEvent
-  | ChatSettingEvent
-  | ContactEvent
-  | UserPushNameEvent
-  | UserPictureEvent
-  | UserPresenceEvent
-  | UserStatusEvent
-  | CallOfferEvent
-  | CallAcceptEvent
-  | CallTerminateEvent;
+export { EventFactory, RawEventData, WSApiEvent } from './EventFactory';

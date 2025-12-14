@@ -24,9 +24,8 @@ describe('GroupsClient', () => {
   };
 
   const mockInviteInfo: GroupInviteInfo = {
-    code: 'ABC123',
-    group: '1234567890@g.us',
-    expires: '2025-12-31T23:59:59Z',
+    id: '1234567890@g.us',
+    name: 'Test Group',
   };
 
   beforeEach(() => {
@@ -53,16 +52,6 @@ describe('GroupsClient', () => {
 
       expect(mockHttpClient.get).toHaveBeenCalledWith('/groups/1234567890@g.us');
       expect(result).toEqual(mockGroupInfo);
-    });
-  });
-
-  describe('deleteAsync', () => {
-    it('should delete a group', async () => {
-      mockHttpClient.deleteVoid.mockResolvedValue(undefined);
-
-      await groupsClient.deleteAsync('1234567890@g.us');
-
-      expect(mockHttpClient.deleteVoid).toHaveBeenCalledWith('/groups/1234567890@g.us');
     });
   });
 
@@ -167,7 +156,7 @@ describe('GroupsClient', () => {
 
       const result = await groupsClient.getInviteInfoAsync('ABC123');
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith('/group-invites/ABC123');
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/groups/invite/ABC123');
       expect(result).toEqual(mockInviteInfo);
     });
   });
@@ -201,16 +190,6 @@ describe('GroupsClient', () => {
 
       expect(result.isSuccess).toBe(false);
       expect(result.statusCode).toBe(404);
-    });
-  });
-
-  describe('tryDeleteAsync', () => {
-    it('should return success response', async () => {
-      mockHttpClient.tryDeleteVoid.mockResolvedValue(createVoidSuccessResponse());
-
-      const result = await groupsClient.tryDeleteAsync('1234567890@g.us');
-
-      expect(result.isSuccess).toBe(true);
     });
   });
 

@@ -2,20 +2,22 @@ import { EventTypes, EventType } from './Constants/EventTypes';
 import { BaseEvent } from './BaseEvent';
 
 // Import all event types
-import { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent } from './Session/SessionEvents';
+import { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent, InitialSyncFinishedEvent } from './Session/SessionEvents';
 import { MessageEvent, MessageDeleteEvent, MessageHistorySyncEvent, MessageReadEvent, MessageStarEvent } from './Messages/MessageEvents';
-import { ChatPresenceEvent, ChatSettingEvent } from './Chats/ChatEvents';
+import { ChatPresenceEvent, ChatSettingEvent, ChatPushNameEvent, ChatStatusEvent, ChatPictureEvent } from './Chats/ChatEvents';
 import { ContactEvent } from './Contacts/ContactEvents';
-import { UserPushNameEvent, UserPictureEvent, UserPresenceEvent, UserStatusEvent } from './Users/UserEvents';
+import { UserPresenceEvent } from './Users/UserEvents';
 import { CallOfferEvent, CallAcceptEvent, CallTerminateEvent } from './Calls/CallEvents';
+import { GroupEvent } from './Groups/GroupEvents';
 
 /**
  * Union type of all possible WhatsApp Business API events
  */
-export type WSApiEvent = 
+export type WSApiEvent =
   | SessionLoggedInEvent
   | SessionLoggedOutEvent
   | SessionLoggedErrorEvent
+  | InitialSyncFinishedEvent
   | MessageEvent
   | MessageDeleteEvent
   | MessageHistorySyncEvent
@@ -23,11 +25,12 @@ export type WSApiEvent =
   | MessageStarEvent
   | ChatPresenceEvent
   | ChatSettingEvent
+  | ChatPushNameEvent
+  | ChatStatusEvent
+  | ChatPictureEvent
   | ContactEvent
-  | UserPushNameEvent
-  | UserPictureEvent
   | UserPresenceEvent
-  | UserStatusEvent
+  | GroupEvent
   | CallOfferEvent
   | CallAcceptEvent
   | CallTerminateEvent;
@@ -50,146 +53,151 @@ export class EventFactory {
    * Map of event types to their constructors/parsers
    */
   private static readonly eventTypeMap: Record<string, (data: any, instanceId: string, receivedAt: Date, eventType: EventType) => WSApiEvent> = {
+    // Session events
     [EventTypes.LOGGED_IN]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
       eventType
     } as SessionLoggedInEvent),
-    
+
     [EventTypes.LOGGED_OUT]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
       eventType
     } as SessionLoggedOutEvent),
-    
+
     [EventTypes.LOGGED_ERROR]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
       eventType
     } as SessionLoggedErrorEvent),
-    
-    [EventTypes.CHAT_PRESENCE]: (data, instanceId, receivedAt, eventType) => ({
+
+    [EventTypes.INITIAL_SYNC_FINISHED]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      lastUpdated: data.lastUpdated ? new Date(data.lastUpdated) : new Date()
-    } as ChatPresenceEvent),
-    
-    [EventTypes.CHAT_SETTING]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType,
-      changedAt: data.changedAt ? new Date(data.changedAt) : new Date()
-    } as ChatSettingEvent),
-    
+      eventType
+    } as InitialSyncFinishedEvent),
+
+    // Message events
     [EventTypes.MESSAGE]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      time: data.time ? new Date(data.time) : new Date()
+      eventType
     } as MessageEvent),
-    
+
     [EventTypes.MESSAGE_DELETE]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      deletedAt: data.deletedAt ? new Date(data.deletedAt) : new Date()
+      eventType
     } as MessageDeleteEvent),
-    
+
     [EventTypes.MESSAGE_HISTORY_SYNC]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      syncStartTime: data.syncStartTime ? new Date(data.syncStartTime) : new Date(),
-      syncEndTime: data.syncEndTime ? new Date(data.syncEndTime) : new Date()
+      eventType
     } as MessageHistorySyncEvent),
-    
+
     [EventTypes.MESSAGE_READ]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      readAt: data.readAt ? new Date(data.readAt) : new Date()
+      eventType
     } as MessageReadEvent),
-    
+
     [EventTypes.MESSAGE_STAR]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      starredAt: data.starredAt ? new Date(data.starredAt) : new Date()
+      eventType
     } as MessageStarEvent),
-    
+
+    // Chat events
+    [EventTypes.CHAT_PRESENCE]: (data, instanceId, receivedAt, eventType) => ({
+      ...data,
+      instanceId,
+      receivedAt,
+      eventType
+    } as ChatPresenceEvent),
+
+    [EventTypes.CHAT_SETTING]: (data, instanceId, receivedAt, eventType) => ({
+      ...data,
+      instanceId,
+      receivedAt,
+      eventType
+    } as ChatSettingEvent),
+
+    [EventTypes.CHAT_PUSH_NAME]: (data, instanceId, receivedAt, eventType) => ({
+      ...data,
+      instanceId,
+      receivedAt,
+      eventType
+    } as ChatPushNameEvent),
+
+    [EventTypes.CHAT_STATUS]: (data, instanceId, receivedAt, eventType) => ({
+      ...data,
+      instanceId,
+      receivedAt,
+      eventType
+    } as ChatStatusEvent),
+
+    [EventTypes.CHAT_PICTURE]: (data, instanceId, receivedAt, eventType) => ({
+      ...data,
+      instanceId,
+      receivedAt,
+      eventType
+    } as ChatPictureEvent),
+
+    // Contact events
     [EventTypes.CONTACT]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      lastUpdated: data.lastUpdated ? new Date(data.lastUpdated) : new Date()
+      eventType
     } as ContactEvent),
-    
-    [EventTypes.USER_PUSH_NAME]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType,
-      changedAt: data.changedAt ? new Date(data.changedAt) : new Date()
-    } as UserPushNameEvent),
-    
-    [EventTypes.USER_PICTURE]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType,
-      changedAt: data.changedAt ? new Date(data.changedAt) : new Date()
-    } as UserPictureEvent),
-    
+
+    // User events
     [EventTypes.USER_PRESENCE]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      lastSeen: data.lastSeen ? new Date(data.lastSeen) : new Date()
+      eventType
     } as UserPresenceEvent),
-    
-    [EventTypes.USER_STATUS]: (data, instanceId, receivedAt, eventType) => ({
+
+    // Group events
+    [EventTypes.GROUP]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      changedAt: data.changedAt ? new Date(data.changedAt) : new Date()
-    } as UserStatusEvent),
-    
+      eventType
+    } as GroupEvent),
+
+    // Call events
     [EventTypes.CALL_OFFER]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      time: data.time ? new Date(data.time) : new Date()
+      eventType
     } as CallOfferEvent),
-    
+
     [EventTypes.CALL_ACCEPT]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      acceptedAt: data.acceptedAt ? new Date(data.acceptedAt) : new Date()
+      eventType
     } as CallAcceptEvent),
-    
+
     [EventTypes.CALL_TERMINATE]: (data, instanceId, receivedAt, eventType) => ({
       ...data,
       instanceId,
       receivedAt,
-      eventType,
-      terminatedAt: data.terminatedAt ? new Date(data.terminatedAt) : new Date()
+      eventType
     } as CallTerminateEvent)
   };
 

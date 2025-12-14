@@ -10,7 +10,7 @@ info:
   version: 1.0.0
   license:
     name: Proprietary
-    url: https://wsapi.chat/terms
+    url: https://wsapi.chat/terms-of-service
 servers:
   - url: https://your-webhook-endpoint.yourcompany.com
     description: Your webhook endpoint that receives WSAPI events
@@ -146,8 +146,8 @@ webhooks:
                 id: 1234567890@s.whatsapp.net
                 sender:
                   id: 1234567890@s.whatsapp.net
+                  user: '1234567890'
                   isMe: false
-                  pushName: John Doe
                 state: typing
       responses:
         '200':
@@ -219,8 +219,8 @@ webhooks:
                 id: 1234567890@s.whatsapp.net
                 sender:
                   id: 1234567890@s.whatsapp.net
+                  user: '1234567890'
                   isMe: false
-                  pushName: John Doe
                 pictureId: picture_123
       responses:
         '200':
@@ -255,26 +255,58 @@ webhooks:
       tags:
         - Groups
       summary: Group event
-      description: Event for group updates
+      description: Event for group updates (topic change, members join/leave)
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/GroupEvent'
-            example:
-              instanceId: ins_ABCdefGHIjk
-              receivedAt: '2025-05-19T00:51:44.816Z'
-              eventType: group
-              eventData:
-                id: 1234567890-1234567890@g.us
-                sender:
-                  id: 1234567890@s.whatsapp.net
-                  isMe: false
-                  pushName: John Doe
-                description:
-                  topic: Group Chat
-                  timestamp: '2025-05-19T00:51:44.816Z'
+            examples:
+              topic_change:
+                summary: Group topic/description changed
+                value:
+                  instanceId: ins_ABCdefGHIjk
+                  receivedAt: '2025-05-19T00:51:44.816Z'
+                  eventType: group
+                  eventData:
+                    id: 1234567890-1234567890@g.us
+                    sender:
+                      id: 1234567890@s.whatsapp.net
+                      user: '1234567890'
+                      isMe: false
+                    description:
+                      topic: New Group Description
+                    timestamp: '2025-05-19T00:51:44.816Z'
+              member_join:
+                summary: Members joined the group
+                value:
+                  instanceId: ins_ABCdefGHIjk
+                  receivedAt: '2025-05-19T00:51:44.816Z'
+                  eventType: group
+                  eventData:
+                    id: 1234567890-1234567890@g.us
+                    sender:
+                      id: 1234567890@s.whatsapp.net
+                      user: '1234567890'
+                      isMe: false
+                    join:
+                      - 9876543210@s.whatsapp.net
+                      - 5551234567@s.whatsapp.net
+              member_leave:
+                summary: Members left the group
+                value:
+                  instanceId: ins_ABCdefGHIjk
+                  receivedAt: '2025-05-19T00:51:44.816Z'
+                  eventType: group
+                  eventData:
+                    id: 1234567890-1234567890@g.us
+                    sender:
+                      id: 9876543210@s.whatsapp.net
+                      user: '9876543210'
+                      isMe: false
+                    leave:
+                      - 9876543210@s.whatsapp.net
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully
@@ -304,8 +336,8 @@ webhooks:
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
+                      user: '1234567890'
                       isMe: false
-                      pushName: John Doe
                     isGroup: false
                     isStatus: false
                     type: text
@@ -322,8 +354,8 @@ webhooks:
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
+                      user: '1234567890'
                       isMe: false
-                      pushName: John Doe
                     isGroup: false
                     isStatus: false
                     type: media
@@ -349,8 +381,8 @@ webhooks:
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
+                      user: '1234567890'
                       isMe: false
-                      pushName: John Doe
                     isGroup: false
                     isStatus: false
                     type: media
@@ -372,8 +404,8 @@ webhooks:
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
+                      user: '1234567890'
                       isMe: false
-                      pushName: John Doe
                     isGroup: false
                     isStatus: false
                     type: reaction
@@ -392,8 +424,8 @@ webhooks:
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
+                      user: '1234567890'
                       isMe: false
-                      pushName: John Doe
                     isGroup: false
                     isStatus: false
                     type: contact
@@ -416,8 +448,8 @@ webhooks:
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
+                      user: '1234567890'
                       isMe: false
-                      pushName: John Doe
                     isGroup: false
                     isStatus: false
                     type: pinInChat
@@ -449,12 +481,12 @@ webhooks:
                 chatId: 1234567890@s.whatsapp.net
                 sender:
                   id: 1234567890@s.whatsapp.net
+                  user: '1234567890'
                   isMe: false
-                  pushName: John Doe
                 messageSender:
                   id: 9876543210@s.whatsapp.net
+                  user: '9876543210'
                   isMe: true
-                  pushName: Me
                 isGroup: false
                 messageIds:
                   - '0123456789012345'
@@ -484,8 +516,8 @@ webhooks:
                 id: '0123456789012345'
                 sender:
                   id: 1234567890@s.whatsapp.net
+                  user: '1234567890'
                   isMe: false
-                  pushName: John Doe
                 chatId: 1234567890@s.whatsapp.net
                 time: '2025-05-19T00:51:44.816Z'
                 isDeletedForAll: true
@@ -516,8 +548,8 @@ webhooks:
                 chatId: 1234567890@s.whatsapp.net
                 sender:
                   id: 1234567890@s.whatsapp.net
+                  user: '1234567890'
                   isMe: false
-                  pushName: John Doe
                 time: '2025-05-19T00:51:44.816Z'
                 isStarred: true
       responses:
@@ -551,8 +583,8 @@ webhooks:
                       chatId: 1234567890@s.whatsapp.net
                       sender:
                         id: 1234567890@s.whatsapp.net
+                        user: '1234567890'
                         isMe: false
-                        pushName: John Doe
                       isGroup: false
                       isStatus: false
                       type: text
@@ -624,6 +656,27 @@ webhooks:
               eventData:
                 error: error_123
                 id: device_123
+      responses:
+        '200':
+          description: Return a 200 status to indicate that the data was received successfully
+  initial_sync_finished:
+    post:
+      operationId: receiveInitialSyncFinishedEvent
+      tags:
+        - Session
+      summary: Initial sync finished event
+      description: Event emitted when the initial sync is finished
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InitialSyncFinishedEvent'
+            example:
+              instanceId: ins_ABCdefGHIjk
+              receivedAt: '2025-05-19T00:51:44.816Z'
+              eventType: initial_sync_finished
+              eventData: null
       responses:
         '200':
           description: Return a 200 status to indicate that the data was received successfully
@@ -734,6 +787,29 @@ components:
             id:
               type: string
               description: The device ID
+    InitialSyncFinishedEvent:
+      type: object
+      required:
+        - instanceId
+        - receivedAt
+        - eventType
+        - eventData
+      properties:
+        instanceId:
+          type: string
+          description: The ID of the WhatsApp instance that generated the event
+        receivedAt:
+          type: string
+          format: date-time
+          description: The timestamp when the event was received
+        eventType:
+          type: string
+          enum:
+            - initial_sync_finished
+          description: The type of event
+        eventData:
+          type: object
+          description: Empty object, event signals sync completion
     ChatSettingEvent:
       type: object
       required:
@@ -801,7 +877,7 @@ components:
                 expiration:
                   type: string
                   enum:
-                    - 'false'
+                    - 'off'
                     - 24h
                     - 7d
                     - 90d
@@ -845,6 +921,105 @@ components:
                 - typing
                 - recording
                 - paused
+    ChatPushNameEvent:
+      type: object
+      required:
+        - instanceId
+        - receivedAt
+        - eventType
+        - eventData
+      properties:
+        instanceId:
+          type: string
+          description: The ID of the WhatsApp instance that generated the event
+        receivedAt:
+          type: string
+          format: date-time
+          description: The timestamp when the event was received
+        eventType:
+          type: string
+          enum:
+            - chat_push_name
+          description: The type of event
+        eventData:
+          type: object
+          required:
+            - id
+            - pushName
+          properties:
+            id:
+              type: string
+              description: The chat ID
+            pushName:
+              type: string
+              description: The chat's push name
+    ChatStatusEvent:
+      type: object
+      required:
+        - instanceId
+        - receivedAt
+        - eventType
+        - eventData
+      properties:
+        instanceId:
+          type: string
+          description: The ID of the WhatsApp instance that generated the event
+        receivedAt:
+          type: string
+          format: date-time
+          description: The timestamp when the event was received
+        eventType:
+          type: string
+          enum:
+            - chat_status
+          description: The type of event
+        eventData:
+          type: object
+          required:
+            - id
+            - status
+          properties:
+            id:
+              type: string
+              description: The chat ID
+            status:
+              type: string
+              description: The chat's status message
+    ChatPictureEvent:
+      type: object
+      required:
+        - instanceId
+        - receivedAt
+        - eventType
+        - eventData
+      properties:
+        instanceId:
+          type: string
+          description: The ID of the WhatsApp instance that generated the event
+        receivedAt:
+          type: string
+          format: date-time
+          description: The timestamp when the event was received
+        eventType:
+          type: string
+          enum:
+            - chat_picture
+          description: The type of event
+        eventData:
+          type: object
+          required:
+            - id
+            - sender
+            - pictureId
+          properties:
+            id:
+              type: string
+              description: The chat ID
+            sender:
+              $ref: '#/components/schemas/Sender'
+            pictureId:
+              type: string
+              description: The ID of the chat's profile picture
     MessageEvent:
       type: object
       required:
@@ -966,21 +1141,21 @@ components:
               type: array
               items:
                 type: string
-            reply_to:
+            replyTo:
               type: object
               properties:
                 id:
                   type: string
                 sender:
                   $ref: '#/components/schemas/Sender'
-                is_forwarded:
+                isForwarded:
                   type: boolean
                 text:
                   type: string
             ephemeralExpiration:
               type: string
               enum:
-                - 'false'
+                - 'off'
                 - 24h
                 - 7d
                 - 90d
@@ -1004,7 +1179,7 @@ components:
                 expiration:
                   type: string
                   enum:
-                    - 'false'
+                    - 'off'
                     - 24h
                     - 7d
                     - 30d
@@ -1241,7 +1416,6 @@ components:
           type: object
           required:
             - id
-            - sender
           properties:
             id:
               type: string
@@ -1250,111 +1424,25 @@ components:
               $ref: '#/components/schemas/Sender'
             description:
               type: object
+              description: Present when the group description/topic changes
               properties:
                 topic:
                   type: string
-                timestamp:
-                  type: string
-                  format: date-time
-    ChatPushNameEvent:
-      type: object
-      required:
-        - instanceId
-        - receivedAt
-        - eventType
-        - eventData
-      properties:
-        instanceId:
-          type: string
-          description: The ID of the WhatsApp instance that generated the event
-        receivedAt:
-          type: string
-          format: date-time
-          description: The timestamp when the event was received
-        eventType:
-          type: string
-          enum:
-            - chat_push_name
-          description: The type of event
-        eventData:
-          type: object
-          required:
-            - id
-            - pushName
-          properties:
-            id:
+                  description: The new group description/topic
+            timestamp:
               type: string
-              description: The chat ID
-            pushName:
-              type: string
-              description: The chat's push name
-    ChatStatusEvent:
-      type: object
-      required:
-        - instanceId
-        - receivedAt
-        - eventType
-        - eventData
-      properties:
-        instanceId:
-          type: string
-          description: The ID of the WhatsApp instance that generated the event
-        receivedAt:
-          type: string
-          format: date-time
-          description: The timestamp when the event was received
-        eventType:
-          type: string
-          enum:
-            - chat_status
-          description: The type of event
-        eventData:
-          type: object
-          required:
-            - id
-            - status
-          properties:
-            id:
-              type: string
-              description: The chat ID
-            status:
-              type: string
-              description: The chat's status message
-    ChatPictureEvent:
-      type: object
-      required:
-        - instanceId
-        - receivedAt
-        - eventType
-        - eventData
-      properties:
-        instanceId:
-          type: string
-          description: The ID of the WhatsApp instance that generated the event
-        receivedAt:
-          type: string
-          format: date-time
-          description: The timestamp when the event was received
-        eventType:
-          type: string
-          enum:
-            - chat_picture
-          description: The type of event
-        eventData:
-          type: object
-          required:
-            - id
-            - sender
-            - pictureId
-          properties:
-            id:
-              type: string
-              description: The chat ID
-            sender:
-              $ref: '#/components/schemas/Sender'
-            pictureId:
-              type: string
-              description: The ID of the chat's profile picture
+              format: date-time
+              description: When the change occurred
+            join:
+              type: array
+              items:
+                type: string
+              description: Array of JIDs of members who joined the group
+            leave:
+              type: array
+              items:
+                type: string
+              description: Array of JIDs of members who left the group
     UserPresenceEvent:
       type: object
       required:
@@ -1429,6 +1517,9 @@ components:
             chatId:
               type: string
               description: The chat ID where the call is offered
+            isGroup:
+              type: boolean
+              description: Whether the call is a group call
             time:
               type: string
               format: date-time
@@ -1525,9 +1616,12 @@ components:
         id:
           type: string
           description: The sender's ID
+        user:
+          type: string
+          description: The user part of the JID (present when available)
+        device:
+          type: integer
+          description: The device ID (present when non-zero)
         isMe:
           type: boolean
           description: Whether the sender is the current user
-        pushName:
-          type: string
-          description: The sender's push name

@@ -27,6 +27,8 @@ export interface IChatsClient {
   updateArchiveAsync(chatId: string, request: ChatUpdateArchiveRequest): Promise<void>;
   updateReadAsync(chatId: string, request: ChatUpdateReadRequest): Promise<void>;
   deleteChatAsync(chatId: string): Promise<void>;
+  /** Clear all messages from a chat */
+  clearAsync(chatId: string): Promise<void>;
 
   // Non-throwing methods (return ApiResponse with success/error info)
   tryListAsync(): Promise<ApiResponse<ChatInfo[]>>;
@@ -41,4 +43,5 @@ export interface IChatsClient {
   tryUpdateArchiveAsync(chatId: string, request: ChatUpdateArchiveRequest): Promise<ApiResponse>;
   tryUpdateReadAsync(chatId: string, request: ChatUpdateReadRequest): Promise<ApiResponse>;
   tryDeleteChatAsync(chatId: string): Promise<ApiResponse>;
+  tryClearAsync(chatId: string): Promise<ApiResponse>;
 }

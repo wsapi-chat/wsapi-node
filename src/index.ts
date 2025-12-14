@@ -42,19 +42,22 @@ export { EventFactory, type RawEventData, type WSApiEvent } from './Events/Event
 export { type BaseEvent } from './Events/BaseEvent.js';
 
 // Session events
-export type { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent } from './Events/Session/SessionEvents.js';
+export type { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent, InitialSyncFinishedEvent } from './Events/Session/SessionEvents.js';
 
-// Message events  
-export type { MessageEvent, MessageDeleteEvent, MessageHistorySyncEvent, MessageReadEvent, MessageStarEvent } from './Events/Messages/MessageEvents.js';
+// Message events
+export type { MessageEvent, MessageDeleteEvent, MessageHistorySyncEvent, MessageReadEvent, MessageStarEvent, MessageType, ReceiptType } from './Events/Messages/MessageEvents.js';
 
 // Chat events
-export type { ChatPresenceEvent, ChatSettingEvent } from './Events/Chats/ChatEvents.js';
+export type { ChatPresenceEvent, ChatSettingEvent, ChatPushNameEvent, ChatStatusEvent, ChatPictureEvent, ChatPresenceState, ChatSettingType, EphemeralExpiration, ChatMuteSetting, ChatPinSetting, ChatReadSetting, ChatArchiveSetting, ChatEphemeralSetting } from './Events/Chats/ChatEvents.js';
 
 // Contact events
 export type { ContactEvent } from './Events/Contacts/ContactEvents.js';
 
 // User events
-export type { UserPushNameEvent, UserPictureEvent, UserPresenceEvent, UserStatusEvent } from './Events/Users/UserEvents.js';
+export type { UserPresenceEvent, UserPresenceStatus } from './Events/Users/UserEvents.js';
+
+// Group events
+export type { GroupEvent, GroupDescriptionChange } from './Events/Groups/GroupEvents.js';
 
 // Call events
-export type { CallOfferEvent, CallAcceptEvent, CallTerminateEvent } from './Events/Calls/CallEvents.js';
+export type { CallOfferEvent, CallAcceptEvent, CallTerminateEvent, CallTerminateReason } from './Events/Calls/CallEvents.js';

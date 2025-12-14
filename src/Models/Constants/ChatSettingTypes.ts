@@ -3,16 +3,6 @@
  */
 export const ChatSettingTypes = {
   /**
-   * Ephemeral message settings
-   */
-  EPHEMERAL: 'ephemeral',
-
-  /**
-   * Archive settings
-   */
-  ARCHIVE: 'archive',
-
-  /**
    * Mute settings
    */
   MUTE: 'mute',
@@ -21,6 +11,21 @@ export const ChatSettingTypes = {
    * Pin settings
    */
   PIN: 'pin',
+
+  /**
+   * Read settings
+   */
+  READ: 'read',
+
+  /**
+   * Archive settings
+   */
+  ARCHIVE: 'archive',
+
+  /**
+   * Ephemeral message settings
+   */
+  EPHEMERAL: 'ephemeral',
 } as const;
 
 /**

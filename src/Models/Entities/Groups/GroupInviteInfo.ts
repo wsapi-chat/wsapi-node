@@ -1,19 +1,56 @@
+import type { GroupInviteParticipant } from './GroupInviteParticipant.js';
+
 /**
- * Group invite information from an invite code
+ * Group information retrieved from an invite code
  */
 export interface GroupInviteInfo {
   /**
-   * The invite code.
+   * Group JID.
    */
-  code: string;
+  id: string;
 
   /**
-   * The group ID.
+   * Group owner JID.
    */
-  group: string;
+  ownerId?: string;
 
   /**
-   * The expiration date of the invite.
+   * Group name.
    */
-  expires?: string;
+  name: string;
+
+  /**
+   * Group creation date.
+   */
+  created?: string;
+
+  /**
+   * Group description.
+   */
+  description?: string;
+
+  /**
+   * Whether only admins can send messages.
+   */
+  isAnnounce?: boolean;
+
+  /**
+   * Whether only admins can edit group info.
+   */
+  isLocked?: boolean;
+
+  /**
+   * Whether ephemeral messages are enabled.
+   */
+  isEphemeral?: boolean;
+
+  /**
+   * Ephemeral message expiration in seconds.
+   */
+  ephemeralExpiration?: number;
+
+  /**
+   * List of group participants.
+   */
+  participants?: GroupInviteParticipant[];
 }

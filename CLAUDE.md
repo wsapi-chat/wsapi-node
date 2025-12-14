@@ -10,6 +10,15 @@ npm run dev          # Watch mode for development
 npm run type-check   # TypeScript type checking without emitting
 ```
 
+## Test Commands
+
+```bash
+npm run test              # Run all tests once
+npm run test:watch        # Run tests in watch mode
+npm run test:coverage     # Run tests with coverage report
+npx vitest tests/api/MessagesClient.test.ts  # Run a single test file
+```
+
 ## Architecture
 
 This is a TypeScript SDK for the WSApi WhatsApp Business API. The package is published as `@wsapichat/client`.
@@ -59,6 +68,7 @@ Each domain has an interface (`I*Client.ts`) and implementation (`*Client.ts`):
 
 ## Code Patterns
 
-- All API client methods follow the dual pattern: throwing (`sendText()`) and non-throwing (`trySendText()`)
+- All API client methods follow the dual pattern: throwing (`sendTextAsync()`) and non-throwing (`trySendTextAsync()`)
 - WhatsApp IDs use format: `{phone}@s.whatsapp.net` for users, `{id}@g.us` for groups
 - Build uses tsup with CJS + ESM dual output and TypeScript declarations
+- Tests use vitest with MockHttpClient (`tests/mocks/MockHttpClient.ts`) for mocking HTTP calls

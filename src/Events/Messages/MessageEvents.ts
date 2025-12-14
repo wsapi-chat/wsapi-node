@@ -4,136 +4,167 @@ import { MessageReplyTo } from '../../Models/Entities/Messages/MessageReplyTo';
 import { MessageEdit } from '../../Models/Entities/Messages/MessageEdit';
 import { MessageMedia } from '../../Models/Entities/Messages/MessageMedia';
 import { MessageReaction } from '../../Models/Entities/Messages/MessageReaction';
+import { MessagePin } from '../../Models/Entities/Messages/MessagePin';
+import { MessageExtendedText } from '../../Models/Entities/Messages/MessageExtendedText';
+
+/**
+ * Message type
+ */
+export type MessageType = 'text' | 'media' | 'reaction' | 'contact' | 'contactArray' | 'pinInChat';
+
+/**
+ * Receipt type for message read events
+ */
+export type ReceiptType = 'delivered' | 'read' | 'played' | 'readSelf' | 'sender' | 'retry' | 'serverError' | 'inactive' | 'peerMsg' | 'historySync';
 
 /**
  * Event fired when a new message is received
  */
 export interface MessageEvent extends BaseEvent {
+  eventType: 'message';
+
   /** Unique message ID */
   id: string;
-  
+
+  /** When the message was sent */
+  time: string;
+
   /** Chat ID where the message was sent */
   chatId: string;
-  
+
   /** Message sender information */
   sender: Sender;
-  
-  /** Display name of the sender */
-  senderName: string;
-  
-  /** When the message was sent */
-  time: Date;
-  
+
   /** Whether this message is in a group chat */
-  isGroup: boolean;
-  
+  isGroup?: boolean;
+
   /** Whether this is a status message */
-  isStatus: boolean;
-  
-  /** Array of mentioned user IDs */
-  mentions?: string[];
-  
-  /** Ephemeral message expiration setting */
-  expiration: string;
-  
-  /** Message type (text, image, video, etc.) */
-  type: string;
-  
+  isStatus?: boolean;
+
+  /** Message type */
+  type: MessageType;
+
   /** Text content for text messages */
   text?: string;
-  
-  /** Reply information if this is a reply */
-  replyTo?: MessageReplyTo;
-  
-  /** Extended text with formatting (raw object for now) */
-  extendedText?: any;
-  
-  /** Edit information if this message was edited */
-  editMessage?: MessageEdit;
-  
+
   /** Media content for media messages */
   media?: MessageMedia;
-  
+
   /** Reaction information */
   reaction?: MessageReaction;
-  
-  /** Single contact for contact messages */
+
+  /** Single contact vCard for contact messages */
   contact?: string;
-  
-  /** Multiple contacts for contact array messages */
+
+  /** Array of vCards for contact array messages */
   contactArray?: string[];
-  
-  /** Pin information if message is pinned (raw object for now) */
-  pinInChat?: any;
+
+  /** Extended text with URL preview */
+  extendedText?: MessageExtendedText;
+
+  /** Array of mentioned user IDs */
+  mentions?: string[];
+
+  /** Reply information if this is a reply */
+  replyTo?: MessageReplyTo;
+
+  /** Ephemeral message expiration setting */
+  ephemeralExpiration?: string;
+
+  /** Whether this message was edited */
+  isEdit?: boolean;
+
+  /** Edit information if this message was edited */
+  edit?: MessageEdit;
+
+  /** Pin information for pinInChat messages */
+  pin?: MessagePin;
 }
 
 /**
  * Event fired when a message is deleted
  */
 export interface MessageDeleteEvent extends BaseEvent {
+  eventType: 'message_delete';
+
   /** ID of the deleted message */
-  messageId: string;
-  
+  id: string;
+
+  /** Sender who deleted the message */
+  sender: Sender;
+
   /** Chat ID where the message was deleted */
   chatId: string;
-  
-  /** Who deleted the message */
-  deletedBy: string;
-  
+
   /** When the message was deleted */
-  deletedAt: Date;
+  time: string;
+
+  /** Whether deleted for all participants */
+  isDeletedForAll?: boolean;
+
+  /** Whether deleted only for the current user */
+  isDeletedForMe?: boolean;
+
+  /** Whether this was a status message */
+  isStatus?: boolean;
 }
 
 /**
  * Event fired when message history is synced
  */
 export interface MessageHistorySyncEvent extends BaseEvent {
-  /** Chat ID for the history sync */
-  chatId: string;
-  
-  /** Number of messages synced */
-  messageCount: number;
-  
-  /** When the sync started */
-  syncStartTime: Date;
-  
-  /** When the sync completed */
-  syncEndTime: Date;
+  eventType: 'message_history_sync';
+
+  /** Array of synced messages */
+  messages: MessageEvent[];
 }
 
 /**
  * Event fired when a message is read
  */
 export interface MessageReadEvent extends BaseEvent {
-  /** ID of the read message */
-  messageId: string;
-  
+  eventType: 'message_read';
+
   /** Chat ID where the message was read */
   chatId: string;
-  
+
   /** Who read the message */
-  readBy: string;
-  
-  /** When the message was read */
-  readAt: Date;
+  sender: Sender;
+
+  /** Original message sender */
+  messageSender?: Sender;
+
+  /** Whether this is in a group chat */
+  isGroup?: boolean;
+
+  /** IDs of messages that were read */
+  messageIds?: string[];
+
+  /** When the read receipt was received */
+  time: string;
+
+  /** Type of receipt */
+  receiptType: ReceiptType;
 }
 
 /**
  * Event fired when a message is starred/unstarred
  */
 export interface MessageStarEvent extends BaseEvent {
+  eventType: 'message_star';
+
   /** ID of the starred message */
-  messageId: string;
-  
+  id: string;
+
   /** Chat ID where the message was starred */
   chatId: string;
-  
+
+  /** Who starred/unstarred the message */
+  sender: Sender;
+
+  /** When the star action occurred */
+  time: string;
+
   /** Whether the message is now starred (true) or unstarred (false) */
   isStarred: boolean;
-  
-  /** Who starred/unstarred the message */
-  starredBy: string;
-  
-  /** When the star action occurred */
-  starredAt: Date;
 }

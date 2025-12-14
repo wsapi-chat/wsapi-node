@@ -1,11 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { EventFactory, type RawEventData } from '../../src/Events/EventFactory';
 import { EventTypes } from '../../src/Models/Constants/EventTypes';
-import type { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent } from '../../src/Events/Session/SessionEvents';
+import type { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent, InitialSyncFinishedEvent } from '../../src/Events/Session/SessionEvents';
 import type { MessageEvent, MessageDeleteEvent, MessageHistorySyncEvent, MessageReadEvent, MessageStarEvent } from '../../src/Events/Messages/MessageEvents';
-import type { ChatPresenceEvent, ChatSettingEvent } from '../../src/Events/Chats/ChatEvents';
+import type { ChatPresenceEvent, ChatSettingEvent, ChatPushNameEvent, ChatStatusEvent, ChatPictureEvent } from '../../src/Events/Chats/ChatEvents';
 import type { ContactEvent } from '../../src/Events/Contacts/ContactEvents';
-import type { UserPushNameEvent, UserPictureEvent, UserPresenceEvent, UserStatusEvent } from '../../src/Events/Users/UserEvents';
+import type { UserPresenceEvent } from '../../src/Events/Users/UserEvents';
+import type { GroupEvent } from '../../src/Events/Groups/GroupEvents';
 import type { CallOfferEvent, CallAcceptEvent, CallTerminateEvent } from '../../src/Events/Calls/CallEvents';
 
 describe('EventFactory', () => {
@@ -124,13 +125,14 @@ describe('EventFactory', () => {
         receivedAt,
         instanceId,
         eventType: EventTypes.LOGGED_OUT,
-        eventData: {},
+        eventData: { reason: 'user_logged_out' },
       };
 
       const event = EventFactory.parseRawEvent(rawEvent) as SessionLoggedOutEvent;
 
       expect(event.eventType).toBe(EventTypes.LOGGED_OUT);
       expect(event.instanceId).toBe(instanceId);
+      expect(event.reason).toBe('user_logged_out');
     });
 
     it('should parse logged_error event', () => {
@@ -138,14 +140,28 @@ describe('EventFactory', () => {
         receivedAt,
         instanceId,
         eventType: EventTypes.LOGGED_ERROR,
-        eventData: { error: 'Connection failed', errorCode: 'ERR_CONNECTION' },
+        eventData: { error: 'Connection failed', id: 'device123' },
       };
 
       const event = EventFactory.parseRawEvent(rawEvent) as SessionLoggedErrorEvent;
 
       expect(event.eventType).toBe(EventTypes.LOGGED_ERROR);
       expect(event.error).toBe('Connection failed');
-      expect(event.errorCode).toBe('ERR_CONNECTION');
+      expect(event.id).toBe('device123');
+    });
+
+    it('should parse initial_sync_finished event', () => {
+      const rawEvent: RawEventData = {
+        receivedAt,
+        instanceId,
+        eventType: EventTypes.INITIAL_SYNC_FINISHED,
+        eventData: {},
+      };
+
+      const event = EventFactory.parseRawEvent(rawEvent) as InitialSyncFinishedEvent;
+
+      expect(event.eventType).toBe(EventTypes.INITIAL_SYNC_FINISHED);
+      expect(event.instanceId).toBe(instanceId);
     });
   });
 
@@ -158,14 +174,12 @@ describe('EventFactory', () => {
         eventData: {
           id: 'msg123',
           chatId: '1234567890@s.whatsapp.net',
-          sender: { id: '1234567890@s.whatsapp.net', name: 'Test' },
-          senderName: 'Test User',
+          sender: { id: '1234567890@s.whatsapp.net', user: '1234567890', isMe: false },
           time: '2025-01-01T11:00:00Z',
           isGroup: false,
           isStatus: false,
           type: 'text',
           text: 'Hello World',
-          expiration: 'off',
         },
       };
 
@@ -174,8 +188,8 @@ describe('EventFactory', () => {
       expect(event.eventType).toBe(EventTypes.MESSAGE);
       expect(event.id).toBe('msg123');
       expect(event.chatId).toBe('1234567890@s.whatsapp.net');
-      expect(event.senderName).toBe('Test User');
-      expect(event.time).toBeInstanceOf(Date);
+      expect(event.sender.id).toBe('1234567890@s.whatsapp.net');
+      expect(event.time).toBe('2025-01-01T11:00:00Z');
       expect(event.isGroup).toBe(false);
       expect(event.type).toBe('text');
       expect(event.text).toBe('Hello World');
@@ -187,19 +201,23 @@ describe('EventFactory', () => {
         instanceId,
         eventType: EventTypes.MESSAGE_DELETE,
         eventData: {
-          messageId: 'msg123',
+          id: 'msg123',
           chatId: '1234567890@s.whatsapp.net',
-          deletedBy: '1234567890@s.whatsapp.net',
-          deletedAt: '2025-01-01T11:30:00Z',
+          sender: { id: '1234567890@s.whatsapp.net', user: '1234567890', isMe: false },
+          time: '2025-01-01T11:30:00Z',
+          isDeletedForAll: true,
+          isDeletedForMe: false,
+          isStatus: false,
         },
       };
 
       const event = EventFactory.parseRawEvent(rawEvent) as MessageDeleteEvent;
 
       expect(event.eventType).toBe(EventTypes.MESSAGE_DELETE);
-      expect(event.messageId).toBe('msg123');
-      expect(event.deletedBy).toBe('1234567890@s.whatsapp.net');
-      expect(event.deletedAt).toBeInstanceOf(Date);
+      expect(event.id).toBe('msg123');
+      expect(event.chatId).toBe('1234567890@s.whatsapp.net');
+      expect(event.time).toBe('2025-01-01T11:30:00Z');
+      expect(event.isDeletedForAll).toBe(true);
     });
 
     it('should parse message_history_sync event', () => {
@@ -208,19 +226,28 @@ describe('EventFactory', () => {
         instanceId,
         eventType: EventTypes.MESSAGE_HISTORY_SYNC,
         eventData: {
-          chatId: '1234567890@s.whatsapp.net',
-          messageCount: 100,
-          syncStartTime: '2025-01-01T10:00:00Z',
-          syncEndTime: '2025-01-01T10:05:00Z',
+          messages: [
+            {
+              instanceId: 'instance123',
+              receivedAt: '2025-01-01T12:00:00Z',
+              eventType: 'message',
+              eventData: {
+                id: 'msg1',
+                time: '2025-01-01T10:00:00Z',
+                chatId: '1234567890@s.whatsapp.net',
+                sender: { id: '1234567890@s.whatsapp.net', user: '1234567890', isMe: false },
+                type: 'text',
+                text: 'Hello',
+              },
+            },
+          ],
         },
       };
 
       const event = EventFactory.parseRawEvent(rawEvent) as MessageHistorySyncEvent;
 
       expect(event.eventType).toBe(EventTypes.MESSAGE_HISTORY_SYNC);
-      expect(event.messageCount).toBe(100);
-      expect(event.syncStartTime).toBeInstanceOf(Date);
-      expect(event.syncEndTime).toBeInstanceOf(Date);
+      expect(event.messages).toBeDefined();
     });
 
     it('should parse message_read event', () => {
@@ -229,19 +256,22 @@ describe('EventFactory', () => {
         instanceId,
         eventType: EventTypes.MESSAGE_READ,
         eventData: {
-          messageId: 'msg123',
           chatId: '1234567890@s.whatsapp.net',
-          readBy: '1234567890@s.whatsapp.net',
-          readAt: '2025-01-01T11:00:00Z',
+          sender: { id: '1234567890@s.whatsapp.net', user: '1234567890', isMe: false },
+          messageSender: { id: '9876543210@s.whatsapp.net', user: '9876543210', isMe: true },
+          messageIds: ['msg123'],
+          time: '2025-01-01T11:00:00Z',
+          receiptType: 'read',
+          isGroup: false,
         },
       };
 
       const event = EventFactory.parseRawEvent(rawEvent) as MessageReadEvent;
 
       expect(event.eventType).toBe(EventTypes.MESSAGE_READ);
-      expect(event.messageId).toBe('msg123');
-      expect(event.readBy).toBe('1234567890@s.whatsapp.net');
-      expect(event.readAt).toBeInstanceOf(Date);
+      expect(event.chatId).toBe('1234567890@s.whatsapp.net');
+      expect(event.receiptType).toBe('read');
+      expect(event.time).toBe('2025-01-01T11:00:00Z');
     });
 
     it('should parse message_star event', () => {
@@ -250,11 +280,11 @@ describe('EventFactory', () => {
         instanceId,
         eventType: EventTypes.MESSAGE_STAR,
         eventData: {
-          messageId: 'msg123',
+          id: 'msg123',
           chatId: '1234567890@s.whatsapp.net',
+          sender: { id: '1234567890@s.whatsapp.net', user: '1234567890', isMe: false },
+          time: '2025-01-01T11:00:00Z',
           isStarred: true,
-          starredBy: '1234567890@s.whatsapp.net',
-          starredAt: '2025-01-01T11:00:00Z',
         },
       };
 
@@ -262,8 +292,8 @@ describe('EventFactory', () => {
 
       expect(event.eventType).toBe(EventTypes.MESSAGE_STAR);
       expect(event.isStarred).toBe(true);
-      expect(event.starredBy).toBe('1234567890@s.whatsapp.net');
-      expect(event.starredAt).toBeInstanceOf(Date);
+      expect(event.id).toBe('msg123');
+      expect(event.time).toBe('2025-01-01T11:00:00Z');
     });
   });
 
@@ -274,19 +304,17 @@ describe('EventFactory', () => {
         instanceId,
         eventType: EventTypes.CHAT_PRESENCE,
         eventData: {
-          chatId: '1234567890@s.whatsapp.net',
-          userId: '1234567890@s.whatsapp.net',
-          status: 'composing',
-          lastUpdated: '2025-01-01T11:00:00Z',
+          id: '1234567890@s.whatsapp.net',
+          sender: { id: '1234567890@s.whatsapp.net', user: '1234567890', isMe: false },
+          state: 'typing',
         },
       };
 
       const event = EventFactory.parseRawEvent(rawEvent) as ChatPresenceEvent;
 
       expect(event.eventType).toBe(EventTypes.CHAT_PRESENCE);
-      expect(event.chatId).toBe('1234567890@s.whatsapp.net');
-      expect(event.status).toBe('composing');
-      expect(event.lastUpdated).toBeInstanceOf(Date);
+      expect(event.id).toBe('1234567890@s.whatsapp.net');
+      expect(event.state).toBe('typing');
     });
 
     it('should parse chat_setting event', () => {
@@ -295,20 +323,75 @@ describe('EventFactory', () => {
         instanceId,
         eventType: EventTypes.CHAT_SETTING,
         eventData: {
-          chatId: '1234567890@s.whatsapp.net',
-          setting: 'mute',
-          value: true,
-          changedBy: '1234567890@s.whatsapp.net',
-          changedAt: '2025-01-01T11:00:00Z',
+          id: '1234567890@s.whatsapp.net',
+          settingType: 'mute',
+          mute: {
+            isMuted: true,
+            muteEndTime: '2025-01-02T12:00:00Z',
+          },
         },
       };
 
       const event = EventFactory.parseRawEvent(rawEvent) as ChatSettingEvent;
 
       expect(event.eventType).toBe(EventTypes.CHAT_SETTING);
-      expect(event.setting).toBe('mute');
-      expect(event.value).toBe(true);
-      expect(event.changedAt).toBeInstanceOf(Date);
+      expect(event.settingType).toBe('mute');
+      expect(event.mute?.isMuted).toBe(true);
+    });
+
+    it('should parse chat_push_name event', () => {
+      const rawEvent: RawEventData = {
+        receivedAt,
+        instanceId,
+        eventType: EventTypes.CHAT_PUSH_NAME,
+        eventData: {
+          id: '1234567890@s.whatsapp.net',
+          pushName: 'John Doe',
+        },
+      };
+
+      const event = EventFactory.parseRawEvent(rawEvent) as ChatPushNameEvent;
+
+      expect(event.eventType).toBe(EventTypes.CHAT_PUSH_NAME);
+      expect(event.id).toBe('1234567890@s.whatsapp.net');
+      expect(event.pushName).toBe('John Doe');
+    });
+
+    it('should parse chat_status event', () => {
+      const rawEvent: RawEventData = {
+        receivedAt,
+        instanceId,
+        eventType: EventTypes.CHAT_STATUS,
+        eventData: {
+          id: '1234567890@s.whatsapp.net',
+          status: 'Available',
+        },
+      };
+
+      const event = EventFactory.parseRawEvent(rawEvent) as ChatStatusEvent;
+
+      expect(event.eventType).toBe(EventTypes.CHAT_STATUS);
+      expect(event.id).toBe('1234567890@s.whatsapp.net');
+      expect(event.status).toBe('Available');
+    });
+
+    it('should parse chat_picture event', () => {
+      const rawEvent: RawEventData = {
+        receivedAt,
+        instanceId,
+        eventType: EventTypes.CHAT_PICTURE,
+        eventData: {
+          id: '1234567890@s.whatsapp.net',
+          sender: { id: '1234567890@s.whatsapp.net', user: '1234567890', isMe: false },
+          pictureId: 'picture_123',
+        },
+      };
+
+      const event = EventFactory.parseRawEvent(rawEvent) as ChatPictureEvent;
+
+      expect(event.eventType).toBe(EventTypes.CHAT_PICTURE);
+      expect(event.id).toBe('1234567890@s.whatsapp.net');
+      expect(event.pictureId).toBe('picture_123');
     });
   });
 
@@ -320,10 +403,8 @@ describe('EventFactory', () => {
         eventType: EventTypes.CONTACT,
         eventData: {
           id: '1234567890@s.whatsapp.net',
-          name: 'Test Contact',
-          phoneNumber: '+1234567890',
-          isBusiness: false,
-          lastUpdated: '2025-01-01T11:00:00Z',
+          fullName: 'Test Contact',
+          inPhoneAddressBook: true,
         },
       };
 
@@ -331,55 +412,70 @@ describe('EventFactory', () => {
 
       expect(event.eventType).toBe(EventTypes.CONTACT);
       expect(event.id).toBe('1234567890@s.whatsapp.net');
-      expect(event.name).toBe('Test Contact');
-      expect(event.isBusiness).toBe(false);
-      expect(event.lastUpdated).toBeInstanceOf(Date);
+      expect(event.fullName).toBe('Test Contact');
+      expect(event.inPhoneAddressBook).toBe(true);
+    });
+  });
+
+  describe('Group Events', () => {
+    it('should parse group event with topic change', () => {
+      const rawEvent: RawEventData = {
+        receivedAt,
+        instanceId,
+        eventType: EventTypes.GROUP,
+        eventData: {
+          id: '1234567890-1234567890@g.us',
+          sender: { id: '1234567890@s.whatsapp.net', user: '1234567890', isMe: false },
+          description: { topic: 'New Group Description' },
+          timestamp: '2025-01-01T11:00:00Z',
+        },
+      };
+
+      const event = EventFactory.parseRawEvent(rawEvent) as GroupEvent;
+
+      expect(event.eventType).toBe(EventTypes.GROUP);
+      expect(event.id).toBe('1234567890-1234567890@g.us');
+      expect(event.description?.topic).toBe('New Group Description');
+    });
+
+    it('should parse group event with member join', () => {
+      const rawEvent: RawEventData = {
+        receivedAt,
+        instanceId,
+        eventType: EventTypes.GROUP,
+        eventData: {
+          id: '1234567890-1234567890@g.us',
+          sender: { id: '1234567890@s.whatsapp.net', user: '1234567890', isMe: false },
+          join: ['9876543210@s.whatsapp.net'],
+        },
+      };
+
+      const event = EventFactory.parseRawEvent(rawEvent) as GroupEvent;
+
+      expect(event.eventType).toBe(EventTypes.GROUP);
+      expect(event.join).toContain('9876543210@s.whatsapp.net');
+    });
+
+    it('should parse group event with member leave', () => {
+      const rawEvent: RawEventData = {
+        receivedAt,
+        instanceId,
+        eventType: EventTypes.GROUP,
+        eventData: {
+          id: '1234567890-1234567890@g.us',
+          sender: { id: '9876543210@s.whatsapp.net', user: '9876543210', isMe: false },
+          leave: ['9876543210@s.whatsapp.net'],
+        },
+      };
+
+      const event = EventFactory.parseRawEvent(rawEvent) as GroupEvent;
+
+      expect(event.eventType).toBe(EventTypes.GROUP);
+      expect(event.leave).toContain('9876543210@s.whatsapp.net');
     });
   });
 
   describe('User Events', () => {
-    it('should parse user_push_name event', () => {
-      const rawEvent: RawEventData = {
-        receivedAt,
-        instanceId,
-        eventType: EventTypes.USER_PUSH_NAME,
-        eventData: {
-          id: '1234567890@s.whatsapp.net',
-          pushName: 'New Name',
-          previousPushName: 'Old Name',
-          changedAt: '2025-01-01T11:00:00Z',
-        },
-      };
-
-      const event = EventFactory.parseRawEvent(rawEvent) as UserPushNameEvent;
-
-      expect(event.eventType).toBe(EventTypes.USER_PUSH_NAME);
-      expect(event.pushName).toBe('New Name');
-      expect(event.previousPushName).toBe('Old Name');
-      expect(event.changedAt).toBeInstanceOf(Date);
-    });
-
-    it('should parse user_picture event', () => {
-      const rawEvent: RawEventData = {
-        receivedAt,
-        instanceId,
-        eventType: EventTypes.USER_PICTURE,
-        eventData: {
-          id: '1234567890@s.whatsapp.net',
-          pictureUrl: 'https://example.com/picture.jpg',
-          isRemoved: false,
-          changedAt: '2025-01-01T11:00:00Z',
-        },
-      };
-
-      const event = EventFactory.parseRawEvent(rawEvent) as UserPictureEvent;
-
-      expect(event.eventType).toBe(EventTypes.USER_PICTURE);
-      expect(event.pictureUrl).toBe('https://example.com/picture.jpg');
-      expect(event.isRemoved).toBe(false);
-      expect(event.changedAt).toBeInstanceOf(Date);
-    });
-
     it('should parse user_presence event', () => {
       const rawEvent: RawEventData = {
         receivedAt,
@@ -387,7 +483,7 @@ describe('EventFactory', () => {
         eventType: EventTypes.USER_PRESENCE,
         eventData: {
           id: '1234567890@s.whatsapp.net',
-          status: 'online',
+          status: 'available',
           lastSeen: '2025-01-01T11:00:00Z',
         },
       };
@@ -395,29 +491,9 @@ describe('EventFactory', () => {
       const event = EventFactory.parseRawEvent(rawEvent) as UserPresenceEvent;
 
       expect(event.eventType).toBe(EventTypes.USER_PRESENCE);
-      expect(event.status).toBe('online');
-      expect(event.lastSeen).toBeInstanceOf(Date);
-    });
-
-    it('should parse user_status event', () => {
-      const rawEvent: RawEventData = {
-        receivedAt,
-        instanceId,
-        eventType: EventTypes.USER_STATUS,
-        eventData: {
-          id: '1234567890@s.whatsapp.net',
-          status: 'Hey there! I am using WhatsApp.',
-          previousStatus: 'Available',
-          changedAt: '2025-01-01T11:00:00Z',
-        },
-      };
-
-      const event = EventFactory.parseRawEvent(rawEvent) as UserStatusEvent;
-
-      expect(event.eventType).toBe(EventTypes.USER_STATUS);
-      expect(event.status).toBe('Hey there! I am using WhatsApp.');
-      expect(event.previousStatus).toBe('Available');
-      expect(event.changedAt).toBeInstanceOf(Date);
+      expect(event.id).toBe('1234567890@s.whatsapp.net');
+      expect(event.status).toBe('available');
+      expect(event.lastSeen).toBe('2025-01-01T11:00:00Z');
     });
   });
 
@@ -431,8 +507,8 @@ describe('EventFactory', () => {
           id: 'call123',
           caller: '1234567890@s.whatsapp.net',
           chatId: '1234567890@s.whatsapp.net',
-          isGroup: false,
           time: '2025-01-01T11:00:00Z',
+          isGroup: false,
           isVideo: false,
         },
       };
@@ -442,8 +518,9 @@ describe('EventFactory', () => {
       expect(event.eventType).toBe(EventTypes.CALL_OFFER);
       expect(event.id).toBe('call123');
       expect(event.caller).toBe('1234567890@s.whatsapp.net');
+      expect(event.chatId).toBe('1234567890@s.whatsapp.net');
       expect(event.isVideo).toBe(false);
-      expect(event.time).toBeInstanceOf(Date);
+      expect(event.time).toBe('2025-01-01T11:00:00Z');
     });
 
     it('should parse call_accept event', () => {
@@ -453,9 +530,8 @@ describe('EventFactory', () => {
         eventType: EventTypes.CALL_ACCEPT,
         eventData: {
           id: 'call123',
-          acceptedBy: '1234567890@s.whatsapp.net',
-          chatId: '1234567890@s.whatsapp.net',
-          acceptedAt: '2025-01-01T11:00:00Z',
+          caller: '1234567890@s.whatsapp.net',
+          time: '2025-01-01T11:00:00Z',
         },
       };
 
@@ -463,8 +539,8 @@ describe('EventFactory', () => {
 
       expect(event.eventType).toBe(EventTypes.CALL_ACCEPT);
       expect(event.id).toBe('call123');
-      expect(event.acceptedBy).toBe('1234567890@s.whatsapp.net');
-      expect(event.acceptedAt).toBeInstanceOf(Date);
+      expect(event.caller).toBe('1234567890@s.whatsapp.net');
+      expect(event.time).toBe('2025-01-01T11:00:00Z');
     });
 
     it('should parse call_terminate event', () => {
@@ -474,11 +550,9 @@ describe('EventFactory', () => {
         eventType: EventTypes.CALL_TERMINATE,
         eventData: {
           id: 'call123',
-          terminatedBy: '1234567890@s.whatsapp.net',
-          chatId: '1234567890@s.whatsapp.net',
+          caller: '1234567890@s.whatsapp.net',
+          time: '2025-01-01T11:02:00Z',
           reason: 'ended',
-          duration: 120,
-          terminatedAt: '2025-01-01T11:02:00Z',
         },
       };
 
@@ -486,9 +560,9 @@ describe('EventFactory', () => {
 
       expect(event.eventType).toBe(EventTypes.CALL_TERMINATE);
       expect(event.id).toBe('call123');
+      expect(event.caller).toBe('1234567890@s.whatsapp.net');
       expect(event.reason).toBe('ended');
-      expect(event.duration).toBe(120);
-      expect(event.terminatedAt).toBeInstanceOf(Date);
+      expect(event.time).toBe('2025-01-01T11:02:00Z');
     });
   });
 
@@ -509,45 +583,36 @@ describe('EventFactory', () => {
     it('should return all supported event types', () => {
       const supportedTypes = EventFactory.getSupportedEventTypes();
 
+      // Session events
       expect(supportedTypes).toContain(EventTypes.LOGGED_IN);
       expect(supportedTypes).toContain(EventTypes.LOGGED_OUT);
       expect(supportedTypes).toContain(EventTypes.LOGGED_ERROR);
+      expect(supportedTypes).toContain(EventTypes.INITIAL_SYNC_FINISHED);
+
+      // Message events
       expect(supportedTypes).toContain(EventTypes.MESSAGE);
       expect(supportedTypes).toContain(EventTypes.MESSAGE_DELETE);
       expect(supportedTypes).toContain(EventTypes.MESSAGE_HISTORY_SYNC);
       expect(supportedTypes).toContain(EventTypes.MESSAGE_READ);
       expect(supportedTypes).toContain(EventTypes.MESSAGE_STAR);
+
+      // Chat events
       expect(supportedTypes).toContain(EventTypes.CHAT_PRESENCE);
       expect(supportedTypes).toContain(EventTypes.CHAT_SETTING);
+      expect(supportedTypes).toContain(EventTypes.CHAT_PUSH_NAME);
+      expect(supportedTypes).toContain(EventTypes.CHAT_STATUS);
+      expect(supportedTypes).toContain(EventTypes.CHAT_PICTURE);
+
+      // Other events
       expect(supportedTypes).toContain(EventTypes.CONTACT);
-      expect(supportedTypes).toContain(EventTypes.USER_PUSH_NAME);
-      expect(supportedTypes).toContain(EventTypes.USER_PICTURE);
+      expect(supportedTypes).toContain(EventTypes.GROUP);
       expect(supportedTypes).toContain(EventTypes.USER_PRESENCE);
-      expect(supportedTypes).toContain(EventTypes.USER_STATUS);
       expect(supportedTypes).toContain(EventTypes.CALL_OFFER);
       expect(supportedTypes).toContain(EventTypes.CALL_ACCEPT);
       expect(supportedTypes).toContain(EventTypes.CALL_TERMINATE);
-      expect(supportedTypes.length).toBe(18);
-    });
-  });
 
-  describe('Date parsing edge cases', () => {
-    it('should use current date when date fields are missing', () => {
-      const rawEvent: RawEventData = {
-        receivedAt,
-        instanceId,
-        eventType: EventTypes.CHAT_PRESENCE,
-        eventData: {
-          chatId: '1234567890@s.whatsapp.net',
-          userId: '1234567890@s.whatsapp.net',
-          status: 'online',
-          // lastUpdated is missing
-        },
-      };
-
-      const event = EventFactory.parseRawEvent(rawEvent) as ChatPresenceEvent;
-
-      expect(event.lastUpdated).toBeInstanceOf(Date);
+      // Should have 20 event types total
+      expect(supportedTypes.length).toBe(20);
     });
   });
 });
