@@ -3,10 +3,12 @@ import { ICallsClient } from '../ApiClient/ICallsClient';
 import { IChatsClient } from '../ApiClient/IChatsClient';
 import { IContactsClient } from '../ApiClient/IContactsClient';
 import { IGroupsClient } from '../ApiClient/IGroupsClient';
-import { IInstanceClient } from '../ApiClient/IInstanceClient';
+import { ICommunitiesClient } from '../ApiClient/ICommunitiesClient';
 import { IMediaClient } from '../ApiClient/IMediaClient';
 import { IMessagesClient } from '../ApiClient/IMessagesClient';
+import { INewslettersClient } from '../ApiClient/INewslettersClient';
 import { ISessionClient } from '../ApiClient/ISessionClient';
+import { IStatusClient } from '../ApiClient/IStatusClient';
 import { IUsersClient } from '../ApiClient/IUsersClient';
 import { ISSEClient, SSEClientOptions } from '../SSE/ISSEClient';
 import { WSApiEvent } from '../Events/EventFactory';
@@ -68,33 +70,39 @@ export interface EventHandlerRegistration {
  */
 export interface IWSApiClient {
   // === API Clients ===
-  /** Instance management operations */
-  readonly instance: IInstanceClient;
-  
-  /** Account information operations */
+  /** Account management operations (gateway-level) */
   readonly account: IAccountClient;
-  
+
   /** Chat management operations */
   readonly chats: IChatsClient;
-  
+
   /** Contact management operations */
   readonly contacts: IContactsClient;
-  
+
   /** Group management operations */
   readonly groups: IGroupsClient;
-  
+
+  /** Community management operations */
+  readonly communities: ICommunitiesClient;
+
   /** Media upload/download operations */
   readonly media: IMediaClient;
-  
+
   /** Message sending/management operations */
   readonly messages: IMessagesClient;
-  
+
+  /** Newsletter management operations */
+  readonly newsletters: INewslettersClient;
+
   /** Session management operations */
   readonly session: ISessionClient;
-  
+
+  /** Status/stories operations */
+  readonly status: IStatusClient;
+
   /** User information operations */
   readonly users: IUsersClient;
-  
+
   /** Call management operations */
   readonly calls: ICallsClient;
   

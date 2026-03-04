@@ -79,6 +79,12 @@ export interface MessageEvent extends BaseEvent {
 
   /** Pin information for pinInChat messages */
   pin?: MessagePin;
+
+  /** Whether this message was forwarded */
+  isForwarded?: boolean;
+
+  /** Whether this is a view-once message */
+  viewOnce?: boolean;
 }
 
 /**
@@ -114,6 +120,9 @@ export interface MessageDeleteEvent extends BaseEvent {
  */
 export interface MessageHistorySyncEvent extends BaseEvent {
   eventType: 'message_history_sync';
+
+  /** Chat ID for which history was synced */
+  chatId?: string;
 
   /** Array of synced messages */
   messages: MessageEvent[];

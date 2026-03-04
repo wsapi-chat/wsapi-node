@@ -9,6 +9,7 @@ import type {
   GroupInviteLinkResponse,
   GroupJoinRequestInfo,
   GroupJoinedResponse,
+  GroupParticipantInfo,
 } from '../Models/Entities/Groups/index.js';
 import type {
   GroupCreateRequest,
@@ -107,6 +108,10 @@ export class GroupsClient implements IGroupsClient {
     return await this.httpClient.get<GroupInviteInfo>(`/groups/invite/${inviteCode}`);
   }
 
+  async getParticipantsAsync(groupId: string): Promise<GroupParticipantInfo[]> {
+    return await this.httpClient.get<GroupParticipantInfo[]>(`/groups/${groupId}/participants`);
+  }
+
   // Non-throwing methods (return ApiResponse with success/error info)
 
   async tryListAsync(): Promise<ApiResponse<GroupInfo[]>> {
@@ -180,5 +185,9 @@ export class GroupsClient implements IGroupsClient {
 
   async tryGetInviteInfoAsync(inviteCode: string): Promise<ApiResponse<GroupInviteInfo>> {
     return await this.httpClient.tryGet<GroupInviteInfo>(`/groups/invite/${inviteCode}`);
+  }
+
+  async tryGetParticipantsAsync(groupId: string): Promise<ApiResponse<GroupParticipantInfo[]>> {
+    return await this.httpClient.tryGet<GroupParticipantInfo[]>(`/groups/${groupId}/participants`);
   }
 }

@@ -1,5 +1,5 @@
 // Chat entity models
-export { type ChatInfo } from './ChatInfo.js';
+export { type ChatInfo, type ChatListItem } from './ChatInfo.js';
 export { type ChatEphemeral } from './ChatEphemeral.js';
 export { type ChatMute } from './ChatMute.js';
 export { type ChatPin } from './ChatPin.js';

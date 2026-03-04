@@ -18,6 +18,7 @@ import type {
   MessageStarRequest,
   MessageDeleteRequest,
   MessageDeleteForMeRequest,
+  MessagePinRequest,
 } from '../Models/Requests/Messages/index.js';
 
 /**
@@ -93,6 +94,10 @@ export class MessagesClient implements IMessagesClient {
     await this.httpClient.putVoid(`messages/${messageId}/delete/forme`, request);
   }
 
+  async pinMessageAsync(messageId: string, request: MessagePinRequest): Promise<void> {
+    await this.httpClient.postVoid(`messages/${messageId}/pin`, request);
+  }
+
   // Non-throwing methods (return ApiResponse with success/error info)
 
   async trySendTextAsync(request: MessageSendTextRequest): Promise<ApiResponse<MessageCreated>> {
@@ -157,5 +162,9 @@ export class MessagesClient implements IMessagesClient {
 
   async tryDeleteForMeAsync(messageId: string, request: MessageDeleteForMeRequest): Promise<ApiResponse> {
     return await this.httpClient.tryPutVoid(`messages/${messageId}/delete/forme`, request);
+  }
+
+  async tryPinMessageAsync(messageId: string, request: MessagePinRequest): Promise<ApiResponse<void>> {
+    return await this.httpClient.tryPostVoid(`messages/${messageId}/pin`, request);
   }
 }

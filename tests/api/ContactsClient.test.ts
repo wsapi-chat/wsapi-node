@@ -9,7 +9,7 @@ describe('ContactsClient', () => {
 
   const mockContactInfo: ContactInfo = {
     id: '1234567890@s.whatsapp.net',
-    name: 'Test Contact',
+    fullName: 'Test Contact',
     pushName: 'Test',
     phoneNumber: '+1234567890',
   };
@@ -54,16 +54,45 @@ describe('ContactsClient', () => {
     });
   });
 
-  describe('updateAsync', () => {
-    it('should update a contact', async () => {
+  describe('syncContactsAsync', () => {
+    it('should sync contacts', async () => {
+      mockHttpClient.postVoid.mockResolvedValue(undefined);
+
+      await contactsClient.syncContactsAsync();
+
+      expect(mockHttpClient.postVoid).toHaveBeenCalledWith('/contacts/sync');
+    });
+  });
+
+  describe('getBlocklistAsync', () => {
+    it('should get blocklist', async () => {
+      const blocklist = [{ id: '1234567890@s.whatsapp.net' }];
+      mockHttpClient.get.mockResolvedValue(blocklist);
+
+      const result = await contactsClient.getBlocklistAsync();
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/contacts/blocklist');
+      expect(result).toEqual(blocklist);
+    });
+  });
+
+  describe('blockContactAsync', () => {
+    it('should block a contact', async () => {
       mockHttpClient.putVoid.mockResolvedValue(undefined);
 
-      await contactsClient.updateAsync('1234567890@s.whatsapp.net', { name: 'Updated Name' });
+      await contactsClient.blockContactAsync('1234567890@s.whatsapp.net');
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/contacts/1234567890@s.whatsapp.net',
-        { name: 'Updated Name' }
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/contacts/1234567890@s.whatsapp.net/block');
+    });
+  });
+
+  describe('unblockContactAsync', () => {
+    it('should unblock a contact', async () => {
+      mockHttpClient.putVoid.mockResolvedValue(undefined);
+
+      await contactsClient.unblockContactAsync('1234567890@s.whatsapp.net');
+
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/contacts/1234567890@s.whatsapp.net/unblock');
     });
   });
 
@@ -109,11 +138,41 @@ describe('ContactsClient', () => {
     });
   });
 
-  describe('tryUpdateAsync', () => {
+  describe('trySyncContactsAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryPostVoid.mockResolvedValue(createVoidSuccessResponse());
+
+      const result = await contactsClient.trySyncContactsAsync();
+
+      expect(result.isSuccess).toBe(true);
+    });
+  });
+
+  describe('tryGetBlocklistAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryGet.mockResolvedValue(createSuccessResponse([{ id: '123@s.whatsapp.net' }]));
+
+      const result = await contactsClient.tryGetBlocklistAsync();
+
+      expect(result.isSuccess).toBe(true);
+    });
+  });
+
+  describe('tryBlockContactAsync', () => {
     it('should return success response', async () => {
       mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
 
-      const result = await contactsClient.tryUpdateAsync('1234567890@s.whatsapp.net', { name: 'Updated' });
+      const result = await contactsClient.tryBlockContactAsync('1234567890@s.whatsapp.net');
+
+      expect(result.isSuccess).toBe(true);
+    });
+  });
+
+  describe('tryUnblockContactAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
+
+      const result = await contactsClient.tryUnblockContactAsync('1234567890@s.whatsapp.net');
 
       expect(result.isSuccess).toBe(true);
     });

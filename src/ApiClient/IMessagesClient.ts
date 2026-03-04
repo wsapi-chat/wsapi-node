@@ -16,6 +16,7 @@ import type {
   MessageStarRequest,
   MessageDeleteRequest,
   MessageDeleteForMeRequest,
+  MessagePinRequest,
 } from '../Models/Requests/Messages/index.js';
 
 /**
@@ -40,6 +41,7 @@ export interface IMessagesClient {
   starAsync(messageId: string, request: MessageStarRequest): Promise<void>;
   deleteAsync(messageId: string, request: MessageDeleteRequest): Promise<void>;
   deleteForMeAsync(messageId: string, request: MessageDeleteForMeRequest): Promise<void>;
+  pinMessageAsync(messageId: string, request: MessagePinRequest): Promise<void>;
 
   // Non-throwing methods (return ApiResponse with success/error info)
   trySendTextAsync(request: MessageSendTextRequest): Promise<ApiResponse<MessageCreated>>;
@@ -58,4 +60,5 @@ export interface IMessagesClient {
   tryStarAsync(messageId: string, request: MessageStarRequest): Promise<ApiResponse>;
   tryDeleteAsync(messageId: string, request: MessageDeleteRequest): Promise<ApiResponse>;
   tryDeleteForMeAsync(messageId: string, request: MessageDeleteForMeRequest): Promise<ApiResponse>;
+  tryPinMessageAsync(messageId: string, request: MessagePinRequest): Promise<ApiResponse<void>>;
 }

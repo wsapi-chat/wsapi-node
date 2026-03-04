@@ -1,18 +1,19 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ChatsClient } from '../../src/ApiClient/ChatsClient';
 import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
-import type { ChatInfo, ChatPicture, ChatBusinessProfile } from '../../src/Models/Entities/Chats/index';
+import type { ChatListItem, ChatPicture, ChatBusinessProfile } from '../../src/Models/Entities/Chats/index';
 
 describe('ChatsClient', () => {
   let mockHttpClient: MockHttpClient;
   let chatsClient: ChatsClient;
 
-  const mockChatInfo: ChatInfo = {
+  const mockChatInfo: ChatListItem = {
     id: '1234567890@s.whatsapp.net',
-    name: 'Test Chat',
     isGroup: false,
-    unreadCount: 5,
-    lastMessage: 'Hello',
+    isArchived: false,
+    isPinned: false,
+    isMuted: false,
+    pushName: 'Test Chat',
   };
 
   const mockChatPicture: ChatPicture = {
@@ -305,6 +306,38 @@ describe('ChatsClient', () => {
       mockHttpClient.tryDeleteVoid.mockResolvedValue(createVoidSuccessResponse());
 
       const result = await chatsClient.tryDeleteChatAsync('1234567890@s.whatsapp.net');
+
+      expect(result.isSuccess).toBe(true);
+    });
+  });
+
+  describe('requestMessagesAsync', () => {
+    it('should request messages', async () => {
+      mockHttpClient.post.mockResolvedValue({ status: 'ok' });
+
+      const result = await chatsClient.requestMessagesAsync('1234567890@s.whatsapp.net', {
+        lastMessageId: 'msg123',
+        lastMessageSenderId: 'sender123',
+        count: 50,
+      });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/messages', {
+        lastMessageId: 'msg123',
+        lastMessageSenderId: 'sender123',
+        count: 50,
+      });
+      expect(result.status).toBe('ok');
+    });
+  });
+
+  describe('tryRequestMessagesAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryPost.mockResolvedValue(createSuccessResponse({ status: 'ok' }));
+
+      const result = await chatsClient.tryRequestMessagesAsync('1234567890@s.whatsapp.net', {
+        lastMessageId: 'msg123',
+        lastMessageSenderId: 'sender123',
+      });
 
       expect(result.isSuccess).toBe(true);
     });

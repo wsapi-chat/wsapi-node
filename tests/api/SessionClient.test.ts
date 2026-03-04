@@ -149,4 +149,26 @@ describe('SessionClient', () => {
       expect(result.data).toEqual(mockSessionStatus);
     });
   });
+
+  describe('flushHistoryAsync', () => {
+    it('should flush history', async () => {
+      mockHttpClient.post.mockResolvedValue({ status: 'ok' });
+
+      const result = await sessionClient.flushHistoryAsync();
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/session/flush-history');
+      expect(result.status).toBe('ok');
+    });
+  });
+
+  describe('tryFlushHistoryAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryPost.mockResolvedValue(createSuccessResponse({ status: 'ok' }));
+
+      const result = await sessionClient.tryFlushHistoryAsync();
+
+      expect(mockHttpClient.tryPost).toHaveBeenCalledWith('/session/flush-history');
+      expect(result.isSuccess).toBe(true);
+    });
+  });
 });

@@ -1,7 +1,7 @@
 import type { HttpClient } from './HttpClient.js';
 import type { ApiResponse } from './ApiResponse.js';
 import type { IChatsClient } from './IChatsClient.js';
-import type { ChatInfo, ChatPicture, ChatBusinessProfile } from '../Models/Entities/Chats/index.js';
+import type { ChatListItem, ChatPicture, ChatBusinessProfile } from '../Models/Entities/Chats/index.js';
 import type {
   ChatUpdatePresenceRequest,
   ChatUpdateEphemeralExpirationRequest,
@@ -9,6 +9,7 @@ import type {
   ChatUpdatePinRequest,
   ChatUpdateArchiveRequest,
   ChatUpdateReadRequest,
+  RequestMessagesRequest,
 } from '../Models/Requests/Chats/index.js';
 
 /**
@@ -20,12 +21,12 @@ export class ChatsClient implements IChatsClient {
 
   // Throwing methods (throw ApiException on error)
   
-  async listAsync(): Promise<ChatInfo[]> {
-    return await this.httpClient.get<ChatInfo[]>('/chats');
+  async listAsync(): Promise<ChatListItem[]> {
+    return await this.httpClient.get<ChatListItem[]>('/chats');
   }
 
-  async getAsync(chatId: string): Promise<ChatInfo> {
-    return await this.httpClient.get<ChatInfo>(`/chats/${chatId}`);
+  async getAsync(chatId: string): Promise<ChatListItem> {
+    return await this.httpClient.get<ChatListItem>(`/chats/${chatId}`);
   }
 
   async getPictureAsync(chatId: string): Promise<ChatPicture> {
@@ -72,14 +73,18 @@ export class ChatsClient implements IChatsClient {
     await this.httpClient.putVoid(`/chats/${chatId}/clear`);
   }
 
-  // Non-throwing methods (return ApiResponse with success/error info)
-
-  async tryListAsync(): Promise<ApiResponse<ChatInfo[]>> {
-    return await this.httpClient.tryGet<ChatInfo[]>('/chats');
+  async requestMessagesAsync(chatId: string, request: RequestMessagesRequest): Promise<{ status: string }> {
+    return await this.httpClient.post<{ status: string }>(`/chats/${chatId}/messages`, request);
   }
 
-  async tryGetAsync(chatId: string): Promise<ApiResponse<ChatInfo>> {
-    return await this.httpClient.tryGet<ChatInfo>(`/chats/${chatId}`);
+  // Non-throwing methods (return ApiResponse with success/error info)
+
+  async tryListAsync(): Promise<ApiResponse<ChatListItem[]>> {
+    return await this.httpClient.tryGet<ChatListItem[]>('/chats');
+  }
+
+  async tryGetAsync(chatId: string): Promise<ApiResponse<ChatListItem>> {
+    return await this.httpClient.tryGet<ChatListItem>(`/chats/${chatId}`);
   }
 
   async tryGetPictureAsync(chatId: string): Promise<ApiResponse<ChatPicture>> {
@@ -124,5 +129,9 @@ export class ChatsClient implements IChatsClient {
 
   async tryClearAsync(chatId: string): Promise<ApiResponse> {
     return await this.httpClient.tryPutVoid(`/chats/${chatId}/clear`);
+  }
+
+  async tryRequestMessagesAsync(chatId: string, request: RequestMessagesRequest): Promise<ApiResponse<{ status: string }>> {
+    return await this.httpClient.tryPost<{ status: string }>(`/chats/${chatId}/messages`, request);
   }
 }

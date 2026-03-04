@@ -1,34 +1,9 @@
-/**
- * User information
- */
-export interface UserInfo {
-  /**
-   * The unique identifier of the user.
-   */
-  id: string;
+import { Identity } from './Identity.js';
 
-  /**
-   * Whether the user is on WhatsApp.
-   */
-  isInWhatsApp: boolean;
-
-  /**
-   * The status message of the user.
-   */
-  status: string;
-
-  /**
-   * The picture ID of the user.
-   */
-  pictureId: string;
-
-  /**
-   * The URL to the user's profile picture.
-   */
-  pictureUrl: string;
-
-  /**
-   * Whether the user account is verified.
-   */
-  isVerified: boolean;
+export interface UserInfo extends Identity {
+    isInWhatsApp?: boolean;
+    status?: string;
+    pictureId?: string;
+    pictureUrl?: string;
+    isVerified?: boolean;
 }

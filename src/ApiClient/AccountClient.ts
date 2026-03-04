@@ -1,63 +1,147 @@
 import type { HttpClient } from './HttpClient.js';
 import type { ApiResponse } from './ApiResponse.js';
 import type { IAccountClient } from './IAccountClient.js';
-import type { AccountInfo } from '../Models/Entities/Accounts/AccountInfo.js';
 import type {
-  AccountUpdateNameRequest,
-  AccountUpdateStatusRequest,
-  AccountUpdatePictureRequest,
-  AccountUpdatePresenceRequest,
-  AccountUpdatePictureResponse,
-} from '../Models/Requests/Account/index.js';
+  AccountInstance,
+  AccountInstanceDetail,
+  AccountInstanceSettings,
+  AccountSubscription,
+  AccountSubscriptionChange,
+  AccountInstanceDefaults,
+  PagedResponse,
+} from '../Models/Entities/Accounts/index.js';
+import type { UpdateInstanceNameRequest } from '../Models/Requests/Account/index.js';
 
 /**
- * WhatsApp account API client implementation.
- * Provides methods for managing account information, status, and settings.
+ * Account API client implementation.
+ * Provides gateway-level instance and subscription management operations.
  */
 export class AccountClient implements IAccountClient {
   constructor(private readonly httpClient: HttpClient) {}
 
   // Throwing methods (throw ApiException on error)
-  
-  async getInfoAsync(): Promise<AccountInfo> {
-    return await this.httpClient.get<AccountInfo>('/account/info');
+
+  async listInstancesAsync(pageNumber?: number, pageSize?: number, createdFrom?: string, createdTo?: string, status?: string): Promise<PagedResponse<AccountInstance>> {
+    const query = this.buildQuery({ pageNumber, pageSize, createdFrom, createdTo, status });
+    return await this.httpClient.get<PagedResponse<AccountInstance>>(`/account/instances${query}`);
   }
 
-  async updateNameAsync(request: AccountUpdateNameRequest): Promise<void> {
-    await this.httpClient.putVoid('/account/name', request);
+  async getInstanceAsync(id: string): Promise<AccountInstanceDetail> {
+    return await this.httpClient.get<AccountInstanceDetail>(`/account/instances/${id}`);
   }
 
-  async updateStatusAsync(request: AccountUpdateStatusRequest): Promise<void> {
-    await this.httpClient.putVoid('/account/status', request);
+  async updateInstanceNameAsync(id: string, request: UpdateInstanceNameRequest): Promise<void> {
+    await this.httpClient.putVoid(`/account/instances/${id}/name`, request);
   }
 
-  async updatePictureAsync(request: AccountUpdatePictureRequest): Promise<AccountUpdatePictureResponse> {
-    return await this.httpClient.post<AccountUpdatePictureResponse>('/account/picture', request);
+  async updateInstanceSettingsAsync(id: string, settings: AccountInstanceSettings): Promise<void> {
+    await this.httpClient.putVoid(`/account/instances/${id}/settings`, settings);
   }
 
-  async updatePresenceAsync(request: AccountUpdatePresenceRequest): Promise<void> {
-    await this.httpClient.putVoid('/account/presence', request);
+  async regenerateInstanceApiKeyAsync(id: string): Promise<string> {
+    return await this.httpClient.put<string>(`/account/instances/${id}/apikey`);
+  }
+
+  async restartInstanceAsync(id: string): Promise<void> {
+    await this.httpClient.putVoid(`/account/instances/${id}/restart`);
+  }
+
+  async listSubscriptionsAsync(pageNumber?: number, pageSize?: number): Promise<PagedResponse<AccountSubscription>> {
+    const query = this.buildQuery({ pageNumber, pageSize });
+    return await this.httpClient.get<PagedResponse<AccountSubscription>>(`/account/subscriptions${query}`);
+  }
+
+  async listSubscriptionInstancesAsync(subscriptionId: string, pageNumber?: number, pageSize?: number, createdFrom?: string, createdTo?: string, status?: string): Promise<PagedResponse<AccountInstance>> {
+    const query = this.buildQuery({ pageNumber, pageSize, createdFrom, createdTo, status });
+    return await this.httpClient.get<PagedResponse<AccountInstance>>(`/account/subscriptions/${subscriptionId}/instances${query}`);
+  }
+
+  async createSubscriptionInstanceAsync(subscriptionId: string): Promise<string> {
+    return await this.httpClient.post<string>(`/account/subscriptions/${subscriptionId}/instances`);
+  }
+
+  async deleteSubscriptionInstanceAsync(subscriptionId: string, instanceId: string): Promise<void> {
+    await this.httpClient.deleteVoid(`/account/subscriptions/${subscriptionId}/instances/${instanceId}`);
+  }
+
+  async listSubscriptionChangesAsync(subscriptionId: string, pageNumber?: number, pageSize?: number, timestampFrom?: string, timestampTo?: string, changeType?: string, instanceId?: string): Promise<PagedResponse<AccountSubscriptionChange>> {
+    const query = this.buildQuery({ pageNumber, pageSize, timestampFrom, timestampTo, changeType, instanceId });
+    return await this.httpClient.get<PagedResponse<AccountSubscriptionChange>>(`/account/subscriptions/${subscriptionId}/changes${query}`);
+  }
+
+  async getInstanceDefaultsAsync(): Promise<AccountInstanceDefaults> {
+    return await this.httpClient.get<AccountInstanceDefaults>('/account/instances/defaults');
+  }
+
+  async updateInstanceDefaultsAsync(defaults: AccountInstanceDefaults): Promise<void> {
+    await this.httpClient.putVoid('/account/instances/defaults', defaults);
   }
 
   // Non-throwing methods (return ApiResponse with success/error info)
 
-  async tryGetInfoAsync(): Promise<ApiResponse<AccountInfo>> {
-    return await this.httpClient.tryGet<AccountInfo>('/account/info');
+  async tryListInstancesAsync(pageNumber?: number, pageSize?: number, createdFrom?: string, createdTo?: string, status?: string): Promise<ApiResponse<PagedResponse<AccountInstance>>> {
+    const query = this.buildQuery({ pageNumber, pageSize, createdFrom, createdTo, status });
+    return await this.httpClient.tryGet<PagedResponse<AccountInstance>>(`/account/instances${query}`);
   }
 
-  async tryUpdateNameAsync(request: AccountUpdateNameRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid('/account/name', request);
+  async tryGetInstanceAsync(id: string): Promise<ApiResponse<AccountInstanceDetail>> {
+    return await this.httpClient.tryGet<AccountInstanceDetail>(`/account/instances/${id}`);
   }
 
-  async tryUpdateStatusAsync(request: AccountUpdateStatusRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid('/account/status', request);
+  async tryUpdateInstanceNameAsync(id: string, request: UpdateInstanceNameRequest): Promise<ApiResponse<void>> {
+    return await this.httpClient.tryPutVoid(`/account/instances/${id}/name`, request);
   }
 
-  async tryUpdatePictureAsync(request: AccountUpdatePictureRequest): Promise<ApiResponse<AccountUpdatePictureResponse>> {
-    return await this.httpClient.tryPost<AccountUpdatePictureResponse>('/account/picture', request);
+  async tryUpdateInstanceSettingsAsync(id: string, settings: AccountInstanceSettings): Promise<ApiResponse<void>> {
+    return await this.httpClient.tryPutVoid(`/account/instances/${id}/settings`, settings);
   }
 
-  async tryUpdatePresenceAsync(request: AccountUpdatePresenceRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid('/account/presence', request);
+  async tryRegenerateInstanceApiKeyAsync(id: string): Promise<ApiResponse<string>> {
+    return await this.httpClient.tryPut<string>(`/account/instances/${id}/apikey`);
+  }
+
+  async tryRestartInstanceAsync(id: string): Promise<ApiResponse<void>> {
+    return await this.httpClient.tryPutVoid(`/account/instances/${id}/restart`);
+  }
+
+  async tryListSubscriptionsAsync(pageNumber?: number, pageSize?: number): Promise<ApiResponse<PagedResponse<AccountSubscription>>> {
+    const query = this.buildQuery({ pageNumber, pageSize });
+    return await this.httpClient.tryGet<PagedResponse<AccountSubscription>>(`/account/subscriptions${query}`);
+  }
+
+  async tryListSubscriptionInstancesAsync(subscriptionId: string, pageNumber?: number, pageSize?: number, createdFrom?: string, createdTo?: string, status?: string): Promise<ApiResponse<PagedResponse<AccountInstance>>> {
+    const query = this.buildQuery({ pageNumber, pageSize, createdFrom, createdTo, status });
+    return await this.httpClient.tryGet<PagedResponse<AccountInstance>>(`/account/subscriptions/${subscriptionId}/instances${query}`);
+  }
+
+  async tryCreateSubscriptionInstanceAsync(subscriptionId: string): Promise<ApiResponse<string>> {
+    return await this.httpClient.tryPost<string>(`/account/subscriptions/${subscriptionId}/instances`);
+  }
+
+  async tryDeleteSubscriptionInstanceAsync(subscriptionId: string, instanceId: string): Promise<ApiResponse<void>> {
+    return await this.httpClient.tryDeleteVoid(`/account/subscriptions/${subscriptionId}/instances/${instanceId}`);
+  }
+
+  async tryListSubscriptionChangesAsync(subscriptionId: string, pageNumber?: number, pageSize?: number, timestampFrom?: string, timestampTo?: string, changeType?: string, instanceId?: string): Promise<ApiResponse<PagedResponse<AccountSubscriptionChange>>> {
+    const query = this.buildQuery({ pageNumber, pageSize, timestampFrom, timestampTo, changeType, instanceId });
+    return await this.httpClient.tryGet<PagedResponse<AccountSubscriptionChange>>(`/account/subscriptions/${subscriptionId}/changes${query}`);
+  }
+
+  async tryGetInstanceDefaultsAsync(): Promise<ApiResponse<AccountInstanceDefaults>> {
+    return await this.httpClient.tryGet<AccountInstanceDefaults>('/account/instances/defaults');
+  }
+
+  async tryUpdateInstanceDefaultsAsync(defaults: AccountInstanceDefaults): Promise<ApiResponse<void>> {
+    return await this.httpClient.tryPutVoid('/account/instances/defaults', defaults);
+  }
+
+  private buildQuery(params: Record<string, string | number | undefined>): string {
+    const parts: string[] = [];
+    for (const [key, value] of Object.entries(params)) {
+      if (value !== undefined && value !== null) {
+        parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`);
+      }
+    }
+    return parts.length > 0 ? `?${parts.join('&')}` : '';
   }
 }

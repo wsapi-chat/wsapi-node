@@ -1,12 +1,14 @@
 import { AccountClient } from './AccountClient';
 import { CallsClient } from './CallsClient';
 import { ChatsClient } from './ChatsClient';
+import { CommunitiesClient } from './CommunitiesClient';
 import { ContactsClient } from './ContactsClient';
 import { GroupsClient } from './GroupsClient';
-import { InstanceClient } from './InstanceClient';
 import { MediaClient } from './MediaClient';
 import { MessagesClient } from './MessagesClient';
+import { NewslettersClient } from './NewslettersClient';
 import { SessionClient } from './SessionClient';
+import { StatusClient } from './StatusClient';
 import { UsersClient } from './UsersClient';
 import { HttpClient, type WSApiClientOptions as HttpWSApiClientOptions } from './HttpClient';
 import { SSEClient } from '../SSE/SSEClient';
@@ -42,14 +44,16 @@ class EventHandlerRegistrationImpl implements EventHandlerRegistration {
  */
 export class WSApiClient implements IWSApiClient {
   // API Clients
-  public readonly instance: InstanceClient;
   public readonly account: AccountClient;
   public readonly chats: ChatsClient;
+  public readonly communities: CommunitiesClient;
   public readonly contacts: ContactsClient;
   public readonly groups: GroupsClient;
   public readonly media: MediaClient;
   public readonly messages: MessagesClient;
+  public readonly newsletters: NewslettersClient;
   public readonly session: SessionClient;
+  public readonly status: StatusClient;
   public readonly users: UsersClient;
   public readonly calls: CallsClient;
   
@@ -89,14 +93,16 @@ export class WSApiClient implements IWSApiClient {
     this.httpClient = new HttpClient(httpClientOptions);
 
     // Initialize API clients
-    this.instance = new InstanceClient(this.httpClient);
     this.account = new AccountClient(this.httpClient);
     this.chats = new ChatsClient(this.httpClient);
+    this.communities = new CommunitiesClient(this.httpClient);
     this.contacts = new ContactsClient(this.httpClient);
     this.groups = new GroupsClient(this.httpClient);
     this.media = new MediaClient(this.httpClient);
     this.messages = new MessagesClient(this.httpClient);
+    this.newsletters = new NewslettersClient(this.httpClient);
     this.session = new SessionClient(this.httpClient);
+    this.status = new StatusClient(this.httpClient);
     this.users = new UsersClient(this.httpClient);
     this.calls = new CallsClient(this.httpClient);
 

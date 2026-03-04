@@ -32,6 +32,9 @@ export const EventTypes = {
   CALL_OFFER: 'call_offer',
   CALL_ACCEPT: 'call_accept',
   CALL_TERMINATE: 'call_terminate',
+
+  // Newsletter events
+  NEWSLETTER: 'newsletter',
 } as const;
 
 export type EventType = typeof EventTypes[keyof typeof EventTypes];

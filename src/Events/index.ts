@@ -41,6 +41,9 @@ export { GroupEvent, type GroupDescriptionChange } from './Groups/GroupEvents';
 // Call events
 export { CallOfferEvent, CallAcceptEvent, CallTerminateEvent, type CallTerminateReason } from './Calls/CallEvents';
 
+// Newsletter events
+export { NewsletterEvent } from './Newsletters/NewsletterEvents.js';
+
 // Base event and constants
 export { BaseEvent } from './BaseEvent';
 export { EventTypes, EventType } from './Constants/EventTypes';

@@ -1,9 +1,10 @@
 import { BaseEvent } from '../BaseEvent';
+import { Identity } from '../../Models/Entities/Users/Identity.js';
 
 /**
  * Call termination reason
  */
-export type CallTerminateReason = 'rejected' | 'ended';
+export type CallTerminateReason = 'rejected' | 'ended' | 'unknown';
 
 /**
  * Event fired when a call is offered/initiated
@@ -14,8 +15,8 @@ export interface CallOfferEvent extends BaseEvent {
   /** Call ID */
   id: string;
 
-  /** User ID of the caller */
-  caller: string;
+  /** Identity of the caller */
+  caller: Identity;
 
   /** Chat ID where the call is offered */
   chatId: string;
@@ -39,8 +40,8 @@ export interface CallAcceptEvent extends BaseEvent {
   /** Call ID */
   id: string;
 
-  /** User ID of the caller */
-  caller: string;
+  /** Identity of the caller */
+  caller: Identity;
 
   /** When the call was accepted (ISO 8601 format) */
   time: string;
@@ -55,8 +56,8 @@ export interface CallTerminateEvent extends BaseEvent {
   /** Call ID */
   id: string;
 
-  /** User ID of the caller */
-  caller: string;
+  /** Identity of the caller */
+  caller: Identity;
 
   /** When the call was terminated (ISO 8601 format) */
   time: string;

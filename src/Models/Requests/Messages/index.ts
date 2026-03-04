@@ -19,3 +19,4 @@ export { type MessageMarkAsReadRequest } from './MessageMarkAsReadRequest.js';
 export { type MessageStarRequest } from './MessageStarRequest.js';
 export { type MessageDeleteRequest } from './MessageDeleteRequest.js';
 export { type MessageDeleteForMeRequest } from './MessageDeleteForMeRequest.js';
+export { type MessagePinRequest } from './MessagePinRequest.js';

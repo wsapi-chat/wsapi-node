@@ -11,6 +11,11 @@ export const CallTerminateReasons = {
    * Call ended normally
    */
   ENDED: 'ended',
+
+  /**
+   * Call terminated for an unknown reason
+   */
+  UNKNOWN: 'unknown',
 } as const;
 
 /**

@@ -372,4 +372,24 @@ describe('MessagesClient', () => {
       expect(result.isSuccess).toBe(true);
     });
   });
+
+  describe('pinMessageAsync', () => {
+    it('should pin a message', async () => {
+      mockHttpClient.postVoid.mockResolvedValue(undefined);
+
+      await messagesClient.pinMessageAsync('msg123', { chatId, senderId: 'sender123', pinned: true });
+
+      expect(mockHttpClient.postVoid).toHaveBeenCalledWith('messages/msg123/pin', { chatId, senderId: 'sender123', pinned: true });
+    });
+  });
+
+  describe('tryPinMessageAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryPostVoid.mockResolvedValue(createVoidSuccessResponse());
+
+      const result = await messagesClient.tryPinMessageAsync('msg123', { chatId, senderId: 'sender123', pinned: true });
+
+      expect(result.isSuccess).toBe(true);
+    });
+  });
 });
