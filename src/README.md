@@ -129,6 +129,29 @@ sseClient.on('connectionStateChanged', (args) => {
 await sseClient.start();
 ```
 
+### 4. Verifying Webhook Signatures
+
+When receiving events via webhooks, verify the `X-Webhook-Signature` header to ensure the payload is authentic. The signature is an HMAC-SHA256 digest of the raw request body, using your instance's signing secret.
+
+```typescript
+import { verifySignature, EventFactory } from '@wsapichat/client';
+
+const SIGNING_SECRET = process.env.WEBHOOK_SIGNING_SECRET!;
+
+// In your HTTP handler — use the raw body bytes, not a re-parsed version
+const isValid = verifySignature(rawBody, SIGNING_SECRET, req.headers['x-webhook-signature']);
+
+if (!isValid) {
+  res.writeHead(401);
+  res.end('Invalid signature');
+  return;
+}
+
+const event = EventFactory.parseEvent(rawBody.toString());
+```
+
+> **Important:** The signature must be verified against the raw request body bytes, before any JSON parsing. Use constant-time comparison (handled internally by the SDK) to prevent timing attacks.
+
 ## License
 
 MIT

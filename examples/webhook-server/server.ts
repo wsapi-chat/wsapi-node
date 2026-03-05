@@ -18,6 +18,7 @@ import * as http from 'node:http';
 import {
   EventFactory,
   EventTypes,
+  verifySignature,
   type WSApiEvent,
   type MessageEvent,
   type ChatPresenceEvent,
@@ -30,6 +31,7 @@ import {
 } from '@wsapichat/client';
 
 const PORT = process.env.PORT || 3000;
+const WEBHOOK_SIGNING_SECRET = process.env.WEBHOOK_SIGNING_SECRET || '';
 
 /**
  * Event handler registry for type-safe event handling
@@ -141,15 +143,15 @@ function handleEvent(event: WSApiEvent): void {
 }
 
 /**
- * Read request body as string
+ * Read raw request body as a Buffer
  */
-function readBody(req: http.IncomingMessage): Promise<string> {
+function readBody(req: http.IncomingMessage): Promise<Buffer> {
   return new Promise((resolve, reject) => {
-    let body = '';
-    req.on('data', (chunk) => {
-      body += chunk.toString();
+    const chunks: Buffer[] = [];
+    req.on('data', (chunk: Buffer) => {
+      chunks.push(chunk);
     });
-    req.on('end', () => resolve(body));
+    req.on('end', () => resolve(Buffer.concat(chunks)));
     req.on('error', reject);
   });
 }
@@ -170,14 +172,24 @@ const server = http.createServer(async (req, res) => {
     try {
       const body = await readBody(req);
 
-      if (!body) {
+      if (!body.length) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: 'Empty request body' }));
         return;
       }
 
+      // Verify webhook signature if a signing secret is configured
+      if (WEBHOOK_SIGNING_SECRET) {
+        const signature = req.headers['x-webhook-signature'] as string | undefined;
+        if (!verifySignature(body, WEBHOOK_SIGNING_SECRET, signature)) {
+          res.writeHead(401, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Invalid webhook signature' }));
+          return;
+        }
+      }
+
       // Parse the event using EventFactory
-      const event = EventFactory.parseEvent(body);
+      const event = EventFactory.parseEvent(body.toString());
 
       // Handle the event
       handleEvent(event);
