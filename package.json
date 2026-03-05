@@ -51,7 +51,7 @@
     "LICENSE"
   ],
   "dependencies": {
-    "eventsource": "^2.0.2"
+    "eventsource": "^4.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.3",
