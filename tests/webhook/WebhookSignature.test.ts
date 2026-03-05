@@ -22,7 +22,9 @@ describe('verifySignature', () => {
   });
 
   it('should return false for an invalid signature', () => {
-    expect(verifySignature(body, secret, 'sha256=0000000000000000000000000000000000000000000000000000000000000000')).toBe(false);
+    expect(
+      verifySignature(body, secret, 'sha256=0000000000000000000000000000000000000000000000000000000000000000'),
+    ).toBe(false);
   });
 
   it('should return false for a wrong secret', () => {
