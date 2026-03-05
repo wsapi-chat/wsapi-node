@@ -22,20 +22,14 @@ jobs:
           cache: npm
           registry-url: https://registry.npmjs.org
 
+      - name: Set version from tag
+        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version
+
       - run: npm ci
       - run: npm run lint
       - run: npm run format:check
       - run: npm run build
       - run: npm run test
-
-      - name: Verify version matches tag
-        run: |
-          TAG_VERSION="${GITHUB_REF_NAME#v}"
-          PKG_VERSION=$(node -p "require('./package.json').version")
-          if [ "$TAG_VERSION" != "$PKG_VERSION" ]; then
-            echo "Tag version ($TAG_VERSION) does not match package.json version ($PKG_VERSION)"
-            exit 1
-          fi
 
       - run: npm publish
         env:
