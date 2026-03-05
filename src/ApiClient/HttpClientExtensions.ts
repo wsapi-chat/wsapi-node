@@ -6,7 +6,7 @@ export class HttpClientExtensions {
   static async readAsApiResponseJsonAsync<T>(response: Response): Promise<ApiResponse<T>> {
     try {
       if (response.ok) {
-        const result = await response.json() as T;
+        const result = (await response.json()) as T;
         return ApiResponseImpl.success(result);
       }
 
@@ -46,7 +46,7 @@ export class HttpClientExtensions {
 
   static async ensureSuccessOrThrowJsonAsync<T>(response: Response): Promise<T> {
     if (response.ok) {
-      const result = await response.json() as T;
+      const result = (await response.json()) as T;
       if (result === null || result === undefined) {
         throw new Error('Empty response');
       }
@@ -84,7 +84,7 @@ export class HttpClientExtensions {
         return ApiResponseImpl.failure<T>({
           status: 408,
           title: 'Request Timeout',
-          detail: 'The request timed out'
+          detail: 'The request timed out',
         });
       }
 
@@ -92,21 +92,21 @@ export class HttpClientExtensions {
         return ApiResponseImpl.failure<T>({
           status: 500,
           title: 'Request Failed',
-          detail: ex.message
+          detail: ex.message,
         });
       }
 
       return ApiResponseImpl.failure<T>({
         status: 500,
         title: 'Request Failed',
-        detail: ex.message
+        detail: ex.message,
       });
     }
 
     return ApiResponseImpl.failure<T>({
       status: 500,
       title: 'Request Failed',
-      detail: 'An unknown error occurred'
+      detail: 'An unknown error occurred',
     });
   }
 
@@ -114,7 +114,7 @@ export class HttpClientExtensions {
     try {
       const contentType = response.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
-        return await response.json() as ProblemDetails;
+        return (await response.json()) as ProblemDetails;
       }
     } catch {
       // ignore
@@ -124,7 +124,7 @@ export class HttpClientExtensions {
     return {
       status: response.status,
       title: response.statusText,
-      detail: content
+      detail: content,
     };
   }
 

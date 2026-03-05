@@ -1,5 +1,5 @@
 export interface CreateCommunityRequest {
-    name: string;
-    participants?: string[];
-    approvalMode?: string;
+  name: string;
+  participants?: string[];
+  approvalMode?: string;
 }

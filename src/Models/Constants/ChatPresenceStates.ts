@@ -21,4 +21,4 @@ export const ChatPresenceStates = {
 /**
  * Type for chat presence state values
  */
-export type ChatPresenceState = typeof ChatPresenceStates[keyof typeof ChatPresenceStates];
+export type ChatPresenceState = (typeof ChatPresenceStates)[keyof typeof ChatPresenceStates];

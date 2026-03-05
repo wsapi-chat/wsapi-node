@@ -15,12 +15,7 @@ import { SSEClient } from '../SSE/SSEClient';
 import { EventFactory, WSApiEvent } from '../Events/EventFactory';
 import { EventTypes } from '../Models/Constants/EventTypes';
 import { SSEConnectionState } from '../SSE/SSEConnectionState';
-import { 
-  IWSApiClient, 
-  WSApiClientOptions, 
-  EventHandler, 
-  EventHandlerRegistration 
-} from './IWSApiClient';
+import { IWSApiClient, WSApiClientOptions, EventHandler, EventHandlerRegistration } from './IWSApiClient';
 
 /**
  * Internal event handler registration implementation
@@ -30,7 +25,7 @@ class EventHandlerRegistrationImpl implements EventHandlerRegistration {
     private client: WSApiClient,
     private eventType: string | null,
     private handler: EventHandler,
-    private id: string
+    private id: string,
   ) {}
 
   remove(): void {
@@ -56,10 +51,10 @@ export class WSApiClient implements IWSApiClient {
   public readonly status: StatusClient;
   public readonly users: UsersClient;
   public readonly calls: CallsClient;
-  
+
   // SSE Client
   public readonly sse: SSEClient;
-  
+
   // Private members
   private readonly httpClient: HttpClient;
   private readonly options: WSApiClientOptions;
@@ -69,7 +64,7 @@ export class WSApiClient implements IWSApiClient {
 
   constructor(options: WSApiClientOptions) {
     this.options = { ...options };
-    
+
     // Validate required options
     if (!options.baseUrl) {
       throw new Error('baseUrl is required');
@@ -111,31 +106,31 @@ export class WSApiClient implements IWSApiClient {
       baseUrl: options.baseUrl,
       headers: {
         'X-API-Key': options.apiKey,
-        'X-Instance-Id': options.instanceId
+        'X-Instance-Id': options.instanceId,
       },
-      ...options.sseOptions?.sseConfig
+      ...options.sseOptions?.sseConfig,
     };
-    
+
     this.sse = new SSEClient(sseOptions);
-    
+
     // Set up automatic event parsing if enabled
     if (options.sseOptions?.autoParseEvents !== false) {
       this.setupEventParsing();
     }
-    
+
     // Auto-connect if enabled
     if (options.sseOptions?.autoConnect) {
-      this.connect().catch(error => {
+      this.connect().catch((error) => {
         console.warn('Auto-connect failed:', error);
       });
     }
   }
 
   // === Event Handling ===
-  
+
   onEvent(handlerOrEventType: EventHandler | string, handler?: EventHandler): EventHandlerRegistration {
     this.throwIfDisposed();
-    
+
     if (typeof handlerOrEventType === 'function') {
       // onEvent(handler) - listen to all events
       return this.registerEventHandler(null, handlerOrEventType);
@@ -155,37 +150,41 @@ export class WSApiClient implements IWSApiClient {
     return this.registerEventHandler(EventTypes.USER_PRESENCE, handler as EventHandler);
   }
 
-  onCall(handler: EventHandler<Extract<WSApiEvent, { eventType: 'call_offer' | 'call_accept' | 'call_terminate' }>>): EventHandlerRegistration {
+  onCall(
+    handler: EventHandler<Extract<WSApiEvent, { eventType: 'call_offer' | 'call_accept' | 'call_terminate' }>>,
+  ): EventHandlerRegistration {
     const registration1 = this.registerEventHandler(EventTypes.CALL_OFFER, handler as EventHandler);
     const registration2 = this.registerEventHandler(EventTypes.CALL_ACCEPT, handler as EventHandler);
     const registration3 = this.registerEventHandler(EventTypes.CALL_TERMINATE, handler as EventHandler);
-    
+
     // Return a combined registration that removes all three handlers
     return {
       remove: () => {
         registration1.remove();
         registration2.remove();
         registration3.remove();
-      }
+      },
     };
   }
 
   // === Lifecycle Management ===
-  
+
   async connect(): Promise<void> {
     this.throwIfDisposed();
-    
-    if (this.sse.connectionState === SSEConnectionState.Connected || 
-        this.sse.connectionState === SSEConnectionState.Connecting) {
+
+    if (
+      this.sse.connectionState === SSEConnectionState.Connected ||
+      this.sse.connectionState === SSEConnectionState.Connecting
+    ) {
       return;
     }
-    
+
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         cleanup();
         reject(new Error('Connection timeout'));
       }, 30000); // 30 second timeout
-      
+
       const handleStateChange = (args: any) => {
         if (args.state === SSEConnectionState.Connected) {
           cleanup();
@@ -195,12 +194,12 @@ export class WSApiClient implements IWSApiClient {
           reject(new Error('Failed to connect to SSE'));
         }
       };
-      
+
       const cleanup = () => {
         clearTimeout(timeout);
         this.sse.offConnectionStateChanged(handleStateChange);
       };
-      
+
       this.sse.onConnectionStateChanged(handleStateChange);
       this.sse.startAsync();
     });
@@ -208,23 +207,23 @@ export class WSApiClient implements IWSApiClient {
 
   async disconnect(): Promise<void> {
     if (this.disposed) return;
-    
+
     this.sse.stopAsync();
-    
+
     // Wait for disconnection
     return new Promise((resolve) => {
       if (this.sse.connectionState === SSEConnectionState.Disconnected) {
         resolve();
         return;
       }
-      
+
       const handleStateChange = (args: any) => {
         if (args.state === SSEConnectionState.Disconnected) {
           this.sse.offConnectionStateChanged(handleStateChange);
           resolve();
         }
       };
-      
+
       this.sse.onConnectionStateChanged(handleStateChange);
     });
   }
@@ -235,21 +234,21 @@ export class WSApiClient implements IWSApiClient {
 
   async dispose(): Promise<void> {
     if (this.disposed) return;
-    
+
     this.disposed = true;
-    
+
     // Clear all event handlers
     this.eventHandlers.clear();
-    
+
     // Disconnect and dispose SSE client
     await this.disconnect();
     this.sse.dispose();
-    
+
     // Note: HttpClient doesn't need explicit disposal in our implementation
   }
 
   // === Private Methods ===
-  
+
   private setupEventParsing(): void {
     this.sse.onRawEventReceived((args) => {
       try {
@@ -260,17 +259,17 @@ export class WSApiClient implements IWSApiClient {
       }
     });
   }
-  
+
   private registerEventHandler(eventType: string | null, handler: EventHandler): EventHandlerRegistration {
     const id = `handler_${++this.handlerIdCounter}`;
     this.eventHandlers.set(id, { eventType, handler });
     return new EventHandlerRegistrationImpl(this, eventType, handler, id);
   }
-  
+
   private removeEventHandler(id: string): void {
     this.eventHandlers.delete(id);
   }
-  
+
   private emitEvent(event: WSApiEvent): void {
     for (const { eventType, handler } of this.eventHandlers.values()) {
       try {
@@ -289,7 +288,7 @@ export class WSApiClient implements IWSApiClient {
       }
     }
   }
-  
+
   private throwIfDisposed(): void {
     if (this.disposed) {
       throw new Error('WSApiClient has been disposed');

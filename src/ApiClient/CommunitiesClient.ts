@@ -4,7 +4,11 @@ import type { ICommunitiesClient } from './ICommunitiesClient.js';
 import type { CommunityInfo, CommunitySubGroupResponse } from '../Models/Entities/Communities/index.js';
 import type { Identity } from '../Models/Entities/Users/Identity.js';
 import type { MessageCreated } from '../Models/Entities/Messages/index.js';
-import type { CreateCommunityRequest, CreateCommunityGroupRequest, LinkGroupRequest } from '../Models/Requests/Communities/index.js';
+import type {
+  CreateCommunityRequest,
+  CreateCommunityGroupRequest,
+  LinkGroupRequest,
+} from '../Models/Requests/Communities/index.js';
 
 /**
  * WhatsApp communities API client implementation.
@@ -133,7 +137,10 @@ export class CommunitiesClient implements ICommunitiesClient {
     return await this.httpClient.tryGet<CommunitySubGroupResponse[]>(`/communities/${id}/groups`);
   }
 
-  async tryCreateCommunityGroupAsync(id: string, request: CreateCommunityGroupRequest): Promise<ApiResponse<MessageCreated>> {
+  async tryCreateCommunityGroupAsync(
+    id: string,
+    request: CreateCommunityGroupRequest,
+  ): Promise<ApiResponse<MessageCreated>> {
     return await this.httpClient.tryPost<MessageCreated>(`/communities/${id}/groups`, request);
   }
 

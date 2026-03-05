@@ -1,6 +1,9 @@
 export { EventTypes, type EventType } from './EventTypes.js';
 export { MessageTypes, type MessageType } from './MessageTypes.js';
-export { GroupUpdateRequestParticipantActions, type GroupUpdateRequestParticipantAction } from './GroupUpdateRequestParticipantActions.js';
+export {
+  GroupUpdateRequestParticipantActions,
+  type GroupUpdateRequestParticipantAction,
+} from './GroupUpdateRequestParticipantActions.js';
 export { CallTerminateReasons, type CallTerminateReason } from './CallTerminateReasons.js';
 export { ChatMuteDurations, type ChatMuteDuration } from './ChatMuteDurations.js';
 export { ChatPresenceStates, type ChatPresenceState } from './ChatPresenceStates.js';

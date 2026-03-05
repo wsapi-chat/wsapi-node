@@ -17,6 +17,7 @@ A TypeScript/JavaScript SDK for integrating with the WSApi API, enabling develop
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 16.0 or later (for Node.js environments)
 - Modern browser with fetch API support (for browser environments)
 - Access to the WSApi API (Valid instance with ID and API key)
@@ -30,6 +31,7 @@ npm install @wsapichat/client
 ```
 
 Or using Yarn:
+
 ```bash
 yarn add @wsapichat/client
 ```
@@ -45,13 +47,13 @@ import { HttpClient, WSApiClientFactory } from '@wsapichat/client';
 
 const client = WSApiClientFactory.create({
   apiKey: 'your-api-key',
-  instanceId: 'your-instance-id'
+  instanceId: 'your-instance-id',
 });
 
 // Send a text message
 const result = await client.messages.sendText({
   to: '1234567890@s.whatsapp.net', // Phone number in WhatsApp format
-  text: 'Hello from TypeScript SDK!'
+  text: 'Hello from TypeScript SDK!',
 });
 
 console.log('Message sent with ID:', result.messageId);
@@ -62,6 +64,7 @@ console.log('Message sent with ID:', result.messageId);
 The SDK provides two methods for each API call to handle different error scenarios:
 
 #### Exception-based (throws on error)
+
 ```typescript
 try {
   const result = await client.messages.sendText(request);
@@ -74,6 +77,7 @@ try {
 ```
 
 #### ApiResponse-based (no exceptions)
+
 ```typescript
 const response = await client.messages.trySendText(request);
 if (response.isSuccess) {
@@ -90,23 +94,23 @@ import { WSApiClientFactory, EventFactory } from '@wsapi/client';
 
 const sseClient = WSApiClientFactory.createSSEClient({
   apiKey: 'your-api-key',
-  instanceId: 'your-instance-id'
+  instanceId: 'your-instance-id',
 });
 
 sseClient.on('rawEventReceived', (args) => {
   try {
     const event = EventFactory.parseEvent(args.rawJson);
-    
+
     switch (event.eventType) {
       case 'message':
         const messageEvent = event as MessageEvent;
         console.log('Message received:', messageEvent.text);
         break;
-      
+
       case 'logged-in':
         console.log('Session logged in');
         break;
-      
+
       // Handle other event types as needed
     }
   } catch (error) {
@@ -124,7 +128,6 @@ sseClient.on('connectionStateChanged', (args) => {
 // Start the SSE client
 await sseClient.start();
 ```
-
 
 ## License
 

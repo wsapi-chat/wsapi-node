@@ -56,4 +56,4 @@ export const MessageReceiptTypes = {
 /**
  * Type for message receipt type values
  */
-export type MessageReceiptType = typeof MessageReceiptTypes[keyof typeof MessageReceiptTypes];
+export type MessageReceiptType = (typeof MessageReceiptTypes)[keyof typeof MessageReceiptTypes];

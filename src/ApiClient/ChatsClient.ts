@@ -20,7 +20,7 @@ export class ChatsClient implements IChatsClient {
   constructor(private readonly httpClient: HttpClient) {}
 
   // Throwing methods (throw ApiException on error)
-  
+
   async listAsync(): Promise<ChatListItem[]> {
     return await this.httpClient.get<ChatListItem[]>('/chats');
   }
@@ -131,7 +131,10 @@ export class ChatsClient implements IChatsClient {
     return await this.httpClient.tryPutVoid(`/chats/${chatId}/clear`);
   }
 
-  async tryRequestMessagesAsync(chatId: string, request: RequestMessagesRequest): Promise<ApiResponse<{ status: string }>> {
+  async tryRequestMessagesAsync(
+    chatId: string,
+    request: RequestMessagesRequest,
+  ): Promise<ApiResponse<{ status: string }>> {
     return await this.httpClient.tryPost<{ status: string }>(`/chats/${chatId}/messages`, request);
   }
 }

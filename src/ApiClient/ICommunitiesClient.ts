@@ -2,7 +2,11 @@ import type { ApiResponse } from './ApiResponse.js';
 import type { CommunityInfo, CommunitySubGroupResponse } from '../Models/Entities/Communities/index.js';
 import type { Identity } from '../Models/Entities/Users/Identity.js';
 import type { MessageCreated } from '../Models/Entities/Messages/index.js';
-import type { CreateCommunityRequest, CreateCommunityGroupRequest, LinkGroupRequest } from '../Models/Requests/Communities/index.js';
+import type {
+  CreateCommunityRequest,
+  CreateCommunityGroupRequest,
+  LinkGroupRequest,
+} from '../Models/Requests/Communities/index.js';
 
 /**
  * Interface for WhatsApp communities API client operations.

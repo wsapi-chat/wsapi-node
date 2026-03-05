@@ -52,8 +52,8 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/PageNumber"
-        - $ref: "#/components/parameters/PageSize"
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
         - name: createdFrom
           in: query
           schema:
@@ -69,14 +69,14 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Paginated list of instances
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PagedAccountInstances"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
+                $ref: '#/components/schemas/PagedAccountInstances'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /account/instances/{id}:
     get:
@@ -87,18 +87,18 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/AccountInstanceId"
+        - $ref: '#/components/parameters/AccountInstanceId'
       responses:
-        "200":
+        '200':
           description: Instance detail
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountInstanceDetail"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
+                $ref: '#/components/schemas/AccountInstanceDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /account/instances/{id}/name:
     put:
@@ -108,22 +108,22 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/AccountInstanceId"
+        - $ref: '#/components/parameters/AccountInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateInstanceNameRequest"
+              $ref: '#/components/schemas/UpdateInstanceNameRequest'
       responses:
-        "204":
+        '204':
           description: Name updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /account/instances/{id}/settings:
     put:
@@ -133,22 +133,22 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/AccountInstanceId"
+        - $ref: '#/components/parameters/AccountInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AccountInstanceSettings"
+              $ref: '#/components/schemas/AccountInstanceSettings'
       responses:
-        "204":
+        '204':
           description: Settings updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /account/instances/{id}/apikey:
     put:
@@ -159,20 +159,20 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/AccountInstanceId"
+        - $ref: '#/components/parameters/AccountInstanceId'
       responses:
-        "200":
+        '200':
           description: New API key
           content:
             application/json:
               schema:
                 type: string
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /account/instances/{id}/restart:
     put:
@@ -182,16 +182,16 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/AccountInstanceId"
+        - $ref: '#/components/parameters/AccountInstanceId'
       responses:
-        "204":
+        '204':
           description: Instance restarted
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /account/subscriptions:
     get:
@@ -202,17 +202,17 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/PageNumber"
-        - $ref: "#/components/parameters/PageSize"
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
       responses:
-        "200":
+        '200':
           description: Paginated list of subscriptions
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PagedAccountSubscriptions"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
+                $ref: '#/components/schemas/PagedAccountSubscriptions'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /account/subscriptions/{id}/instances:
     get:
@@ -223,9 +223,9 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/SubscriptionId"
-        - $ref: "#/components/parameters/PageNumber"
-        - $ref: "#/components/parameters/PageSize"
+        - $ref: '#/components/parameters/SubscriptionId'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
         - name: createdFrom
           in: query
           schema:
@@ -241,14 +241,14 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Paginated list of instances
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PagedAccountInstances"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
+                $ref: '#/components/schemas/PagedAccountInstances'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
     post:
       tags: [Account]
@@ -258,18 +258,18 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/SubscriptionId"
+        - $ref: '#/components/parameters/SubscriptionId'
       responses:
-        "200":
+        '200':
           description: Instance ID
           content:
             application/json:
               schema:
                 type: string
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /account/subscriptions/{id}/instances/{instanceId}:
     delete:
@@ -280,19 +280,19 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/SubscriptionId"
+        - $ref: '#/components/parameters/SubscriptionId'
         - name: instanceId
           in: path
           required: true
           schema:
             type: string
       responses:
-        "204":
+        '204':
           description: Instance deleted
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /account/subscriptions/{id}/changes:
     get:
@@ -303,9 +303,9 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: "#/components/parameters/SubscriptionId"
-        - $ref: "#/components/parameters/PageNumber"
-        - $ref: "#/components/parameters/PageSize"
+        - $ref: '#/components/parameters/SubscriptionId'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
         - name: timestampFrom
           in: query
           schema:
@@ -325,16 +325,16 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Paginated list of changes
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PagedAccountSubscriptionChanges"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
+                $ref: '#/components/schemas/PagedAccountSubscriptionChanges'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
   /account/instances/defaults:
     get:
@@ -345,16 +345,16 @@ paths:
       security:
         - CustomerApiKey: []
       responses:
-        "200":
+        '200':
           description: Instance defaults
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AccountInstanceDefaults"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
+                $ref: '#/components/schemas/AccountInstanceDefaults'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
 
     put:
       tags: [Account]
@@ -368,14 +368,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/AccountInstanceDefaults"
+              $ref: '#/components/schemas/AccountInstanceDefaults'
       responses:
-        "204":
+        '204':
           description: Defaults updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   # ─── Session ───────────────────────────────────────────────────────
 
@@ -386,21 +386,21 @@ paths:
       description: Returns a PNG image of the QR code to scan with WhatsApp.
       operationId: getQR
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: QR code PNG image
           content:
             image/png:
               schema:
                 type: string
                 format: binary
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /session/qr/text:
     get:
@@ -409,9 +409,9 @@ paths:
       description: Returns the raw QR code string for clients that want to render the QR code themselves.
       operationId: getQRText
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: QR code string
           content:
             application/json:
@@ -423,12 +423,12 @@ paths:
                     description: Raw QR code string
                 required:
                   - code
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /session/pair-code/{phone}:
     get:
@@ -436,7 +436,7 @@ paths:
       summary: Get pair code for phone number
       operationId: getPairCode
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
         - name: phone
           in: path
           required: true
@@ -445,7 +445,7 @@ paths:
             type: string
             pattern: '^\+?\d{7,15}$'
       responses:
-        "200":
+        '200':
           description: Pair code generated
           content:
             application/json:
@@ -454,13 +454,13 @@ paths:
                 properties:
                   code:
                     type: string
-                    example: "ABCD-EFGH"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                    example: 'ABCD-EFGH'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /session/status:
     get:
@@ -468,18 +468,18 @@ paths:
       summary: Get session status
       operationId: getSessionStatus
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: Session status
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SessionStatus"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/SessionStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /session/logout:
     post:
@@ -487,16 +487,16 @@ paths:
       summary: Logout from WhatsApp
       operationId: logout
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "204":
+        '204':
           description: Logged out
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /session/flush-history:
     post:
@@ -512,9 +512,9 @@ paths:
         Cached messages expire after 1 hour.
       operationId: flushHistory
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "202":
+        '202':
           description: History flush initiated
           content:
             application/json:
@@ -524,12 +524,12 @@ paths:
                   status:
                     type: string
                     example: ok
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   # ─── Messages ──────────────────────────────────────────────────────
 
@@ -540,43 +540,43 @@ paths:
       description: Send a text message to a WhatsApp contact or group. The response contains the message ID, which can be used later for reply, edit, delete, star, and other actions.
       operationId: sendText
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendTextRequest"
+              $ref: '#/components/schemas/SendTextRequest'
             examples:
               simpleMessage:
                 summary: Plain text message
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  text: "Hello world!"
+                  to: '1234567890@s.whatsapp.net'
+                  text: 'Hello world!'
               withMentions:
                 summary: Text with user mention
                 value:
-                  to: "1234567890@g.us"
-                  text: "Hi @1234567890"
-                  mentions: ["1234567890@s.whatsapp.net"]
+                  to: '1234567890@g.us'
+                  text: 'Hi @1234567890'
+                  mentions: ['1234567890@s.whatsapp.net']
               reply:
                 summary: Reply to a previous message
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  text: "On it!"
-                  replyTo: "01234567890123456"
-                  replyToSenderId: "1234567890:12@s.whatsapp.net"
+                  to: '1234567890@s.whatsapp.net'
+                  text: 'On it!'
+                  replyTo: '01234567890123456'
+                  replyToSenderId: '1234567890:12@s.whatsapp.net'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/image:
     post:
@@ -585,40 +585,40 @@ paths:
       description: Send an image message via URL or base64-encoded data. The response contains the message ID.
       operationId: sendImage
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendMediaRequest"
+              $ref: '#/components/schemas/SendMediaRequest'
             examples:
               byURL:
                 summary: Image by URL
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  url: "https://example.com/cat.jpg"
-                  mimeType: "image/jpeg"
-                  caption: "Cat pic"
+                  to: '1234567890@s.whatsapp.net'
+                  url: 'https://example.com/cat.jpg'
+                  mimeType: 'image/jpeg'
+                  caption: 'Cat pic'
               byBase64ViewOnce:
                 summary: Image by base64 sent as view-once
                 value:
-                  to: "1234567890@g.us"
-                  data: "/9j/4AAQSkZJRgABAQ..."
-                  mimeType: "image/png"
-                  caption: "One-time secret"
+                  to: '1234567890@g.us'
+                  data: '/9j/4AAQSkZJRgABAQ...'
+                  mimeType: 'image/png'
+                  caption: 'One-time secret'
                   viewOnce: true
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/video:
     post:
@@ -627,39 +627,39 @@ paths:
       description: Send a video message via URL or base64-encoded data. The response contains the message ID.
       operationId: sendVideo
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendMediaRequest"
+              $ref: '#/components/schemas/SendMediaRequest'
             examples:
               byURL:
                 summary: Video by URL with caption
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  url: "https://example.com/clip.mp4"
-                  mimeType: "video/mp4"
-                  caption: "Watch this"
+                  to: '1234567890@s.whatsapp.net'
+                  url: 'https://example.com/clip.mp4'
+                  mimeType: 'video/mp4'
+                  caption: 'Watch this'
               byBase64ViewOnce:
                 summary: Video by base64 as view-once
                 value:
-                  to: "1234567890@g.us"
-                  data: "AAAAGGZ0eXBtcDQy..."
-                  mimeType: "video/mp4"
+                  to: '1234567890@g.us'
+                  data: 'AAAAGGZ0eXBtcDQy...'
+                  mimeType: 'video/mp4'
                   viewOnce: true
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/audio:
     post:
@@ -668,38 +668,38 @@ paths:
       description: Send an audio message via URL or base64-encoded data. The response contains the message ID.
       operationId: sendAudio
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendMediaRequest"
+              $ref: '#/components/schemas/SendMediaRequest'
             examples:
               byURL:
                 summary: Audio by URL
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  url: "https://example.com/audio.mp3"
-                  mimeType: "audio/mpeg"
+                  to: '1234567890@s.whatsapp.net'
+                  url: 'https://example.com/audio.mp3'
+                  mimeType: 'audio/mpeg'
               byBase64ViewOnce:
                 summary: Audio by base64 as view-once
                 value:
-                  to: "1234567890@g.us"
-                  data: "SUQzBAAAAAAAI1RTU0U..."
-                  mimeType: "audio/mp3"
+                  to: '1234567890@g.us'
+                  data: 'SUQzBAAAAAAAI1RTU0U...'
+                  mimeType: 'audio/mp3'
                   viewOnce: true
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/voice:
     post:
@@ -708,35 +708,35 @@ paths:
       description: Send a voice (push-to-talk) message via URL or base64-encoded data. The response contains the message ID.
       operationId: sendVoice
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendMediaRequest"
+              $ref: '#/components/schemas/SendMediaRequest'
             examples:
               byURL:
                 summary: Voice by URL
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  url: "https://example.com/ptt.ogg"
+                  to: '1234567890@s.whatsapp.net'
+                  url: 'https://example.com/ptt.ogg'
               byBase64:
                 summary: Voice by base64
                 value:
-                  to: "1234567890@g.us"
-                  data: "T2dnUwACAAAAAAAAAAA..."
+                  to: '1234567890@g.us'
+                  data: 'T2dnUwACAAAAAAAAAAA...'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/document:
     post:
@@ -745,38 +745,38 @@ paths:
       description: Send a document via URL or base64-encoded data. The `filename` field is required. The response contains the message ID.
       operationId: sendDocument
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendDocumentRequest"
+              $ref: '#/components/schemas/SendDocumentRequest'
             examples:
               byURL:
                 summary: Document by URL with caption
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  url: "https://example.com/report.pdf"
-                  filename: "report.pdf"
-                  caption: "Monthly report"
+                  to: '1234567890@s.whatsapp.net'
+                  url: 'https://example.com/report.pdf'
+                  filename: 'report.pdf'
+                  caption: 'Monthly report'
               byBase64:
                 summary: Document by base64
                 value:
-                  to: "1234567890@g.us"
-                  data: "JVBERi0xLjQKJeLjz9M..."
-                  filename: "numbers.xlsx"
+                  to: '1234567890@g.us'
+                  data: 'JVBERi0xLjQKJeLjz9M...'
+                  filename: 'numbers.xlsx'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/sticker:
     post:
@@ -785,37 +785,37 @@ paths:
       description: Send a sticker (WebP format) via URL or base64-encoded data. Use `isAnimated` for animated stickers. The response contains the message ID.
       operationId: sendSticker
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendStickerRequest"
+              $ref: '#/components/schemas/SendStickerRequest'
             examples:
               byURL:
                 summary: Static sticker by URL
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  url: "https://example.com/sticker.webp"
+                  to: '1234567890@s.whatsapp.net'
+                  url: 'https://example.com/sticker.webp'
                   isAnimated: false
               byBase64Animated:
                 summary: Animated sticker by base64
                 value:
-                  to: "1234567890@g.us"
-                  data: "UklGRiIAAABXRUJQVlA4..."
+                  to: '1234567890@g.us'
+                  data: 'UklGRiIAAABXRUJQVlA4...'
                   isAnimated: true
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/contact:
     post:
@@ -824,35 +824,35 @@ paths:
       description: Send a contact card via display name (auto-generated vCard) or a raw vCard string. The response contains the message ID.
       operationId: sendContact
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendContactRequest"
+              $ref: '#/components/schemas/SendContactRequest'
             examples:
               withDisplayName:
                 summary: Contact with display name
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  displayName: "Jane Doe"
+                  to: '1234567890@s.whatsapp.net'
+                  displayName: 'Jane Doe'
               withVCard:
                 summary: Contact using vCard
                 value:
-                  to: "1234567890@g.us"
+                  to: '1234567890@g.us'
                   vcard: "BEGIN:VCARD\nVERSION:3.0\nN:Doe;Jane;;;\nFN:Jane Doe\nTEL;TYPE=CELL:+19876543210\nEND:VCARD"
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/location:
     post:
@@ -861,40 +861,40 @@ paths:
       description: Send a location with coordinates and optional name, address, and URL details. The response contains the message ID.
       operationId: sendLocation
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendLocationRequest"
+              $ref: '#/components/schemas/SendLocationRequest'
             examples:
               basic:
                 summary: Basic location
                 value:
-                  to: "1234567890@s.whatsapp.net"
+                  to: '1234567890@s.whatsapp.net'
                   latitude: 37.7749
                   longitude: -122.4194
               withDetails:
                 summary: Location with name and address
                 value:
-                  to: "1234567890@g.us"
+                  to: '1234567890@g.us'
                   latitude: 51.5034
                   longitude: -0.1276
-                  name: "Big Ben"
-                  address: "Westminster, London SW1A 0AA, UK"
-                  url: "https://maps.google.com/?q=Big+Ben"
+                  name: 'Big Ben'
+                  address: 'Westminster, London SW1A 0AA, UK'
+                  url: 'https://maps.google.com/?q=Big+Ben'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/link:
     post:
@@ -903,40 +903,40 @@ paths:
       description: Send a link message with an optional preview (title, description, and JPEG thumbnail). The response contains the message ID.
       operationId: sendLink
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendLinkRequest"
+              $ref: '#/components/schemas/SendLinkRequest'
             examples:
               minimal:
                 summary: Minimal link
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  text: "Check this link"
-                  url: "https://example.com/article"
+                  to: '1234567890@s.whatsapp.net'
+                  text: 'Check this link'
+                  url: 'https://example.com/article'
               withPreview:
                 summary: Link with preview details
                 value:
-                  to: "1234567890@g.us"
-                  text: "Interesting read"
-                  url: "https://example.com/blog/post-1"
-                  title: "A neat blog post"
-                  description: "This post explains things."
-                  jpegThumbnail: "/9j/4AAQSkZJRgABAQ..."
+                  to: '1234567890@g.us'
+                  text: 'Interesting read'
+                  url: 'https://example.com/blog/post-1'
+                  title: 'A neat blog post'
+                  description: 'This post explains things.'
+                  jpegThumbnail: '/9j/4AAQSkZJRgABAQ...'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/{messageId}/reaction:
     post:
@@ -945,38 +945,38 @@ paths:
       description: Send an emoji reaction to a message. Send an empty string as the reaction to remove a previous reaction.
       operationId: sendReaction
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/MessageIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/MessageIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SendReactionRequest"
+              $ref: '#/components/schemas/SendReactionRequest'
             examples:
               thumbsUp:
                 summary: React with thumbs up
                 value:
-                  to: "1234567890@s.whatsapp.net"
-                  senderId: "1234567890@s.whatsapp.net"
+                  to: '1234567890@s.whatsapp.net'
+                  senderId: '1234567890@s.whatsapp.net'
                   reaction: "\U0001F44D"
               heart:
                 summary: React with heart in a group chat
                 value:
-                  to: "1234567890@g.us"
-                  senderId: "9876543210@s.whatsapp.net"
+                  to: '1234567890@g.us'
+                  senderId: '9876543210@s.whatsapp.net'
                   reaction: "\u2764\uFE0F"
       responses:
-        "200":
-          $ref: "#/components/responses/OK"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/{messageId}/edit:
     post:
@@ -985,28 +985,28 @@ paths:
       description: Edit the text of a previously sent message. Only your own messages can be edited.
       operationId: editMessage
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/MessageIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/MessageIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/EditMessageRequest"
+              $ref: '#/components/schemas/EditMessageRequest'
             example:
-              to: "1234567890@s.whatsapp.net"
-              text: "Updated message"
+              to: '1234567890@s.whatsapp.net'
+              text: 'Updated message'
       responses:
-        "200":
-          $ref: "#/components/responses/OK"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/{messageId}/read:
     post:
@@ -1015,29 +1015,29 @@ paths:
       description: Mark a message as read with the specified receipt type.
       operationId: markAsRead
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/MessageIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/MessageIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MarkAsReadRequest"
+              $ref: '#/components/schemas/MarkAsReadRequest'
             example:
-              chatId: "1234567890@s.whatsapp.net"
-              senderId: "1234567890@s.whatsapp.net"
-              receiptType: "read"
+              chatId: '1234567890@s.whatsapp.net'
+              senderId: '1234567890@s.whatsapp.net'
+              receiptType: 'read'
       responses:
-        "204":
+        '204':
           description: Message marked as read
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/{messageId}/star:
     post:
@@ -1046,29 +1046,29 @@ paths:
       description: Star or unstar a message. Set `starred` to true to star, false to unstar.
       operationId: starMessage
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/MessageIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/MessageIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/StarMessageRequest"
+              $ref: '#/components/schemas/StarMessageRequest'
             example:
-              chatId: "1234567890@s.whatsapp.net"
-              senderId: "1234567890@s.whatsapp.net"
+              chatId: '1234567890@s.whatsapp.net'
+              senderId: '1234567890@s.whatsapp.net'
               starred: true
       responses:
-        "204":
+        '204':
           description: Message starred/unstarred
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/{messageId}/pin:
     post:
@@ -1077,39 +1077,39 @@ paths:
       description: Pin or unpin a message in a chat. Set `pinned` to true to pin, false to unpin. Optionally specify a pin expiration duration.
       operationId: pinMessage
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/MessageIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/MessageIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PinMessageRequest"
+              $ref: '#/components/schemas/PinMessageRequest'
             examples:
               pin:
                 summary: Pin a message
                 value:
-                  chatId: "1234567890@s.whatsapp.net"
-                  senderId: "1234567890@s.whatsapp.net"
+                  chatId: '1234567890@s.whatsapp.net'
+                  senderId: '1234567890@s.whatsapp.net'
                   pinned: true
-                  pinExpiration: "7d"
+                  pinExpiration: '7d'
               unpin:
                 summary: Unpin a message
                 value:
-                  chatId: "1234567890@s.whatsapp.net"
-                  senderId: "1234567890@s.whatsapp.net"
+                  chatId: '1234567890@s.whatsapp.net'
+                  senderId: '1234567890@s.whatsapp.net'
                   pinned: false
       responses:
-        "204":
+        '204':
           description: Message pinned/unpinned
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/{messageId}/delete:
     post:
@@ -1118,28 +1118,28 @@ paths:
       description: Delete a message for all chat participants. Only your own sent messages can be deleted for everyone.
       operationId: deleteMessage
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/MessageIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/MessageIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DeleteMessageRequest"
+              $ref: '#/components/schemas/DeleteMessageRequest'
             example:
-              chatId: "1234567890@s.whatsapp.net"
-              senderId: "1234567890@s.whatsapp.net"
+              chatId: '1234567890@s.whatsapp.net'
+              senderId: '1234567890@s.whatsapp.net'
       responses:
-        "204":
+        '204':
           description: Message deleted
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /messages/{messageId}/delete-for-me:
     post:
@@ -1148,30 +1148,30 @@ paths:
       description: Delete a message only from your own chat. The message remains visible to other participants.
       operationId: deleteMessageForMe
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/MessageIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/MessageIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DeleteMessageForMeRequest"
+              $ref: '#/components/schemas/DeleteMessageForMeRequest'
             example:
-              chatId: "1234567890@s.whatsapp.net"
-              senderId: "1234567890@s.whatsapp.net"
+              chatId: '1234567890@s.whatsapp.net'
+              senderId: '1234567890@s.whatsapp.net'
               isFromMe: true
-              timestamp: "2025-05-19T00:51:44.816Z"
+              timestamp: '2025-05-19T00:51:44.816Z'
       responses:
-        "204":
+        '204':
           description: Message deleted for me
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   # ─── Groups ────────────────────────────────────────────────────────
 
@@ -1182,24 +1182,24 @@ paths:
       description: Retrieve a list of all groups the current user is a member of.
       operationId: listGroups
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: List of groups
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/GroupInfoResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/GroupInfoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     post:
       tags: [Groups]
@@ -1207,24 +1207,24 @@ paths:
       description: Create a new WhatsApp group with the specified name and initial participants.
       operationId: createGroup
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateGroupRequest"
+              $ref: '#/components/schemas/CreateGroupRequest'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}:
     get:
@@ -1233,23 +1233,23 @@ paths:
       description: Retrieve detailed information about a specific group, including participants, admins, and settings.
       operationId: getGroup
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       responses:
-        "200":
+        '200':
           description: Group info
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GroupInfoResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/GroupInfoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/name:
     put:
@@ -1258,25 +1258,25 @@ paths:
       description: Update the name of a group. Requires admin privileges.
       operationId: setGroupName
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetNameRequest"
+              $ref: '#/components/schemas/SetNameRequest'
       responses:
-        "204":
+        '204':
           description: Name updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/description:
     put:
@@ -1285,25 +1285,25 @@ paths:
       description: Update the description of a group. Requires admin privileges.
       operationId: setGroupDescription
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetDescriptionRequest"
+              $ref: '#/components/schemas/SetDescriptionRequest'
       responses:
-        "204":
+        '204':
           description: Description updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/picture:
     post:
@@ -1312,16 +1312,16 @@ paths:
       description: Update the profile picture of a group. Requires admin privileges.
       operationId: setGroupPicture
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetPictureRequest"
+              $ref: '#/components/schemas/SetPictureRequest'
       responses:
-        "200":
+        '200':
           description: Picture updated
           content:
             application/json:
@@ -1330,14 +1330,14 @@ paths:
                 properties:
                   pictureId:
                     type: string
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/leave:
     post:
@@ -1346,19 +1346,19 @@ paths:
       description: Leave the specified group. You will no longer receive messages from this group.
       operationId: leaveGroup
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       responses:
-        "204":
+        '204':
           description: Left group
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/participants:
     get:
@@ -1367,27 +1367,27 @@ paths:
       description: Retrieve the list of all participants in a group.
       operationId: getGroupParticipants
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       responses:
-        "200":
+        '200':
           description: List of participants
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/GroupParticipant"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/GroupParticipant'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     put:
       tags: [Groups]
@@ -1395,46 +1395,46 @@ paths:
       description: Add, remove, promote, or demote participants. Requires admin privileges.
       operationId: updateGroupParticipants
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateParticipantsRequest"
+              $ref: '#/components/schemas/UpdateParticipantsRequest'
             examples:
               addParticipants:
                 summary: Add participants to group
                 value:
-                  participants: ["1234567890@s.whatsapp.net"]
-                  action: "add"
+                  participants: ['1234567890@s.whatsapp.net']
+                  action: 'add'
               removeParticipants:
                 summary: Remove participants from group
                 value:
-                  participants: ["1234567890@s.whatsapp.net"]
-                  action: "remove"
+                  participants: ['1234567890@s.whatsapp.net']
+                  action: 'remove'
               promoteToAdmin:
                 summary: Promote participants to admin
                 value:
-                  participants: ["1234567890@s.whatsapp.net"]
-                  action: "promote"
+                  participants: ['1234567890@s.whatsapp.net']
+                  action: 'promote'
               demoteFromAdmin:
                 summary: Demote admins to regular members
                 value:
-                  participants: ["1234567890@s.whatsapp.net"]
-                  action: "demote"
+                  participants: ['1234567890@s.whatsapp.net']
+                  action: 'demote'
       responses:
-        "204":
+        '204':
           description: Participants updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/invite-link:
     get:
@@ -1443,10 +1443,10 @@ paths:
       description: Get the current invite link for a group. Requires admin privileges.
       operationId: getGroupInviteLink
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       responses:
-        "200":
+        '200':
           description: Invite link
           content:
             application/json:
@@ -1455,15 +1455,15 @@ paths:
                 properties:
                   link:
                     type: string
-                    example: "https://chat.whatsapp.com/abc123"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                    example: 'https://chat.whatsapp.com/abc123'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/invite-link/reset:
     post:
@@ -1472,10 +1472,10 @@ paths:
       description: Reset and generate a new invite link for a group. The old link will no longer work. Requires admin privileges.
       operationId: resetGroupInviteLink
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       responses:
-        "200":
+        '200':
           description: New invite link
           content:
             application/json:
@@ -1484,15 +1484,15 @@ paths:
                 properties:
                   link:
                     type: string
-                    example: "https://chat.whatsapp.com/xyz789"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                    example: 'https://chat.whatsapp.com/xyz789'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/settings/announce:
     put:
@@ -1501,25 +1501,25 @@ paths:
       description: When enabled, only admins can send messages.
       operationId: setGroupAnnounce
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetBoolRequest"
+              $ref: '#/components/schemas/SetBoolRequest'
       responses:
-        "204":
+        '204':
           description: Setting updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/settings/locked:
     put:
@@ -1528,25 +1528,25 @@ paths:
       description: When enabled, only admins can edit group info.
       operationId: setGroupLocked
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetBoolRequest"
+              $ref: '#/components/schemas/SetBoolRequest'
       responses:
-        "204":
+        '204':
           description: Setting updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/settings/join-approval:
     put:
@@ -1555,25 +1555,25 @@ paths:
       description: When enabled, new members require admin approval.
       operationId: setGroupJoinApproval
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetBoolRequest"
+              $ref: '#/components/schemas/SetBoolRequest'
       responses:
-        "204":
+        '204':
           description: Setting updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/settings/member-add-mode:
     put:
@@ -1582,25 +1582,25 @@ paths:
       description: Control whether only admins can add members.
       operationId: setGroupMemberAddMode
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetMemberAddModeRequest"
+              $ref: '#/components/schemas/SetMemberAddModeRequest'
       responses:
-        "204":
+        '204':
           description: Setting updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/join/link:
     post:
@@ -1609,24 +1609,24 @@ paths:
       description: Join a group using an invite link code (the part after `https://chat.whatsapp.com/`).
       operationId: joinGroupWithLink
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/JoinWithLinkRequest"
+              $ref: '#/components/schemas/JoinWithLinkRequest'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/join/invite:
     post:
@@ -1635,24 +1635,24 @@ paths:
       description: Accept a group invite received via a direct message. Requires the group JID, inviter JID, and invite code.
       operationId: joinGroupWithInvite
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/JoinWithInviteRequest"
+              $ref: '#/components/schemas/JoinWithInviteRequest'
       responses:
-        "204":
+        '204':
           description: Joined group
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/invite/{code}:
     get:
@@ -1661,7 +1661,7 @@ paths:
       description: Preview group information from an invite code without joining the group.
       operationId: getGroupInfoFromLink
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
         - name: code
           in: path
           required: true
@@ -1669,20 +1669,20 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Group info from invite link
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GroupInfoResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/GroupInfoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /groups/{id}/requests:
     get:
@@ -1691,25 +1691,25 @@ paths:
       description: Get the list of pending join requests for a group. Only available when join approval mode is enabled.
       operationId: getGroupRequests
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       responses:
-        "200":
+        '200':
           description: List of pending join requests
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/GroupParticipantRequest"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/GroupParticipantRequest'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     put:
       tags: [Groups]
@@ -1717,36 +1717,36 @@ paths:
       description: Approve or reject pending join requests for a group. Only available when join approval mode is enabled. Requires admin privileges.
       operationId: updateGroupRequests
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/GroupIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/GroupIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateRequestsRequest"
+              $ref: '#/components/schemas/UpdateRequestsRequest'
             examples:
               approve:
                 summary: Approve join requests
                 value:
-                  participants: ["1234567890@s.whatsapp.net"]
-                  action: "approve"
+                  participants: ['1234567890@s.whatsapp.net']
+                  action: 'approve'
               reject:
                 summary: Reject join requests
                 value:
-                  participants: ["1234567890@s.whatsapp.net"]
-                  action: "reject"
+                  participants: ['1234567890@s.whatsapp.net']
+                  action: 'reject'
       responses:
-        "204":
+        '204':
           description: Requests updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   # ─── Communities ───────────────────────────────────────────────────
 
@@ -1757,24 +1757,24 @@ paths:
       description: Retrieve a list of all communities the current user is a member of.
       operationId: listCommunities
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: List of communities
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/CommunityInfoResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/CommunityInfoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     post:
       tags: [Communities]
@@ -1782,24 +1782,24 @@ paths:
       description: Create a new WhatsApp community with the specified name and optional participants.
       operationId: createCommunity
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateCommunityRequest"
+              $ref: '#/components/schemas/CreateCommunityRequest'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}:
     get:
@@ -1808,23 +1808,23 @@ paths:
       description: Retrieve detailed information about a specific community.
       operationId: getCommunity
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       responses:
-        "200":
+        '200':
           description: Community info
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CommunityInfoResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/CommunityInfoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/leave:
     post:
@@ -1833,19 +1833,19 @@ paths:
       description: Leave a community. This will remove the current user from the community.
       operationId: leaveCommunity
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       responses:
-        "204":
+        '204':
           description: Left community
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/name:
     put:
@@ -1854,25 +1854,25 @@ paths:
       description: Update the name of a community. Requires admin privileges.
       operationId: setCommunityName
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetNameRequest"
+              $ref: '#/components/schemas/SetNameRequest'
       responses:
-        "204":
+        '204':
           description: Name updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/description:
     put:
@@ -1881,25 +1881,25 @@ paths:
       description: Update the description of a community. Requires admin privileges.
       operationId: setCommunityDescription
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetDescriptionRequest"
+              $ref: '#/components/schemas/SetDescriptionRequest'
       responses:
-        "204":
+        '204':
           description: Description updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/picture:
     post:
@@ -1908,16 +1908,16 @@ paths:
       description: Update the profile picture of a community. Requires admin privileges.
       operationId: setCommunityPicture
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetPictureRequest"
+              $ref: '#/components/schemas/SetPictureRequest'
       responses:
-        "200":
+        '200':
           description: Picture updated
           content:
             application/json:
@@ -1926,14 +1926,14 @@ paths:
                 properties:
                   pictureId:
                     type: string
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/settings/locked:
     put:
@@ -1942,25 +1942,25 @@ paths:
       description: When enabled, only admins can edit community info.
       operationId: setCommunityLocked
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetBoolRequest"
+              $ref: '#/components/schemas/SetBoolRequest'
       responses:
-        "204":
+        '204':
           description: Setting updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/participants:
     get:
@@ -1969,25 +1969,25 @@ paths:
       description: Retrieve the list of all participants in a community.
       operationId: getCommunityParticipants
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       responses:
-        "200":
+        '200':
           description: List of participants
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Identity"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/Identity'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     put:
       tags: [Communities]
@@ -1995,46 +1995,46 @@ paths:
       description: Add, remove, promote, or demote participants. Requires admin privileges.
       operationId: updateCommunityParticipants
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateParticipantsRequest"
+              $ref: '#/components/schemas/UpdateParticipantsRequest'
             examples:
               add:
                 summary: Add participants
                 value:
-                  participants: ["1234567890@s.whatsapp.net"]
-                  action: "add"
+                  participants: ['1234567890@s.whatsapp.net']
+                  action: 'add'
               remove:
                 summary: Remove participants
                 value:
-                  participants: ["1234567890@s.whatsapp.net"]
-                  action: "remove"
+                  participants: ['1234567890@s.whatsapp.net']
+                  action: 'remove'
               promote:
                 summary: Promote to admin
                 value:
-                  participants: ["1234567890@s.whatsapp.net"]
-                  action: "promote"
+                  participants: ['1234567890@s.whatsapp.net']
+                  action: 'promote'
               demote:
                 summary: Demote from admin
                 value:
-                  participants: ["1234567890@s.whatsapp.net"]
-                  action: "demote"
+                  participants: ['1234567890@s.whatsapp.net']
+                  action: 'demote'
       responses:
-        "204":
+        '204':
           description: Participants updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/invite-link:
     get:
@@ -2043,10 +2043,10 @@ paths:
       description: Get the current invite link for a community. Requires admin privileges.
       operationId: getCommunityInviteLink
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       responses:
-        "200":
+        '200':
           description: Invite link
           content:
             application/json:
@@ -2055,15 +2055,15 @@ paths:
                 properties:
                   link:
                     type: string
-                    example: "https://chat.whatsapp.com/abc123"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                    example: 'https://chat.whatsapp.com/abc123'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/invite-link/reset:
     post:
@@ -2072,10 +2072,10 @@ paths:
       description: Reset and generate a new invite link. The old link will no longer work. Requires admin privileges.
       operationId: resetCommunityInviteLink
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       responses:
-        "200":
+        '200':
           description: New invite link
           content:
             application/json:
@@ -2084,15 +2084,15 @@ paths:
                 properties:
                   link:
                     type: string
-                    example: "https://chat.whatsapp.com/xyz789"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                    example: 'https://chat.whatsapp.com/xyz789'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/groups:
     get:
@@ -2101,27 +2101,27 @@ paths:
       description: Retrieve the list of all sub-groups linked to a community.
       operationId: getCommunitySubGroups
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       responses:
-        "200":
+        '200':
           description: List of sub-groups
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/CommunitySubGroupResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/CommunitySubGroupResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     post:
       tags: [Communities]
@@ -2129,25 +2129,25 @@ paths:
       description: Create a new sub-group inside a community. Requires admin privileges.
       operationId: createCommunityGroup
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateCommunityGroupRequest"
+              $ref: '#/components/schemas/CreateCommunityGroupRequest'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/groups/link:
     post:
@@ -2156,25 +2156,25 @@ paths:
       description: Link an existing group as a sub-group of a community. Requires admin privileges in both the group and community.
       operationId: linkGroupToCommunity
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LinkGroupRequest"
+              $ref: '#/components/schemas/LinkGroupRequest'
       responses:
-        "204":
+        '204':
           description: Group linked
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /communities/{id}/groups/{groupId}:
     delete:
@@ -2183,8 +2183,8 @@ paths:
       description: Remove a sub-group from a community. The group itself is not deleted. Requires admin privileges.
       operationId: unlinkCommunityGroup
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/CommunityIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/CommunityIdPath'
         - name: groupId
           in: path
           required: true
@@ -2192,16 +2192,16 @@ paths:
           schema:
             type: string
       responses:
-        "204":
+        '204':
           description: Group unlinked
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   # ─── Contacts ──────────────────────────────────────────────────────
 
@@ -2211,24 +2211,24 @@ paths:
       summary: List all contacts
       operationId: listContacts
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: List of contacts
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ContactInfo"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/ContactInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     post:
       tags: [Contacts]
@@ -2236,24 +2236,24 @@ paths:
       description: Creates or updates a contact via WhatsApp app state sync.
       operationId: createContact
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateContactRequest"
+              $ref: '#/components/schemas/CreateContactRequest'
       responses:
-        "204":
+        '204':
           description: Contact created or updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /contacts/sync:
     post:
@@ -2264,18 +2264,18 @@ paths:
         from the server and updates the local contact store, replacing any stale data.
       operationId: syncContacts
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "204":
+        '204':
           description: Contact sync triggered
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /contacts/{id}:
     get:
@@ -2283,7 +2283,7 @@ paths:
       summary: Get a specific contact
       operationId: getContact
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
         - name: id
           in: path
           required: true
@@ -2291,20 +2291,20 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Contact info
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ContactInfo"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/ContactInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /contacts/blocklist:
     get:
@@ -2313,24 +2313,24 @@ paths:
       description: Returns the list of all blocked contacts.
       operationId: getBlocklist
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: List of blocked contacts
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Identity"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/Identity'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /contacts/{id}/block:
     put:
@@ -2339,7 +2339,7 @@ paths:
       description: Block a contact by their JID. The contact will no longer be able to send you messages.
       operationId: blockContact
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
         - name: id
           in: path
           required: true
@@ -2347,16 +2347,16 @@ paths:
           schema:
             type: string
       responses:
-        "204":
+        '204':
           description: Contact blocked
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /contacts/{id}/unblock:
     put:
@@ -2365,7 +2365,7 @@ paths:
       description: Unblock a previously blocked contact.
       operationId: unblockContact
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
         - name: id
           in: path
           required: true
@@ -2373,16 +2373,16 @@ paths:
           schema:
             type: string
       responses:
-        "204":
+        '204':
           description: Contact unblocked
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   # ─── Users ─────────────────────────────────────────────────────────
 
@@ -2392,22 +2392,22 @@ paths:
       summary: Get own profile info
       operationId: getMyProfile
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: Account profile info
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserMeInfo"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/UserMeInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     put:
       tags: [Users]
@@ -2415,24 +2415,24 @@ paths:
       description: Update name, status, and/or picture. All fields are optional.
       operationId: updateMyProfile
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateProfileRequest"
+              $ref: '#/components/schemas/UpdateProfileRequest'
       responses:
-        "204":
+        '204':
           description: Profile updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /users/me/presence:
     put:
@@ -2441,24 +2441,24 @@ paths:
       description: Set the account's presence to available or unavailable. This is a transient action (not persisted in the profile).
       operationId: setPresence
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetMyPresenceRequest"
+              $ref: '#/components/schemas/SetMyPresenceRequest'
       responses:
-        "204":
+        '204':
           description: Presence updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /users/me/privacy:
     get:
@@ -2467,22 +2467,22 @@ paths:
       description: Returns the current privacy settings for the account.
       operationId: getPrivacySettings
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: Current privacy settings
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PrivacySettingsResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/PrivacySettingsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     put:
       tags: [Users]
@@ -2490,39 +2490,39 @@ paths:
       description: Update a single privacy setting. Returns the full updated privacy settings.
       operationId: setPrivacySetting
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetPrivacyRequest"
+              $ref: '#/components/schemas/SetPrivacyRequest'
             examples:
               lastSeen:
                 summary: Set last seen to contacts only
                 value:
-                  setting: "last"
-                  value: "contacts"
+                  setting: 'last'
+                  value: 'contacts'
               readReceipts:
                 summary: Disable read receipts
                 value:
-                  setting: "readreceipts"
-                  value: "none"
+                  setting: 'readreceipts'
+                  value: 'none'
       responses:
-        "200":
+        '200':
           description: Updated privacy settings
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PrivacySettingsResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/PrivacySettingsResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /users/check:
     post:
@@ -2531,32 +2531,32 @@ paths:
       description: Check multiple phone numbers at once to see if they are registered on WhatsApp.
       operationId: bulkCheckUsers
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/BulkCheckRequest"
+              $ref: '#/components/schemas/BulkCheckRequest'
             example:
-              phones: ["1234567890", "9876543210"]
+              phones: ['1234567890', '9876543210']
       responses:
-        "200":
+        '200':
           description: Bulk check results
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/BulkCheckResult"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/BulkCheckResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /users/{phone}/check:
     get:
@@ -2564,10 +2564,10 @@ paths:
       summary: Check if a phone number is on WhatsApp
       operationId: checkUser
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/PhonePath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/PhonePath'
       responses:
-        "200":
+        '200':
           description: WhatsApp presence check result
           content:
             application/json:
@@ -2576,14 +2576,14 @@ paths:
                 properties:
                   isInWhatsApp:
                     type: boolean
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /users/{phone}/profile:
     get:
@@ -2591,23 +2591,23 @@ paths:
       summary: Get user profile info
       operationId: getUserProfile
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/PhonePath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/PhonePath'
       responses:
-        "200":
+        '200':
           description: User profile info
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserInfo"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/UserInfo'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   # ─── Media ─────────────────────────────────────────────────────────
 
@@ -2618,7 +2618,7 @@ paths:
       description: Returns the raw media file as a binary download with Content-Disposition header. Use the `media.id` field from incoming message webhook events as the `id` query parameter.
       operationId: downloadMedia
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
         - name: id
           in: query
           required: true
@@ -2626,21 +2626,21 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Media file download
           content:
             application/octet-stream:
               schema:
                 type: string
                 format: binary
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   # ─── Chats ──────────────────────────────────────────────────────────
 
@@ -2651,22 +2651,22 @@ paths:
       description: Returns all known chats for the instance, enriched with contact info (pushName, businessName, fullName) and chat settings (pinned, archived, muted). Sorted by last activity descending.
       operationId: listChats
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: List of chats
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ChatListItem"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/ChatListItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}:
     get:
@@ -2675,42 +2675,42 @@ paths:
       description: Returns details for a single chat, enriched with contact info and chat settings.
       operationId: getChatInfo
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       responses:
-        "200":
+        '200':
           description: Chat info
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ChatListItem"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/ChatListItem'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     delete:
       tags: [Chats]
       summary: Delete a chat
       operationId: deleteChat
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       responses:
-        "204":
+        '204':
           description: Chat deleted
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/picture:
     get:
@@ -2718,23 +2718,23 @@ paths:
       summary: Get chat profile picture
       operationId: getChatPicture
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       responses:
-        "200":
+        '200':
           description: Chat picture info
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ChatPictureResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/ChatPictureResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/business:
     get:
@@ -2742,23 +2742,23 @@ paths:
       summary: Get business profile for a chat
       operationId: getChatBusinessProfile
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       responses:
-        "200":
+        '200':
           description: Business profile
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BusinessProfileResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/BusinessProfileResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/presence:
     put:
@@ -2766,25 +2766,25 @@ paths:
       summary: Send chat presence (typing, paused, recording)
       operationId: setChatPresence
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetPresenceRequest"
+              $ref: '#/components/schemas/SetPresenceRequest'
       responses:
-        "204":
+        '204':
           description: Presence sent
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/presence/subscribe:
     put:
@@ -2792,19 +2792,19 @@ paths:
       summary: Subscribe to presence updates for a chat
       operationId: subscribeChatPresence
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       responses:
-        "204":
+        '204':
           description: Subscribed
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/ephemeral:
     put:
@@ -2812,25 +2812,25 @@ paths:
       summary: Set disappearing messages timer
       operationId: setChatEphemeral
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetChatEphemeralRequest"
+              $ref: '#/components/schemas/SetChatEphemeralRequest'
       responses:
-        "204":
+        '204':
           description: Timer set
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/mute:
     put:
@@ -2838,25 +2838,25 @@ paths:
       summary: Mute or unmute a chat
       operationId: muteChat
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MuteChatRequest"
+              $ref: '#/components/schemas/MuteChatRequest'
       responses:
-        "204":
+        '204':
           description: Mute setting updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/pin:
     put:
@@ -2864,25 +2864,25 @@ paths:
       summary: Pin or unpin a chat
       operationId: pinChat
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PinChatRequest"
+              $ref: '#/components/schemas/PinChatRequest'
       responses:
-        "204":
+        '204':
           description: Pin setting updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/archive:
     put:
@@ -2890,25 +2890,25 @@ paths:
       summary: Archive or unarchive a chat
       operationId: archiveChat
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ArchiveChatRequest"
+              $ref: '#/components/schemas/ArchiveChatRequest'
       responses:
-        "204":
+        '204':
           description: Archive setting updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/read:
     put:
@@ -2916,25 +2916,25 @@ paths:
       summary: Mark a chat as read or unread
       operationId: markChatAsRead
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChatMarkAsReadRequest"
+              $ref: '#/components/schemas/ChatMarkAsReadRequest'
       responses:
-        "204":
+        '204':
           description: Read state updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/messages:
     post:
@@ -2945,20 +2945,20 @@ paths:
         asynchronously as a `message_history_sync` event via the configured publisher.
       operationId: requestChatMessages
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RequestMessagesRequest"
+              $ref: '#/components/schemas/RequestMessagesRequest'
             example:
-              lastMessageId: "3EB0A0B0C1D2E3F4"
-              lastMessageSenderId: "1234567890"
+              lastMessageId: '3EB0A0B0C1D2E3F4'
+              lastMessageSenderId: '1234567890'
               count: 50
       responses:
-        "202":
+        '202':
           description: History sync request accepted
           content:
             application/json:
@@ -2968,14 +2968,14 @@ paths:
                   status:
                     type: string
                     example: ok
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /chats/{chatId}/clear:
     post:
@@ -2983,19 +2983,19 @@ paths:
       summary: Clear all messages from a chat
       operationId: clearChat
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/ChatIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/ChatIdPath'
       responses:
-        "204":
+        '204':
           description: Chat cleared
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   # ─── Calls ─────────────────────────────────────────────────────────
 
@@ -3005,7 +3005,7 @@ paths:
       summary: Reject an incoming call
       operationId: rejectCall
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
         - name: callId
           in: path
           required: true
@@ -3017,18 +3017,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RejectCallRequest"
+              $ref: '#/components/schemas/RejectCallRequest'
       responses:
-        "204":
+        '204':
           description: Call rejected
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   # ─── Newsletters ──────────────────────────────────────────────────
 
@@ -3039,24 +3039,24 @@ paths:
       description: Returns all newsletters the current user is subscribed to.
       operationId: listNewsletters
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: List of newsletters
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/NewsletterInfoResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                  $ref: '#/components/schemas/NewsletterInfoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
     post:
       tags: [Newsletters]
@@ -3064,27 +3064,27 @@ paths:
       description: Create a new newsletter/channel with the specified name, description, and optional picture.
       operationId: createNewsletter
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateNewsletterRequest"
+              $ref: '#/components/schemas/CreateNewsletterRequest'
             example:
-              name: "My Newsletter"
-              description: "Updates about cool stuff"
+              name: 'My Newsletter'
+              description: 'Updates about cool stuff'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /newsletters/invite/{code}:
     get:
@@ -3093,7 +3093,7 @@ paths:
       description: Look up newsletter information using an invite code.
       operationId: getNewsletterByInviteCode
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
         - name: code
           in: path
           required: true
@@ -3101,22 +3101,22 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Newsletter info
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NewsletterInfoResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/NewsletterInfoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /newsletters/{id}:
     get:
@@ -3125,25 +3125,25 @@ paths:
       description: Retrieve detailed information about a specific newsletter.
       operationId: getNewsletter
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/NewsletterIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/NewsletterIdPath'
       responses:
-        "200":
+        '200':
           description: Newsletter info
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/NewsletterInfoResponse"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+                $ref: '#/components/schemas/NewsletterInfoResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /newsletters/{id}/subscription:
     put:
@@ -3152,14 +3152,14 @@ paths:
       description: Set the subscription state for a newsletter. Set `subscribed` to true to follow/subscribe, or false to unfollow/unsubscribe.
       operationId: setNewsletterSubscription
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/NewsletterIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/NewsletterIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SetSubscriptionRequest"
+              $ref: '#/components/schemas/SetSubscriptionRequest'
             examples:
               subscribe:
                 summary: Subscribe to newsletter
@@ -3170,16 +3170,16 @@ paths:
                 value:
                   subscribed: false
       responses:
-        "204":
+        '204':
           description: Subscription state updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /newsletters/{id}/mute:
     put:
@@ -3188,14 +3188,14 @@ paths:
       description: Toggle mute state for a newsletter. Muted newsletters do not send notifications.
       operationId: toggleMuteNewsletter
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/NewsletterIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/NewsletterIdPath'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ToggleMuteNewsletterRequest"
+              $ref: '#/components/schemas/ToggleMuteNewsletterRequest'
             examples:
               mute:
                 summary: Mute newsletter
@@ -3206,16 +3206,16 @@ paths:
                 value:
                   mute: false
       responses:
-        "204":
+        '204':
           description: Mute state updated
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   # ─── Status ──────────────────────────────────────────────────────
 
@@ -3226,26 +3226,26 @@ paths:
       description: Returns the status broadcast privacy settings for the logged-in account.
       operationId: getStatusPrivacy
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       responses:
-        "200":
+        '200':
           description: Status privacy settings
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/StatusPrivacyResponse"
+                  $ref: '#/components/schemas/StatusPrivacyResponse'
               example:
                 - type: contacts
                   list: []
                   isDefault: true
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /status/text:
     post:
@@ -3254,26 +3254,26 @@ paths:
       description: Post a text status update (story) visible to your contacts.
       operationId: postTextStatus
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PostTextStatusRequest"
+              $ref: '#/components/schemas/PostTextStatusRequest'
             example:
-              text: "Hello from WSAPI!"
+              text: 'Hello from WSAPI!'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /status/image:
     post:
@@ -3282,36 +3282,36 @@ paths:
       description: Post an image status update (story) via URL or base64-encoded data.
       operationId: postImageStatus
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PostMediaStatusRequest"
+              $ref: '#/components/schemas/PostMediaStatusRequest'
             examples:
               byURL:
                 summary: Image status by URL
                 value:
-                  url: "https://example.com/photo.jpg"
-                  mimeType: "image/jpeg"
-                  caption: "Beautiful sunset"
+                  url: 'https://example.com/photo.jpg'
+                  mimeType: 'image/jpeg'
+                  caption: 'Beautiful sunset'
               byBase64:
                 summary: Image status by base64
                 value:
-                  data: "/9j/4AAQSkZJRgABAQ..."
-                  mimeType: "image/png"
+                  data: '/9j/4AAQSkZJRgABAQ...'
+                  mimeType: 'image/png'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /status/video:
     post:
@@ -3320,36 +3320,36 @@ paths:
       description: Post a video status update (story) via URL or base64-encoded data.
       operationId: postVideoStatus
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
+        - $ref: '#/components/parameters/XInstanceId'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PostMediaStatusRequest"
+              $ref: '#/components/schemas/PostMediaStatusRequest'
             examples:
               byURL:
                 summary: Video status by URL
                 value:
-                  url: "https://example.com/clip.mp4"
-                  mimeType: "video/mp4"
-                  caption: "Check this out"
+                  url: 'https://example.com/clip.mp4'
+                  mimeType: 'video/mp4'
+                  caption: 'Check this out'
               byBase64:
                 summary: Video status by base64
                 value:
-                  data: "AAAAGGZ0eXBtcDQy..."
-                  mimeType: "video/mp4"
+                  data: 'AAAAGGZ0eXBtcDQy...'
+                  mimeType: 'video/mp4'
       responses:
-        "201":
-          $ref: "#/components/responses/Created"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '201':
+          $ref: '#/components/responses/Created'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
   /status/{messageId}/delete:
     post:
@@ -3358,17 +3358,17 @@ paths:
       description: Delete (revoke) a previously posted status update so it is no longer visible to your contacts.
       operationId: deleteStatus
       parameters:
-        - $ref: "#/components/parameters/XInstanceId"
-        - $ref: "#/components/parameters/MessageIdPath"
+        - $ref: '#/components/parameters/XInstanceId'
+        - $ref: '#/components/parameters/MessageIdPath'
       responses:
-        "204":
+        '204':
           description: Status deleted
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "409":
-          $ref: "#/components/responses/DeviceNotPaired"
-        "503":
-          $ref: "#/components/responses/ServiceUnavailable"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/DeviceNotPaired'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
 
 components:
   securitySchemes:
@@ -3397,7 +3397,7 @@ components:
       description: The ID of the WhatsApp instance to use
       schema:
         type: string
-        default: "{{instanceId}}"
+        default: '{{instanceId}}'
 
     AccountInstanceId:
       name: id
@@ -3488,7 +3488,7 @@ components:
                 type: string
                 description: ID of the created resource
           example:
-            id: "01234567890123456"
+            id: '01234567890123456'
 
     OK:
       description: Success
@@ -3501,57 +3501,57 @@ components:
                 type: string
                 description: ID of the resource
           example:
-            id: "01234567890123456"
+            id: '01234567890123456'
 
     BadRequest:
       description: Bad request
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           example:
             status: 400
-            detail: "invalid request body"
+            detail: 'invalid request body'
 
     Unauthorized:
       description: Authentication failed
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           example:
             status: 401
-            detail: "unauthorized"
+            detail: 'unauthorized'
 
     NotFound:
       description: Resource not found
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           example:
             status: 404
-            detail: "not found"
+            detail: 'not found'
 
     ServiceUnavailable:
       description: Instance not available (not connected or service is nil)
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           example:
             status: 503
-            detail: "instance not available"
+            detail: 'instance not available'
 
     DeviceNotPaired:
       description: Device is not paired. Complete the pairing process first.
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           example:
             status: 403
-            detail: "device not paired"
+            detail: 'device not paired'
 
   schemas:
     Error:
@@ -3562,7 +3562,7 @@ components:
         detail:
           type: string
           description: Human-readable error message
-          example: "invalid request body"
+          example: 'invalid request body'
         status:
           type: integer
           description: HTTP status code
@@ -3650,7 +3650,7 @@ components:
 
     SendDocumentRequest:
       allOf:
-        - $ref: "#/components/schemas/SendMediaRequest"
+        - $ref: '#/components/schemas/SendMediaRequest'
         - type: object
           required: [filename]
           properties:
@@ -4015,11 +4015,11 @@ components:
         id:
           type: string
           description: Chat JID
-          example: "1234567890@s.whatsapp.net"
+          example: '1234567890@s.whatsapp.net'
         lid:
           type: string
           description: LID-based JID for the chat (omitted for groups or if unknown)
-          example: "222424242@lid"
+          example: '222424242@lid'
         isGroup:
           type: boolean
         isArchived:
@@ -4217,15 +4217,15 @@ components:
         id:
           type: string
           description: Primary identifier (phone-based JID preferred, LID fallback)
-          example: "1234567890@s.whatsapp.net"
+          example: '1234567890@s.whatsapp.net'
         lid:
           type: string
           description: LID-based JID (omitted if unknown)
-          example: "222424242@lid"
+          example: '222424242@lid'
         phone:
           type: string
           description: Phone number without prefix (omitted if unknown)
-          example: "1234567890"
+          example: '1234567890'
         device:
           type: integer
           description: Device number (omitted if 0)
@@ -4233,7 +4233,7 @@ components:
 
     Sender:
       allOf:
-        - $ref: "#/components/schemas/Identity"
+        - $ref: '#/components/schemas/Identity'
         - type: object
           properties:
             isMe:
@@ -4243,7 +4243,7 @@ components:
 
     GroupParticipant:
       allOf:
-        - $ref: "#/components/schemas/Identity"
+        - $ref: '#/components/schemas/Identity'
         - type: object
           properties:
             isAdmin:
@@ -4259,7 +4259,7 @@ components:
         groupId:
           type: string
         owner:
-          $ref: "#/components/schemas/Identity"
+          $ref: '#/components/schemas/Identity'
         name:
           type: string
         createdAt:
@@ -4279,7 +4279,7 @@ components:
         participants:
           type: array
           items:
-            $ref: "#/components/schemas/GroupParticipant"
+            $ref: '#/components/schemas/GroupParticipant'
         communityId:
           type: string
         isAnnouncementGroup:
@@ -4293,7 +4293,7 @@ components:
       type: object
       properties:
         user:
-          $ref: "#/components/schemas/Identity"
+          $ref: '#/components/schemas/Identity'
         requestedAt:
           type: string
           format: date-time
@@ -4321,7 +4321,7 @@ components:
         communityId:
           type: string
         owner:
-          $ref: "#/components/schemas/Identity"
+          $ref: '#/components/schemas/Identity'
         name:
           type: string
         created:
@@ -4336,11 +4336,11 @@ components:
         participants:
           type: array
           items:
-            $ref: "#/components/schemas/GroupParticipant"
+            $ref: '#/components/schemas/GroupParticipant'
 
     ContactInfo:
       allOf:
-        - $ref: "#/components/schemas/Identity"
+        - $ref: '#/components/schemas/Identity'
         - type: object
           properties:
             fullName:
@@ -4356,7 +4356,7 @@ components:
 
     UserInfo:
       allOf:
-        - $ref: "#/components/schemas/Identity"
+        - $ref: '#/components/schemas/Identity'
         - type: object
           properties:
             isInWhatsApp:
@@ -4373,7 +4373,7 @@ components:
 
     UserMeInfo:
       allOf:
-        - $ref: "#/components/schemas/Identity"
+        - $ref: '#/components/schemas/Identity'
         - type: object
           properties:
             deviceId:
@@ -4615,7 +4615,7 @@ components:
         hasApiKey:
           type: boolean
         settings:
-          $ref: "#/components/schemas/AccountInstanceSettings"
+          $ref: '#/components/schemas/AccountInstanceSettings'
         status:
           type: string
         deviceId:
@@ -4738,7 +4738,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/AccountInstance"
+            $ref: '#/components/schemas/AccountInstance'
         totalCount:
           type: integer
         pageNumber:
@@ -4752,7 +4752,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/AccountSubscription"
+            $ref: '#/components/schemas/AccountSubscription'
         totalCount:
           type: integer
         pageNumber:
@@ -4766,7 +4766,7 @@ components:
         items:
           type: array
           items:
-            $ref: "#/components/schemas/AccountSubscriptionChange"
+            $ref: '#/components/schemas/AccountSubscriptionChange'
         totalCount:
           type: integer
         pageNumber:

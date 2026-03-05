@@ -1,6 +1,11 @@
 // SSE Core
 export { SSEClient } from './SSEClient.js';
-export type { ISSEClient, SSEClientOptions, SSEConnectionStateChangedHandler, RawEventReceivedHandler } from './ISSEClient.js';
+export type {
+  ISSEClient,
+  SSEClientOptions,
+  SSEConnectionStateChangedHandler,
+  RawEventReceivedHandler,
+} from './ISSEClient.js';
 
 // SSE Types
 export { SSEConnectionState } from './SSEConnectionState.js';

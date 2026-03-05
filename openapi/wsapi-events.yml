@@ -86,24 +86,24 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CallOfferEvent"
+              $ref: '#/components/schemas/CallOfferEvent'
             example:
               eventId: evt_a1b2c3d4e5f67890
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: call_offer
               eventData:
                 id: call_123
                 caller:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
+                  phone: '1234567890'
                 chatId: 1234567890@s.whatsapp.net
                 isGroup: false
-                time: "2025-05-19T00:51:44.816Z"
+                time: '2025-05-19T00:51:44.816Z'
                 isVideo: true
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   call_terminate:
     post:
@@ -117,22 +117,22 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CallTerminateEvent"
+              $ref: '#/components/schemas/CallTerminateEvent'
             example:
               eventId: evt_b2c3d4e5f6789012
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: call_terminate
               eventData:
                 id: call_123
                 caller:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
-                time: "2025-05-19T00:51:44.816Z"
+                  phone: '1234567890'
+                time: '2025-05-19T00:51:44.816Z'
                 reason: ended
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   call_accept:
     post:
@@ -146,21 +146,21 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CallAcceptEvent"
+              $ref: '#/components/schemas/CallAcceptEvent'
             example:
               eventId: evt_c3d4e5f678901234
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: call_accept
               eventData:
                 id: call_123
                 caller:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
-                time: "2025-05-19T00:51:44.816Z"
+                  phone: '1234567890'
+                time: '2025-05-19T00:51:44.816Z'
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   chat_setting:
     post:
@@ -174,27 +174,27 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChatSettingEvent"
+              $ref: '#/components/schemas/ChatSettingEvent'
             examples:
               mute:
                 summary: Chat muted
                 value:
                   eventId: evt_d4e5f67890123456
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: chat_setting
                   eventData:
                     id: 1234567890@s.whatsapp.net
                     settingType: mute
                     mute:
                       isMuted: true
-                      muteEndTime: "2025-05-20T00:51:44.816Z"
+                      muteEndTime: '2025-05-20T00:51:44.816Z'
               pin:
                 summary: Chat pinned
                 value:
                   eventId: evt_e5f6789012345678
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: chat_setting
                   eventData:
                     id: 1234567890@s.whatsapp.net
@@ -206,7 +206,7 @@ webhooks:
                 value:
                   eventId: evt_f678901234567890
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: chat_setting
                   eventData:
                     id: 1234567890@s.whatsapp.net
@@ -218,7 +218,7 @@ webhooks:
                 value:
                   eventId: evt_0123456789abcdef
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: chat_setting
                   eventData:
                     id: 1234567890@s.whatsapp.net
@@ -230,7 +230,7 @@ webhooks:
                 value:
                   eventId: evt_1234567890abcdef
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: chat_setting
                   eventData:
                     id: 1234567890@s.whatsapp.net
@@ -240,10 +240,10 @@ webhooks:
                       sender:
                         id: 1234567890@s.whatsapp.net
                         lid: 12345678901234@lid
-                        phone: "1234567890"
+                        phone: '1234567890'
                         isMe: false
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   chat_presence:
     post:
@@ -257,22 +257,22 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChatPresenceEvent"
+              $ref: '#/components/schemas/ChatPresenceEvent'
             example:
               eventId: evt_2345678901abcdef
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: chat_presence
               eventData:
                 id: 1234567890@s.whatsapp.net
                 sender:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
+                  phone: '1234567890'
                   isMe: false
                 state: typing
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   chat_push_name:
     post:
@@ -286,20 +286,20 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChatPushNameEvent"
+              $ref: '#/components/schemas/ChatPushNameEvent'
             example:
               eventId: evt_3456789012abcdef
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: chat_push_name
               eventData:
                 user:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
+                  phone: '1234567890'
                 pushName: John Doe
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   chat_status:
     post:
@@ -313,20 +313,20 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChatStatusEvent"
+              $ref: '#/components/schemas/ChatStatusEvent'
             example:
               eventId: evt_4567890123abcdef
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: chat_status
               eventData:
                 user:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
+                  phone: '1234567890'
                 status: Available
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   chat_picture:
     post:
@@ -340,22 +340,22 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ChatPictureEvent"
+              $ref: '#/components/schemas/ChatPictureEvent'
             example:
               eventId: evt_5678901234abcdef
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: chat_picture
               eventData:
                 id: 1234567890@s.whatsapp.net
                 sender:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
+                  phone: '1234567890'
                   isMe: false
                 pictureId: picture_123
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   contact:
     post:
@@ -369,21 +369,21 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ContactEvent"
+              $ref: '#/components/schemas/ContactEvent'
             example:
               eventId: evt_6789012345abcdef
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: contact
               eventData:
                 contact:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
+                  phone: '1234567890'
                 fullName: John Doe
                 inPhoneAddressBook: true
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   group:
     post:
@@ -397,133 +397,133 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GroupEvent"
+              $ref: '#/components/schemas/GroupEvent'
             examples:
               topic_change:
                 summary: Group topic/description changed
                 value:
                   eventId: evt_7890123456abcdef
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: group
                   eventData:
                     id: 1234567890-1234567890@g.us
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     description:
                       topic: New Group Description
-                    timestamp: "2025-05-19T00:51:44.816Z"
+                    timestamp: '2025-05-19T00:51:44.816Z'
               name_change:
                 summary: Group name changed
                 value:
                   eventId: evt_890123456789abcd
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: group
                   eventData:
                     id: 1234567890-1234567890@g.us
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     name:
                       name: New Group Name
-                    timestamp: "2025-05-19T00:51:44.816Z"
+                    timestamp: '2025-05-19T00:51:44.816Z'
               member_join:
                 summary: Members joined the group
                 value:
                   eventId: evt_90123456789abcde
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: group
                   eventData:
                     id: 1234567890-1234567890@g.us
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     join:
                       - id: 9876543210@s.whatsapp.net
                         lid: 98765432101234@lid
-                        phone: "9876543210"
+                        phone: '9876543210'
                       - id: 5551234567@s.whatsapp.net
                         lid: 55512345671234@lid
-                        phone: "5551234567"
+                        phone: '5551234567'
               member_leave:
                 summary: Members left the group
                 value:
                   eventId: evt_0123456789abcde0
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: group
                   eventData:
                     id: 1234567890-1234567890@g.us
                     sender:
                       id: 9876543210@s.whatsapp.net
                       lid: 98765432101234@lid
-                      phone: "9876543210"
+                      phone: '9876543210'
                       isMe: false
                     leave:
                       - id: 9876543210@s.whatsapp.net
                         lid: 98765432101234@lid
-                        phone: "9876543210"
+                        phone: '9876543210'
               admin_promote:
                 summary: Members promoted to admin
                 value:
                   eventId: evt_abcdef0123456789
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: group
                   eventData:
                     id: 1234567890-1234567890@g.us
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     promote:
                       - id: 9876543210@s.whatsapp.net
                         lid: 98765432101234@lid
-                        phone: "9876543210"
-                    timestamp: "2025-05-19T00:51:44.816Z"
+                        phone: '9876543210'
+                    timestamp: '2025-05-19T00:51:44.816Z'
               joined_community:
                 summary: Joined a community
                 value:
                   eventId: evt_bcdef01234567890
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: group
                   eventData:
                     id: 1234567890-1234567890@g.us
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     isCommunity: true
                     joinReason: invite
                     join:
                       - id: 1111111111@s.whatsapp.net
                         lid: 11111111111234@lid
-                        phone: "1111111111"
+                        phone: '1111111111'
               joined_community_group:
                 summary: Joined a group inside a community
                 value:
                   eventId: evt_cdef012345678901
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: group
                   eventData:
                     id: 9876543210-9876543210@g.us
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     communityId: 1234567890-1234567890@g.us
                     isAnnouncementGroup: false
@@ -531,29 +531,29 @@ webhooks:
                     join:
                       - id: 1111111111@s.whatsapp.net
                         lid: 11111111111234@lid
-                        phone: "1111111111"
+                        phone: '1111111111'
               group_linked_to_community:
                 summary: Group linked to a community
                 value:
                   eventId: evt_def0123456789012
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: group
                   eventData:
                     id: 1234567890-1234567890@g.us
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     link:
                       type: sub_group
                       groupId: 9876543210-9876543210@g.us
                       groupName: New Subgroup
                       isAnnouncementGroup: false
-                    timestamp: "2025-05-19T00:51:44.816Z"
+                    timestamp: '2025-05-19T00:51:44.816Z'
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   newsletter:
     post:
@@ -567,14 +567,14 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/NewsletterEvent"
+              $ref: '#/components/schemas/NewsletterEvent'
             examples:
               join:
                 summary: Joined a newsletter
                 value:
                   eventId: evt_a1b2c3d4e5f67890
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: newsletter
                   eventData:
                     id: 1234567890@newsletter
@@ -586,7 +586,7 @@ webhooks:
                 value:
                   eventId: evt_b2c3d4e5f6789012
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: newsletter
                   eventData:
                     id: 1234567890@newsletter
@@ -597,14 +597,14 @@ webhooks:
                 value:
                   eventId: evt_c3d4e5f678901234
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: newsletter
                   eventData:
                     id: 1234567890@newsletter
                     action: mute
                     mute: MUTED
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   message:
     post:
@@ -618,23 +618,23 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MessageEvent"
+              $ref: '#/components/schemas/MessageEvent'
             examples:
               text:
                 summary: Text message
                 value:
                   eventId: evt_ef01234567890123
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: message
                   eventData:
-                    id: "0123456789012345"
-                    time: "2025-05-19T00:51:44.816Z"
+                    id: '0123456789012345'
+                    time: '2025-05-19T00:51:44.816Z'
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     isGroup: false
                     isStatus: false
@@ -645,16 +645,16 @@ webhooks:
                 value:
                   eventId: evt_f012345678901234
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: message
                   eventData:
-                    id: "0123456789012346"
-                    time: "2025-05-19T00:51:45.000Z"
+                    id: '0123456789012346'
+                    time: '2025-05-19T00:51:45.000Z'
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     isGroup: false
                     isStatus: false
@@ -673,16 +673,16 @@ webhooks:
                 value:
                   eventId: evt_0123456789012345
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: message
                   eventData:
-                    id: "0123456789012347"
-                    time: "2025-05-19T00:51:46.000Z"
+                    id: '0123456789012347'
+                    time: '2025-05-19T00:51:46.000Z'
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     isGroup: false
                     isStatus: false
@@ -698,38 +698,38 @@ webhooks:
                 value:
                   eventId: evt_1234567890123456
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: message
                   eventData:
-                    id: "0123456789012348"
-                    time: "2025-05-19T00:51:47.000Z"
+                    id: '0123456789012348'
+                    time: '2025-05-19T00:51:47.000Z'
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     isGroup: false
                     isStatus: false
                     type: reaction
                     reaction:
-                      messageId: "0123456789012345"
+                      messageId: '0123456789012345'
                       emoji: "\U0001F44D"
               contact:
                 summary: Single contact vCard
                 value:
                   eventId: evt_2345678901234567
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: message
                   eventData:
-                    id: "0123456789012349"
-                    time: "2025-05-19T00:51:48.000Z"
+                    id: '0123456789012349'
+                    time: '2025-05-19T00:51:48.000Z'
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     isGroup: false
                     isStatus: false
@@ -746,26 +746,26 @@ webhooks:
                 value:
                   eventId: evt_3456789012345678
                   instanceId: ins_ABCdefGHIjk
-                  receivedAt: "2025-05-19T00:51:44.816Z"
+                  receivedAt: '2025-05-19T00:51:44.816Z'
                   eventType: message
                   eventData:
-                    id: "0123456789012350"
-                    time: "2025-05-19T00:51:49.000Z"
+                    id: '0123456789012350'
+                    time: '2025-05-19T00:51:49.000Z'
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     isGroup: false
                     isStatus: false
                     type: pinInChat
                     pin:
                       pinned: true
-                      messageId: "0123456789012346"
+                      messageId: '0123456789012346'
                       expiration: 24h
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   message_read:
     post:
@@ -779,31 +779,31 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MessageReadEvent"
+              $ref: '#/components/schemas/MessageReadEvent'
             example:
               eventId: evt_4567890123456789
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: message_read
               eventData:
                 chatId: 1234567890@s.whatsapp.net
                 sender:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
+                  phone: '1234567890'
                   isMe: false
                 messageSender:
                   id: 9876543210@s.whatsapp.net
                   lid: 98765432101234@lid
-                  phone: "9876543210"
+                  phone: '9876543210'
                   isMe: true
                 isGroup: false
                 messageIds:
-                  - "0123456789012345"
-                time: "2025-05-19T00:51:44.816Z"
+                  - '0123456789012345'
+                time: '2025-05-19T00:51:44.816Z'
                 receiptType: read
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   message_delete:
     post:
@@ -817,26 +817,26 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MessageDeleteEvent"
+              $ref: '#/components/schemas/MessageDeleteEvent'
             example:
               eventId: evt_5678901234567890
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: message_delete
               eventData:
-                id: "0123456789012345"
+                id: '0123456789012345'
                 sender:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
+                  phone: '1234567890'
                   isMe: false
                 chatId: 1234567890@s.whatsapp.net
-                time: "2025-05-19T00:51:44.816Z"
+                time: '2025-05-19T00:51:44.816Z'
                 isDeletedForAll: true
                 isDeletedForMe: false
                 isStatus: false
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   message_star:
     post:
@@ -850,24 +850,24 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MessageStarEvent"
+              $ref: '#/components/schemas/MessageStarEvent'
             example:
               eventId: evt_6789012345678901
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: message_star
               eventData:
-                id: "0123456789012345"
+                id: '0123456789012345'
                 chatId: 1234567890@s.whatsapp.net
                 sender:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
+                  phone: '1234567890'
                   isMe: false
-                time: "2025-05-19T00:51:44.816Z"
+                time: '2025-05-19T00:51:44.816Z'
                 isStarred: true
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   message_history_sync:
     post:
@@ -881,29 +881,29 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/MessageHistorySyncEvent"
+              $ref: '#/components/schemas/MessageHistorySyncEvent'
             example:
               eventId: evt_7890123456789012
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: message_history_sync
               eventData:
                 chatId: 1234567890@s.whatsapp.net
                 messages:
-                  - id: "0123456789012345"
-                    time: "2025-05-19T00:51:44.816Z"
+                  - id: '0123456789012345'
+                    time: '2025-05-19T00:51:44.816Z'
                     chatId: 1234567890@s.whatsapp.net
                     sender:
                       id: 1234567890@s.whatsapp.net
                       lid: 12345678901234@lid
-                      phone: "1234567890"
+                      phone: '1234567890'
                       isMe: false
                     isGroup: false
                     isStatus: false
                     type: text
                     text: Hello, world!
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   logged_in:
     post:
@@ -920,16 +920,16 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LoggedInEvent"
+              $ref: '#/components/schemas/LoggedInEvent'
             example:
               eventId: evt_8901234567890123
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: logged_in
               eventData:
                 deviceId: 1234567890:12@s.whatsapp.net
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   logged_out:
     post:
@@ -950,16 +950,16 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LoggedOutEvent"
+              $ref: '#/components/schemas/LoggedOutEvent'
             example:
               eventId: evt_9012345678901234
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: logged_out
               eventData:
                 reason: user_logged_out
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   login_error:
     post:
@@ -976,17 +976,17 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/LoginErrorEvent"
+              $ref: '#/components/schemas/LoginErrorEvent'
             example:
               eventId: evt_0123456789012345
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: login_error
               eventData:
                 id: 1234567890:12@s.whatsapp.net
-                error: "connection timeout: failed to pair device"
+                error: 'connection timeout: failed to pair device'
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   initial_sync_finished:
     post:
@@ -1004,15 +1004,15 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/InitialSyncFinishedEvent"
+              $ref: '#/components/schemas/InitialSyncFinishedEvent'
             example:
               eventId: evt_abcdef1234567890
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: initial_sync_finished
               eventData: {}
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
   user_presence:
     post:
@@ -1026,21 +1026,21 @@ webhooks:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UserPresenceEvent"
+              $ref: '#/components/schemas/UserPresenceEvent'
             example:
               eventId: evt_bcdef01234567890
               instanceId: ins_ABCdefGHIjk
-              receivedAt: "2025-05-19T00:51:44.816Z"
+              receivedAt: '2025-05-19T00:51:44.816Z'
               eventType: user_presence
               eventData:
                 user:
                   id: 1234567890@s.whatsapp.net
                   lid: 12345678901234@lid
-                  phone: "1234567890"
+                  phone: '1234567890'
                 status: available
-                lastSeen: "2025-05-19T00:51:44.816Z"
+                lastSeen: '2025-05-19T00:51:44.816Z'
       responses:
-        "200":
+        '200':
           description: Return a 200 status to indicate that the data was received successfully
 components:
   schemas:
@@ -1299,12 +1299,12 @@ components:
                 expiration:
                   type: string
                   enum:
-                    - "off"
+                    - 'off'
                     - 24h
                     - 7d
                     - 90d
                 sender:
-                  $ref: "#/components/schemas/Sender"
+                  $ref: '#/components/schemas/Sender'
     ChatPresenceEvent:
       type: object
       required:
@@ -1340,7 +1340,7 @@ components:
               type: string
               description: The chat ID
             sender:
-              $ref: "#/components/schemas/Sender"
+              $ref: '#/components/schemas/Sender'
             state:
               type: string
               enum:
@@ -1378,7 +1378,7 @@ components:
             - pushName
           properties:
             user:
-              $ref: "#/components/schemas/Identity"
+              $ref: '#/components/schemas/Identity'
             pushName:
               type: string
               description: The user's push name
@@ -1413,7 +1413,7 @@ components:
             - status
           properties:
             user:
-              $ref: "#/components/schemas/Identity"
+              $ref: '#/components/schemas/Identity'
             status:
               type: string
               description: The user's about/status message
@@ -1456,7 +1456,7 @@ components:
                 The user who changed the chat picture. The `isMe` field is
                 accurately resolved by comparing the event author with the
                 client's own JID.
-              $ref: "#/components/schemas/Sender"
+              $ref: '#/components/schemas/Sender'
             pictureId:
               type: string
               description: The ID of the chat's profile picture
@@ -1492,7 +1492,7 @@ components:
             - inPhoneAddressBook
           properties:
             contact:
-              $ref: "#/components/schemas/Identity"
+              $ref: '#/components/schemas/Identity'
             fullName:
               type: string
               description: The contact's full name
@@ -1532,7 +1532,7 @@ components:
               type: string
               description: The group or community ID
             sender:
-              $ref: "#/components/schemas/Sender"
+              $ref: '#/components/schemas/Sender'
             timestamp:
               type: string
               format: date-time
@@ -1581,22 +1581,22 @@ components:
             join:
               type: array
               items:
-                $ref: "#/components/schemas/Identity"
+                $ref: '#/components/schemas/Identity'
               description: Array of identities who joined the group
             leave:
               type: array
               items:
-                $ref: "#/components/schemas/Identity"
+                $ref: '#/components/schemas/Identity'
               description: Array of identities who left the group
             promote:
               type: array
               items:
-                $ref: "#/components/schemas/Identity"
+                $ref: '#/components/schemas/Identity'
               description: Array of identities who were promoted to admin
             demote:
               type: array
               items:
-                $ref: "#/components/schemas/Identity"
+                $ref: '#/components/schemas/Identity'
               description: Array of identities who were demoted from admin
             link:
               type: object
@@ -1651,7 +1651,7 @@ components:
             suspended:
               type:
                 - boolean
-                - "null"
+                - 'null'
               description: Present when the group's suspension status changes. True means suspended, false means unsuspended.
     NewsletterEvent:
       type: object
@@ -1746,7 +1746,7 @@ components:
               type: string
               description: The chat ID
             sender:
-              $ref: "#/components/schemas/Sender"
+              $ref: '#/components/schemas/Sender'
             isGroup:
               type: boolean
             isStatus:
@@ -1839,7 +1839,7 @@ components:
                 id:
                   type: string
                 sender:
-                  $ref: "#/components/schemas/Sender"
+                  $ref: '#/components/schemas/Sender'
                 isForwarded:
                   type: boolean
                 text:
@@ -1847,7 +1847,7 @@ components:
             ephemeralExpiration:
               type: string
               enum:
-                - "off"
+                - 'off'
                 - 24h
                 - 7d
                 - 90d
@@ -1871,7 +1871,7 @@ components:
                 expiration:
                   type: string
                   enum:
-                    - "off"
+                    - 'off'
                     - 24h
                     - 7d
                     - 30d
@@ -1911,9 +1911,9 @@ components:
               type: string
               description: The chat ID
             sender:
-              $ref: "#/components/schemas/Sender"
+              $ref: '#/components/schemas/Sender'
             messageSender:
-              $ref: "#/components/schemas/Sender"
+              $ref: '#/components/schemas/Sender'
             isGroup:
               type: boolean
             messageIds:
@@ -1971,7 +1971,7 @@ components:
               type: string
               description: The message ID
             sender:
-              $ref: "#/components/schemas/Sender"
+              $ref: '#/components/schemas/Sender'
             chatId:
               type: string
               description: The chat ID
@@ -2024,7 +2024,7 @@ components:
               type: string
               description: The chat ID
             sender:
-              $ref: "#/components/schemas/Sender"
+              $ref: '#/components/schemas/Sender'
             time:
               type: string
               format: date-time
@@ -2069,7 +2069,7 @@ components:
               type: array
               description: Array of message event payloads
               items:
-                $ref: "#/components/schemas/MessageEventData"
+                $ref: '#/components/schemas/MessageEventData'
     MessageEventData:
       type: object
       description: The eventData payload of a message event (used inside history sync arrays)
@@ -2088,7 +2088,7 @@ components:
         chatId:
           type: string
         sender:
-          $ref: "#/components/schemas/Sender"
+          $ref: '#/components/schemas/Sender'
         isGroup:
           type: boolean
         isStatus:
@@ -2171,7 +2171,7 @@ components:
             id:
               type: string
             sender:
-              $ref: "#/components/schemas/Sender"
+              $ref: '#/components/schemas/Sender'
             isForwarded:
               type: boolean
             text:
@@ -2228,7 +2228,7 @@ components:
             - status
           properties:
             user:
-              $ref: "#/components/schemas/Identity"
+              $ref: '#/components/schemas/Identity'
             status:
               type: string
               enum:
@@ -2273,7 +2273,7 @@ components:
               type: string
               description: The call ID
             caller:
-              $ref: "#/components/schemas/Identity"
+              $ref: '#/components/schemas/Identity'
             chatId:
               type: string
               description: The chat ID where the call is offered (caller ID for 1:1, group JID for group calls)
@@ -2323,7 +2323,7 @@ components:
               type: string
               description: The call ID
             caller:
-              $ref: "#/components/schemas/Identity"
+              $ref: '#/components/schemas/Identity'
             time:
               type: string
               format: date-time
@@ -2370,7 +2370,7 @@ components:
               type: string
               description: The call ID
             caller:
-              $ref: "#/components/schemas/Identity"
+              $ref: '#/components/schemas/Identity'
             time:
               type: string
               format: date-time

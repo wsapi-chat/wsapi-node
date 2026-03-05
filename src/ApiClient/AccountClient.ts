@@ -21,7 +21,13 @@ export class AccountClient implements IAccountClient {
 
   // Throwing methods (throw ApiException on error)
 
-  async listInstancesAsync(pageNumber?: number, pageSize?: number, createdFrom?: string, createdTo?: string, status?: string): Promise<PagedResponse<AccountInstance>> {
+  async listInstancesAsync(
+    pageNumber?: number,
+    pageSize?: number,
+    createdFrom?: string,
+    createdTo?: string,
+    status?: string,
+  ): Promise<PagedResponse<AccountInstance>> {
     const query = this.buildQuery({ pageNumber, pageSize, createdFrom, createdTo, status });
     return await this.httpClient.get<PagedResponse<AccountInstance>>(`/account/instances${query}`);
   }
@@ -51,9 +57,18 @@ export class AccountClient implements IAccountClient {
     return await this.httpClient.get<PagedResponse<AccountSubscription>>(`/account/subscriptions${query}`);
   }
 
-  async listSubscriptionInstancesAsync(subscriptionId: string, pageNumber?: number, pageSize?: number, createdFrom?: string, createdTo?: string, status?: string): Promise<PagedResponse<AccountInstance>> {
+  async listSubscriptionInstancesAsync(
+    subscriptionId: string,
+    pageNumber?: number,
+    pageSize?: number,
+    createdFrom?: string,
+    createdTo?: string,
+    status?: string,
+  ): Promise<PagedResponse<AccountInstance>> {
     const query = this.buildQuery({ pageNumber, pageSize, createdFrom, createdTo, status });
-    return await this.httpClient.get<PagedResponse<AccountInstance>>(`/account/subscriptions/${subscriptionId}/instances${query}`);
+    return await this.httpClient.get<PagedResponse<AccountInstance>>(
+      `/account/subscriptions/${subscriptionId}/instances${query}`,
+    );
   }
 
   async createSubscriptionInstanceAsync(subscriptionId: string): Promise<string> {
@@ -64,9 +79,19 @@ export class AccountClient implements IAccountClient {
     await this.httpClient.deleteVoid(`/account/subscriptions/${subscriptionId}/instances/${instanceId}`);
   }
 
-  async listSubscriptionChangesAsync(subscriptionId: string, pageNumber?: number, pageSize?: number, timestampFrom?: string, timestampTo?: string, changeType?: string, instanceId?: string): Promise<PagedResponse<AccountSubscriptionChange>> {
+  async listSubscriptionChangesAsync(
+    subscriptionId: string,
+    pageNumber?: number,
+    pageSize?: number,
+    timestampFrom?: string,
+    timestampTo?: string,
+    changeType?: string,
+    instanceId?: string,
+  ): Promise<PagedResponse<AccountSubscriptionChange>> {
     const query = this.buildQuery({ pageNumber, pageSize, timestampFrom, timestampTo, changeType, instanceId });
-    return await this.httpClient.get<PagedResponse<AccountSubscriptionChange>>(`/account/subscriptions/${subscriptionId}/changes${query}`);
+    return await this.httpClient.get<PagedResponse<AccountSubscriptionChange>>(
+      `/account/subscriptions/${subscriptionId}/changes${query}`,
+    );
   }
 
   async getInstanceDefaultsAsync(): Promise<AccountInstanceDefaults> {
@@ -79,7 +104,13 @@ export class AccountClient implements IAccountClient {
 
   // Non-throwing methods (return ApiResponse with success/error info)
 
-  async tryListInstancesAsync(pageNumber?: number, pageSize?: number, createdFrom?: string, createdTo?: string, status?: string): Promise<ApiResponse<PagedResponse<AccountInstance>>> {
+  async tryListInstancesAsync(
+    pageNumber?: number,
+    pageSize?: number,
+    createdFrom?: string,
+    createdTo?: string,
+    status?: string,
+  ): Promise<ApiResponse<PagedResponse<AccountInstance>>> {
     const query = this.buildQuery({ pageNumber, pageSize, createdFrom, createdTo, status });
     return await this.httpClient.tryGet<PagedResponse<AccountInstance>>(`/account/instances${query}`);
   }
@@ -104,14 +135,26 @@ export class AccountClient implements IAccountClient {
     return await this.httpClient.tryPutVoid(`/account/instances/${id}/restart`);
   }
 
-  async tryListSubscriptionsAsync(pageNumber?: number, pageSize?: number): Promise<ApiResponse<PagedResponse<AccountSubscription>>> {
+  async tryListSubscriptionsAsync(
+    pageNumber?: number,
+    pageSize?: number,
+  ): Promise<ApiResponse<PagedResponse<AccountSubscription>>> {
     const query = this.buildQuery({ pageNumber, pageSize });
     return await this.httpClient.tryGet<PagedResponse<AccountSubscription>>(`/account/subscriptions${query}`);
   }
 
-  async tryListSubscriptionInstancesAsync(subscriptionId: string, pageNumber?: number, pageSize?: number, createdFrom?: string, createdTo?: string, status?: string): Promise<ApiResponse<PagedResponse<AccountInstance>>> {
+  async tryListSubscriptionInstancesAsync(
+    subscriptionId: string,
+    pageNumber?: number,
+    pageSize?: number,
+    createdFrom?: string,
+    createdTo?: string,
+    status?: string,
+  ): Promise<ApiResponse<PagedResponse<AccountInstance>>> {
     const query = this.buildQuery({ pageNumber, pageSize, createdFrom, createdTo, status });
-    return await this.httpClient.tryGet<PagedResponse<AccountInstance>>(`/account/subscriptions/${subscriptionId}/instances${query}`);
+    return await this.httpClient.tryGet<PagedResponse<AccountInstance>>(
+      `/account/subscriptions/${subscriptionId}/instances${query}`,
+    );
   }
 
   async tryCreateSubscriptionInstanceAsync(subscriptionId: string): Promise<ApiResponse<string>> {
@@ -122,9 +165,19 @@ export class AccountClient implements IAccountClient {
     return await this.httpClient.tryDeleteVoid(`/account/subscriptions/${subscriptionId}/instances/${instanceId}`);
   }
 
-  async tryListSubscriptionChangesAsync(subscriptionId: string, pageNumber?: number, pageSize?: number, timestampFrom?: string, timestampTo?: string, changeType?: string, instanceId?: string): Promise<ApiResponse<PagedResponse<AccountSubscriptionChange>>> {
+  async tryListSubscriptionChangesAsync(
+    subscriptionId: string,
+    pageNumber?: number,
+    pageSize?: number,
+    timestampFrom?: string,
+    timestampTo?: string,
+    changeType?: string,
+    instanceId?: string,
+  ): Promise<ApiResponse<PagedResponse<AccountSubscriptionChange>>> {
     const query = this.buildQuery({ pageNumber, pageSize, timestampFrom, timestampTo, changeType, instanceId });
-    return await this.httpClient.tryGet<PagedResponse<AccountSubscriptionChange>>(`/account/subscriptions/${subscriptionId}/changes${query}`);
+    return await this.httpClient.tryGet<PagedResponse<AccountSubscriptionChange>>(
+      `/account/subscriptions/${subscriptionId}/changes${query}`,
+    );
   }
 
   async tryGetInstanceDefaultsAsync(): Promise<ApiResponse<AccountInstanceDefaults>> {

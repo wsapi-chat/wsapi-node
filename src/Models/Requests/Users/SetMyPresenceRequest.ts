@@ -1,3 +1,3 @@
 export interface SetMyPresenceRequest {
-    presence: string;
+  presence: string;
 }

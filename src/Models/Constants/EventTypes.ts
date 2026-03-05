@@ -37,4 +37,4 @@ export const EventTypes = {
   NEWSLETTER: 'newsletter',
 } as const;
 
-export type EventType = typeof EventTypes[keyof typeof EventTypes];
+export type EventType = (typeof EventTypes)[keyof typeof EventTypes];

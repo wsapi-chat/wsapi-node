@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { SessionClient } from '../../src/ApiClient/SessionClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
 import type { SessionStatus, SessionPairCode, SessionQRCode } from '../../src/Models/Entities/Session/index';
 
 describe('SessionClient', () => {

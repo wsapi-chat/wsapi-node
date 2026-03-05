@@ -1,7 +1,19 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { AccountClient } from '../../src/ApiClient/AccountClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
-import type { AccountInstance, AccountInstanceDetail, AccountInstanceSettings, AccountSubscription, AccountSubscriptionChange, AccountInstanceDefaults, PagedResponse } from '../../src/Models/Entities/Accounts/index';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
+import type {
+  AccountInstance,
+  AccountInstanceDetail,
+  AccountInstanceSettings,
+  AccountSubscription,
+  AccountInstanceDefaults,
+  PagedResponse,
+} from '../../src/Models/Entities/Accounts/index';
 
 describe('AccountClient', () => {
   let mockHttpClient: MockHttpClient;
@@ -61,7 +73,7 @@ describe('AccountClient', () => {
       await accountClient.listInstancesAsync(1, 20, '2025-01-01', '2025-12-31', 'active');
 
       expect(mockHttpClient.get).toHaveBeenCalledWith(
-        '/account/instances?pageNumber=1&pageSize=20&createdFrom=2025-01-01&createdTo=2025-12-31&status=active'
+        '/account/instances?pageNumber=1&pageSize=20&createdFrom=2025-01-01&createdTo=2025-12-31&status=active',
       );
     });
   });

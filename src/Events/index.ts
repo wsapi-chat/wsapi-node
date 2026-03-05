@@ -1,5 +1,10 @@
 // Session events
-export { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent, InitialSyncFinishedEvent } from './Session/SessionEvents';
+export {
+  SessionLoggedInEvent,
+  SessionLoggedOutEvent,
+  SessionLoggedErrorEvent,
+  InitialSyncFinishedEvent,
+} from './Session/SessionEvents';
 
 // Message events
 export {
@@ -9,7 +14,7 @@ export {
   MessageReadEvent,
   MessageStarEvent,
   type MessageType,
-  type ReceiptType
+  type ReceiptType,
 } from './Messages/MessageEvents';
 
 // Chat events
@@ -26,7 +31,7 @@ export {
   type ChatPinSetting,
   type ChatReadSetting,
   type ChatArchiveSetting,
-  type ChatEphemeralSetting
+  type ChatEphemeralSetting,
 } from './Chats/ChatEvents';
 
 // Contact events

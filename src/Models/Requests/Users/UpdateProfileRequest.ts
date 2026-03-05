@@ -1,5 +1,5 @@
 export interface UpdateProfileRequest {
-    name?: string;
-    status?: string;
-    picture?: string;
+  name?: string;
+  status?: string;
+  picture?: string;
 }

@@ -1,5 +1,5 @@
 import type { ApiResponse } from './ApiResponse.js';
-import type { ChatInfo, ChatListItem, ChatPicture, ChatBusinessProfile } from '../Models/Entities/Chats/index.js';
+import type { ChatListItem, ChatPicture, ChatBusinessProfile } from '../Models/Entities/Chats/index.js';
 import type {
   ChatUpdatePresenceRequest,
   ChatUpdateEphemeralExpirationRequest,

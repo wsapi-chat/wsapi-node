@@ -1,5 +1,5 @@
 export interface StatusPrivacyResponse {
-    type?: string;
-    list?: string[];
-    isDefault?: boolean;
+  type?: string;
+  list?: string[];
+  isDefault?: boolean;
 }

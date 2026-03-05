@@ -146,7 +146,7 @@ function handleEvent(event: WSApiEvent): void {
 function readBody(req: http.IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
     let body = '';
-    req.on('data', chunk => {
+    req.on('data', (chunk) => {
       body += chunk.toString();
     });
     req.on('end', () => resolve(body));
@@ -192,7 +192,7 @@ const server = http.createServer(async (req, res) => {
         JSON.stringify({
           error: 'Failed to process event',
           details: error instanceof Error ? error.message : 'Unknown error',
-        })
+        }),
       );
     }
     return;
@@ -215,7 +215,7 @@ server.listen(PORT, () => {
   console.log(`\n💡 Configure your WSApi instance to send webhooks to:`);
   console.log(`   http://your-server:${PORT}/webhook`);
   console.log(`\n📋 Supported Events:`);
-  EventFactory.getSupportedEventTypes().forEach(type => {
+  EventFactory.getSupportedEventTypes().forEach((type) => {
     const hasHandler = eventHandlers[type] ? '✓' : ' ';
     console.log(`   [${hasHandler}] ${type}`);
   });

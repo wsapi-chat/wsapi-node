@@ -15,7 +15,17 @@ export type MessageType = 'text' | 'media' | 'reaction' | 'contact' | 'contactAr
 /**
  * Receipt type for message read events
  */
-export type ReceiptType = 'delivered' | 'read' | 'played' | 'readSelf' | 'sender' | 'retry' | 'serverError' | 'inactive' | 'peerMsg' | 'historySync';
+export type ReceiptType =
+  | 'delivered'
+  | 'read'
+  | 'played'
+  | 'readSelf'
+  | 'sender'
+  | 'retry'
+  | 'serverError'
+  | 'inactive'
+  | 'peerMsg'
+  | 'historySync';
 
 /**
  * Event fired when a new message is received

@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { CommunitiesClient } from '../../src/ApiClient/CommunitiesClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
 import type { CommunityInfo } from '../../src/Models/Entities/Communities/index';
 
 describe('CommunitiesClient', () => {
@@ -78,7 +83,9 @@ describe('CommunitiesClient', () => {
 
       await communitiesClient.setCommunityDescriptionAsync('community123@g.us', 'New Desc');
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/communities/community123@g.us/description', { description: 'New Desc' });
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/communities/community123@g.us/description', {
+        description: 'New Desc',
+      });
     });
   });
 
@@ -88,7 +95,9 @@ describe('CommunitiesClient', () => {
 
       const result = await communitiesClient.setCommunityPictureAsync('community123@g.us', 'base64data');
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('/communities/community123@g.us/picture', { data: 'base64data' });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/communities/community123@g.us/picture', {
+        data: 'base64data',
+      });
       expect(result.pictureId).toBe('pic123');
     });
   });
@@ -99,7 +108,9 @@ describe('CommunitiesClient', () => {
 
       await communitiesClient.setCommunityLockedAsync('community123@g.us', true);
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/communities/community123@g.us/settings/locked', { enabled: true });
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/communities/community123@g.us/settings/locked', {
+        enabled: true,
+      });
     });
   });
 

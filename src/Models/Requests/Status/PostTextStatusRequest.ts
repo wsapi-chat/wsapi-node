@@ -1,3 +1,3 @@
 export interface PostTextStatusRequest {
-    text: string;
+  text: string;
 }

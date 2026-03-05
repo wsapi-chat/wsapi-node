@@ -46,13 +46,40 @@ export { EventFactory, type RawEventData, type WSApiEvent } from './Events/Event
 export { type BaseEvent } from './Events/BaseEvent.js';
 
 // Session events
-export type { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent, InitialSyncFinishedEvent } from './Events/Session/SessionEvents.js';
+export type {
+  SessionLoggedInEvent,
+  SessionLoggedOutEvent,
+  SessionLoggedErrorEvent,
+  InitialSyncFinishedEvent,
+} from './Events/Session/SessionEvents.js';
 
 // Message events
-export type { MessageEvent, MessageDeleteEvent, MessageHistorySyncEvent, MessageReadEvent, MessageStarEvent, MessageType, ReceiptType } from './Events/Messages/MessageEvents.js';
+export type {
+  MessageEvent,
+  MessageDeleteEvent,
+  MessageHistorySyncEvent,
+  MessageReadEvent,
+  MessageStarEvent,
+  MessageType,
+  ReceiptType,
+} from './Events/Messages/MessageEvents.js';
 
 // Chat events
-export type { ChatPresenceEvent, ChatSettingEvent, ChatPushNameEvent, ChatStatusEvent, ChatPictureEvent, ChatPresenceState, ChatSettingType, EphemeralExpiration, ChatMuteSetting, ChatPinSetting, ChatReadSetting, ChatArchiveSetting, ChatEphemeralSetting } from './Events/Chats/ChatEvents.js';
+export type {
+  ChatPresenceEvent,
+  ChatSettingEvent,
+  ChatPushNameEvent,
+  ChatStatusEvent,
+  ChatPictureEvent,
+  ChatPresenceState,
+  ChatSettingType,
+  EphemeralExpiration,
+  ChatMuteSetting,
+  ChatPinSetting,
+  ChatReadSetting,
+  ChatArchiveSetting,
+  ChatEphemeralSetting,
+} from './Events/Chats/ChatEvents.js';
 
 // Contact events
 export type { ContactEvent } from './Events/Contacts/ContactEvents.js';
@@ -64,7 +91,12 @@ export type { UserPresenceEvent, UserPresenceStatus } from './Events/Users/UserE
 export type { GroupEvent, GroupDescriptionChange } from './Events/Groups/GroupEvents.js';
 
 // Call events
-export type { CallOfferEvent, CallAcceptEvent, CallTerminateEvent, CallTerminateReason } from './Events/Calls/CallEvents.js';
+export type {
+  CallOfferEvent,
+  CallAcceptEvent,
+  CallTerminateEvent,
+  CallTerminateReason,
+} from './Events/Calls/CallEvents.js';
 
 // Newsletter events
 export type { NewsletterEvent } from './Events/Newsletters/NewsletterEvents.js';

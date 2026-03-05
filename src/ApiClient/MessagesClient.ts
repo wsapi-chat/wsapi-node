@@ -29,7 +29,7 @@ export class MessagesClient implements IMessagesClient {
   constructor(private readonly httpClient: HttpClient) {}
 
   // Throwing methods (throw ApiException on error)
-  
+
   async sendTextAsync(request: MessageSendTextRequest): Promise<MessageCreated> {
     return await this.httpClient.post<MessageCreated>('messages/text', request);
   }
@@ -140,7 +140,10 @@ export class MessagesClient implements IMessagesClient {
     return await this.httpClient.tryPost<MessageCreated>('messages/location', request);
   }
 
-  async trySendReactionAsync(messageId: string, request: MessageSendReactionRequest): Promise<ApiResponse<MessageCreated>> {
+  async trySendReactionAsync(
+    messageId: string,
+    request: MessageSendReactionRequest,
+  ): Promise<ApiResponse<MessageCreated>> {
     return await this.httpClient.tryPost<MessageCreated>(`messages/${messageId}/reaction`, request);
   }
 

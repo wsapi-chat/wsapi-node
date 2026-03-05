@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { NewslettersClient } from '../../src/ApiClient/NewslettersClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
 import type { NewsletterInfo } from '../../src/Models/Entities/Newsletters/index';
 
 describe('NewslettersClient', () => {
@@ -68,7 +73,9 @@ describe('NewslettersClient', () => {
 
       await newslettersClient.toggleSubscriptionAsync('newsletter123@newsletter', true);
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/newsletters/newsletter123@newsletter/subscription', { subscribed: true });
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/newsletters/newsletter123@newsletter/subscription', {
+        subscribed: true,
+      });
     });
   });
 

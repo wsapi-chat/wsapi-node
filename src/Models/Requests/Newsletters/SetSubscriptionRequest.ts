@@ -1,3 +1,3 @@
 export interface SetSubscriptionRequest {
-    subscribed: boolean;
+  subscribed: boolean;
 }

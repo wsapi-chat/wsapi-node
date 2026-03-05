@@ -1,4 +1,4 @@
 export interface CreateCommunityGroupRequest {
-    name: string;
-    participants?: string[];
+  name: string;
+  participants?: string[];
 }

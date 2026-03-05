@@ -4,7 +4,7 @@
 export interface RawEventReceivedEventArgs {
   /** The raw JSON string received from the SSE stream */
   rawJson: string;
-  
+
   /** Timestamp when the event was received */
   receivedAt: Date;
 }

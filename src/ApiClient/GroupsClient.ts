@@ -138,7 +138,10 @@ export class GroupsClient implements IGroupsClient {
     return await this.httpClient.tryPutVoid(`/groups/${groupId}/name`, request);
   }
 
-  async tryUpdatePictureAsync(groupId: string, request: GroupUpdatePictureRequest): Promise<ApiResponse<GroupPictureUpdated>> {
+  async tryUpdatePictureAsync(
+    groupId: string,
+    request: GroupUpdatePictureRequest,
+  ): Promise<ApiResponse<GroupPictureUpdated>> {
     return await this.httpClient.tryPost<GroupPictureUpdated>(`/groups/${groupId}/picture`, request);
   }
 
@@ -179,7 +182,10 @@ export class GroupsClient implements IGroupsClient {
     return await this.httpClient.tryPutVoid(`/groups/${groupId}/requests`, request);
   }
 
-  async tryUpdateParticipantsAsync(groupId: string, request: GroupUpdateRequestParticipantsRequest): Promise<ApiResponse> {
+  async tryUpdateParticipantsAsync(
+    groupId: string,
+    request: GroupUpdateRequestParticipantsRequest,
+  ): Promise<ApiResponse> {
     return await this.httpClient.tryPutVoid(`/groups/${groupId}/participants`, request);
   }
 

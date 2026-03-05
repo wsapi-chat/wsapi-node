@@ -1,3 +1,3 @@
 export interface RejectCallRequest {
-    callerId: string;
+  callerId: string;
 }

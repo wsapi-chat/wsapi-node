@@ -3,7 +3,8 @@ export const GroupUpdateRequestParticipantActions = {
   REMOVE: 'remove',
   UPDATE: 'update',
   PROMOTE: 'promote',
-  DEMOTE: 'demote'
+  DEMOTE: 'demote',
 } as const;
 
-export type GroupUpdateRequestParticipantAction = typeof GroupUpdateRequestParticipantActions[keyof typeof GroupUpdateRequestParticipantActions];
+export type GroupUpdateRequestParticipantAction =
+  (typeof GroupUpdateRequestParticipantActions)[keyof typeof GroupUpdateRequestParticipantActions];

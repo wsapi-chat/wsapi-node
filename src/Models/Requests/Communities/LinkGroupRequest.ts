@@ -1,3 +1,3 @@
 export interface LinkGroupRequest {
-    groupId: string;
+  groupId: string;
 }

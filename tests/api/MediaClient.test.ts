@@ -28,7 +28,9 @@ describe('MediaClient', () => {
 
       await mediaClient.downloadAsync('media/with spaces&special=chars');
 
-      expect(mockHttpClient.getBinary).toHaveBeenCalledWith('/media/download?id=media%2Fwith%20spaces%26special%3Dchars');
+      expect(mockHttpClient.getBinary).toHaveBeenCalledWith(
+        '/media/download?id=media%2Fwith%20spaces%26special%3Dchars',
+      );
     });
   });
 

@@ -1,10 +1,5 @@
 import type { ApiResponse } from './ApiResponse.js';
-import type {
-  UserInfo,
-  UserMeInfo,
-  BulkCheckResult,
-  PrivacySettingsResponse,
-} from '../Models/Entities/Users/index.js';
+import type { UserInfo, UserMeInfo, BulkCheckResult, PrivacySettingsResponse } from '../Models/Entities/Users/index.js';
 import type {
   UpdateProfileRequest,
   SetMyPresenceRequest,

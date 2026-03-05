@@ -1,9 +1,26 @@
 import { describe, it, expect } from 'vitest';
 import { EventFactory, type RawEventData } from '../../src/Events/EventFactory';
 import { EventTypes } from '../../src/Models/Constants/EventTypes';
-import type { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent, InitialSyncFinishedEvent } from '../../src/Events/Session/SessionEvents';
-import type { MessageEvent, MessageDeleteEvent, MessageHistorySyncEvent, MessageReadEvent, MessageStarEvent } from '../../src/Events/Messages/MessageEvents';
-import type { ChatPresenceEvent, ChatSettingEvent, ChatPushNameEvent, ChatStatusEvent, ChatPictureEvent } from '../../src/Events/Chats/ChatEvents';
+import type {
+  SessionLoggedInEvent,
+  SessionLoggedOutEvent,
+  SessionLoggedErrorEvent,
+  InitialSyncFinishedEvent,
+} from '../../src/Events/Session/SessionEvents';
+import type {
+  MessageEvent,
+  MessageDeleteEvent,
+  MessageHistorySyncEvent,
+  MessageReadEvent,
+  MessageStarEvent,
+} from '../../src/Events/Messages/MessageEvents';
+import type {
+  ChatPresenceEvent,
+  ChatSettingEvent,
+  ChatPushNameEvent,
+  ChatStatusEvent,
+  ChatPictureEvent,
+} from '../../src/Events/Chats/ChatEvents';
 import type { ContactEvent } from '../../src/Events/Contacts/ContactEvents';
 import type { UserPresenceEvent } from '../../src/Events/Users/UserEvents';
 import type { GroupEvent } from '../../src/Events/Groups/GroupEvents';

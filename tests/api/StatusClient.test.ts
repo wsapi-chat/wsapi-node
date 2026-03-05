@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { StatusClient } from '../../src/ApiClient/StatusClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
 import type { StatusPrivacyResponse } from '../../src/Models/Entities/Status/index';
 import type { MessageCreated } from '../../src/Models/Entities/Messages/MessageCreated';
 
@@ -73,7 +78,10 @@ describe('StatusClient', () => {
 
       await statusClient.deleteAsync('status123', 'chat123', 'sender123');
 
-      expect(mockHttpClient.postVoid).toHaveBeenCalledWith('/status/status123/delete', { chatId: 'chat123', senderId: 'sender123' });
+      expect(mockHttpClient.postVoid).toHaveBeenCalledWith('/status/status123/delete', {
+        chatId: 'chat123',
+        senderId: 'sender123',
+      });
     });
   });
 

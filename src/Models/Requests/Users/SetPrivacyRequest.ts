@@ -1,4 +1,4 @@
 export interface SetPrivacyRequest {
-    setting: string;
-    value: string;
+  setting: string;
+  value: string;
 }

@@ -8,8 +8,8 @@ export interface MessageMedia {
   id: string;
 
   /**
- * The type of media (image, video, audio, etc.).
- */
+   * The type of media (image, video, audio, etc.).
+   */
   mediaType: string;
 
   /**

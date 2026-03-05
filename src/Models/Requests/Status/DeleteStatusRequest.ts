@@ -1,4 +1,4 @@
 export interface DeleteStatusRequest {
-    chatId: string;
-    senderId: string;
+  chatId: string;
+  senderId: string;
 }

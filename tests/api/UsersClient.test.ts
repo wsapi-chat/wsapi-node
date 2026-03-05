@@ -1,7 +1,17 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { UsersClient } from '../../src/ApiClient/UsersClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
-import type { UserInfo, UserMeInfo, BulkCheckResult, PrivacySettingsResponse } from '../../src/Models/Entities/Users/index';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
+import type {
+  UserInfo,
+  UserMeInfo,
+  BulkCheckResult,
+  PrivacySettingsResponse,
+} from '../../src/Models/Entities/Users/index';
 
 describe('UsersClient', () => {
   let mockHttpClient: MockHttpClient;

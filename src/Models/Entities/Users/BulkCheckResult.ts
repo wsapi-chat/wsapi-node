@@ -1,5 +1,5 @@
 export interface BulkCheckResult {
-    query: string;
-    isInWhatsApp: boolean;
-    jid?: string;
+  query: string;
+  isInWhatsApp: boolean;
+  jid?: string;
 }

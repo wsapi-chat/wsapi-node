@@ -21,4 +21,4 @@ export const CallTerminateReasons = {
 /**
  * Type for call termination reason values
  */
-export type CallTerminateReason = typeof CallTerminateReasons[keyof typeof CallTerminateReasons];
+export type CallTerminateReason = (typeof CallTerminateReasons)[keyof typeof CallTerminateReasons];

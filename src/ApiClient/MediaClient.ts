@@ -7,7 +7,7 @@ import type { ApiResponse } from './ApiResponse.js';
  * Provides methods to download media files.
  */
 export class MediaClient implements IMediaClient {
-  constructor(private readonly httpClient: HttpClient) { }
+  constructor(private readonly httpClient: HttpClient) {}
 
   /**
    * Downloads media from WhatsApp servers.

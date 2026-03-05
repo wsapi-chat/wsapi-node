@@ -26,4 +26,4 @@ export const ChatMuteDurations = {
 /**
  * Type for chat mute duration values
  */
-export type ChatMuteDuration = typeof ChatMuteDurations[keyof typeof ChatMuteDurations];
+export type ChatMuteDuration = (typeof ChatMuteDurations)[keyof typeof ChatMuteDurations];
