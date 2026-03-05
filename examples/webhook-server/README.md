@@ -47,9 +47,9 @@ http://your-server:3000/webhook
 
 ## Environment Variables
 
-| Variable                 | Default | Description                                                                 |
-| ------------------------ | ------- | --------------------------------------------------------------------------- |
-| `PORT`                   | `3000`  | Server port                                                                 |
+| Variable                 | Default | Description                                                                     |
+| ------------------------ | ------- | ------------------------------------------------------------------------------- |
+| `PORT`                   | `3000`  | Server port                                                                     |
 | `WEBHOOK_SIGNING_SECRET` | (none)  | HMAC-SHA256 signing secret. When set, incoming webhook signatures are verified. |
 
 ## Example Event Payload
