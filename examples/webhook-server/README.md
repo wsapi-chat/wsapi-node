@@ -5,6 +5,7 @@ This example demonstrates how to set up an HTTP server to receive and parse webh
 ## Features
 
 - Receives webhook POST requests
+- Verifies HMAC-SHA256 webhook signatures (when `WEBHOOK_SIGNING_SECRET` is set)
 - Parses events using the `EventFactory` from `@wsapichat/client`
 - Type-safe event handling for different event types
 - Health check endpoint
@@ -46,9 +47,10 @@ http://your-server:3000/webhook
 
 ## Environment Variables
 
-| Variable | Default | Description |
-| -------- | ------- | ----------- |
-| `PORT`   | `3000`  | Server port |
+| Variable                 | Default | Description                                                                 |
+| ------------------------ | ------- | --------------------------------------------------------------------------- |
+| `PORT`                   | `3000`  | Server port                                                                 |
+| `WEBHOOK_SIGNING_SECRET` | (none)  | HMAC-SHA256 signing secret. When set, incoming webhook signatures are verified. |
 
 ## Example Event Payload
 
@@ -77,7 +79,7 @@ http://your-server:3000/webhook
 
 ## Testing with curl
 
-Send a test message event:
+Send a test message event (without signature verification):
 
 ```bash
 curl -X POST http://localhost:3000/webhook \
@@ -99,6 +101,19 @@ curl -X POST http://localhost:3000/webhook \
       "expiration": "off"
     }
   }'
+```
+
+Send a test event with a signature (when `WEBHOOK_SIGNING_SECRET` is set):
+
+```bash
+BODY='{"receivedAt":"2025-01-01T12:00:00Z","instanceId":"test-instance","eventType":"message","eventData":{"id":"msg123","chatId":"1234567890@s.whatsapp.net","sender":{"id":"1234567890@s.whatsapp.net"},"senderName":"Test User","time":"2025-01-01T11:59:00Z","isGroup":false,"isStatus":false,"type":"text","text":"Hello, World!","expiration":"off"}}'
+SECRET="your-signing-secret"
+SIGNATURE="sha256=$(echo -n "$BODY" | openssl dgst -sha256 -hmac "$SECRET" | awk '{print $2}')"
+
+curl -X POST http://localhost:3000/webhook \
+  -H "Content-Type: application/json" \
+  -H "X-Webhook-Signature: $SIGNATURE" \
+  -d "$BODY"
 ```
 
 Check health:

@@ -36,11 +36,8 @@ export interface InstanceSettings {
   /** The webhook URL for receiving events */
   webhookUrl?: string;
 
-  /** The webhook authorization header name */
-  webhookAuthHeader?: string;
-
-  /** The webhook authorization header value */
-  webhookAuthValue?: string;
+  /** The signing secret used to verify webhook signatures */
+  webhookSigningSecret?: string;
 
   /** Whether the instance is in pull mode */
   pullMode: boolean;

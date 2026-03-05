@@ -41,6 +41,9 @@ export * from './Models/index.js';
 // SSE (Server-Sent Events)
 export * from './SSE/index.js';
 
+// Webhook utilities
+export { verifySignature } from './Webhook/index.js';
+
 // Events (Event Factory and specific event types)
 export { EventFactory, type RawEventData, type WSApiEvent } from './Events/EventFactory.js';
 export { type BaseEvent } from './Events/BaseEvent.js';
