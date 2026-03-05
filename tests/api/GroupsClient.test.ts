@@ -1,7 +1,17 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { GroupsClient } from '../../src/ApiClient/GroupsClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
-import type { GroupInfo, GroupCreated, GroupPictureUpdated, GroupInviteInfo } from '../../src/Models/Entities/Groups/index';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
+import type {
+  GroupInfo,
+  GroupCreated,
+  GroupPictureUpdated,
+  GroupInviteInfo,
+} from '../../src/Models/Entities/Groups/index';
 
 describe('GroupsClient', () => {
   let mockHttpClient: MockHttpClient;
@@ -78,10 +88,9 @@ describe('GroupsClient', () => {
 
       await groupsClient.updateDescriptionAsync('1234567890@g.us', { description: 'New Description' });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/groups/1234567890@g.us/description',
-        { description: 'New Description' }
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/groups/1234567890@g.us/description', {
+        description: 'New Description',
+      });
     });
   });
 
@@ -91,10 +100,7 @@ describe('GroupsClient', () => {
 
       await groupsClient.updateNameAsync('1234567890@g.us', { name: 'New Name' });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/groups/1234567890@g.us/name',
-        { name: 'New Name' }
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/groups/1234567890@g.us/name', { name: 'New Name' });
     });
   });
 
@@ -104,10 +110,7 @@ describe('GroupsClient', () => {
 
       const result = await groupsClient.updatePictureAsync('1234567890@g.us', { picture: 'base64data' });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith(
-        '/groups/1234567890@g.us/picture',
-        { picture: 'base64data' }
-      );
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/groups/1234567890@g.us/picture', { picture: 'base64data' });
       expect(result).toEqual(mockPictureUpdated);
     });
   });
@@ -143,10 +146,9 @@ describe('GroupsClient', () => {
         participants: ['1111111111@s.whatsapp.net'],
       });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/groups/1234567890@g.us/participants',
-        { participants: ['1111111111@s.whatsapp.net'] }
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/groups/1234567890@g.us/participants', {
+        participants: ['1111111111@s.whatsapp.net'],
+      });
     });
   });
 
@@ -281,6 +283,30 @@ describe('GroupsClient', () => {
 
       expect(result.isSuccess).toBe(true);
       expect(result.data).toEqual(mockInviteInfo);
+    });
+  });
+
+  describe('getParticipantsAsync', () => {
+    it('should get group participants', async () => {
+      const participants = [{ id: '1234567890@s.whatsapp.net', phone: '1234567890' }];
+      mockHttpClient.get.mockResolvedValue(participants);
+
+      const result = await groupsClient.getParticipantsAsync('1234567890@g.us');
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/groups/1234567890@g.us/participants');
+      expect(result).toEqual(participants);
+    });
+  });
+
+  describe('tryGetParticipantsAsync', () => {
+    it('should return success response', async () => {
+      const participants = [{ id: '1234567890@s.whatsapp.net' }];
+      mockHttpClient.tryGet.mockResolvedValue(createSuccessResponse(participants));
+
+      const result = await groupsClient.tryGetParticipantsAsync('1234567890@g.us');
+
+      expect(result.isSuccess).toBe(true);
+      expect(result.data).toEqual(participants);
     });
   });
 });

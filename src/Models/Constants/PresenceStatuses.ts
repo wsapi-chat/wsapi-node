@@ -16,4 +16,4 @@ export const PresenceStatuses = {
 /**
  * Type for presence status values
  */
-export type PresenceStatus = typeof PresenceStatuses[keyof typeof PresenceStatuses];
+export type PresenceStatus = (typeof PresenceStatuses)[keyof typeof PresenceStatuses];

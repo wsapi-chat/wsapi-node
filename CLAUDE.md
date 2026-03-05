@@ -26,17 +26,20 @@ This is a TypeScript SDK for the WSApi WhatsApp Business API. The package is pub
 ### Core Components
 
 **WSApiClient** (`src/ApiClient/WSApiClient.ts`) - Main entry point that unifies:
+
 - Domain-specific API clients (messages, groups, chats, contacts, etc.)
 - SSE client for real-time events
 - Event handler registration system
 
 **HttpClient** (`src/ApiClient/HttpClient.ts`) - HTTP infrastructure with dual error handling:
+
 - Throwing methods: `get()`, `post()`, `put()`, `delete()` - throw `ApiException` on failure
 - Non-throwing methods: `tryGet()`, `tryPost()`, etc. - return `ApiResponse<T>` with success/error info
 
 ### Domain API Clients
 
 Each domain has an interface (`I*Client.ts`) and implementation (`*Client.ts`):
+
 - `MessagesClient` - Send text, media, contacts, locations
 - `GroupsClient` - Create/manage groups, participants
 - `ChatsClient` - Archive, mute, pin, ephemeral settings
@@ -53,6 +56,7 @@ Each domain has an interface (`I*Client.ts`) and implementation (`*Client.ts`):
 **SSE Client** (`src/SSE/SSEClient.ts`) - Persistent connection for real-time events
 **EventFactory** (`src/Events/EventFactory.ts`) - Parses raw JSON into typed event objects
 **Event Types** (`src/Events/*/`) - Strongly-typed events organized by domain:
+
 - Session: `logged-in`, `logged-out`, `logged-error`
 - Messages: `message`, `message_delete`, `message_history_sync`, `message_read`, `message_star`
 - Chats: `chat_presence`, `chat_setting`

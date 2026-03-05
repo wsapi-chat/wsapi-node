@@ -26,4 +26,4 @@ export const EphemeralExpirations = {
 /**
  * Type for ephemeral expiration values
  */
-export type EphemeralExpiration = typeof EphemeralExpirations[keyof typeof EphemeralExpirations];
+export type EphemeralExpiration = (typeof EphemeralExpirations)[keyof typeof EphemeralExpirations];

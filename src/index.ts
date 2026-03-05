@@ -14,6 +14,8 @@ export { type IMessagesClient } from './ApiClient/IMessagesClient.js';
 export { MessagesClient } from './ApiClient/MessagesClient.js';
 export { type IGroupsClient } from './ApiClient/IGroupsClient.js';
 export { GroupsClient } from './ApiClient/GroupsClient.js';
+export { type ICommunitiesClient } from './ApiClient/ICommunitiesClient.js';
+export { CommunitiesClient } from './ApiClient/CommunitiesClient.js';
 export { type IContactsClient } from './ApiClient/IContactsClient.js';
 export { ContactsClient } from './ApiClient/ContactsClient.js';
 export { type IChatsClient } from './ApiClient/IChatsClient.js';
@@ -24,10 +26,12 @@ export { type IUsersClient } from './ApiClient/IUsersClient.js';
 export { UsersClient } from './ApiClient/UsersClient.js';
 export { type IMediaClient } from './ApiClient/IMediaClient.js';
 export { MediaClient } from './ApiClient/MediaClient.js';
-export { type IInstanceClient } from './ApiClient/IInstanceClient.js';
-export { InstanceClient } from './ApiClient/InstanceClient.js';
+export { type INewslettersClient } from './ApiClient/INewslettersClient.js';
+export { NewslettersClient } from './ApiClient/NewslettersClient.js';
 export { type ISessionClient } from './ApiClient/ISessionClient.js';
 export { SessionClient } from './ApiClient/SessionClient.js';
+export { type IStatusClient } from './ApiClient/IStatusClient.js';
+export { StatusClient } from './ApiClient/StatusClient.js';
 export { type ICallsClient } from './ApiClient/ICallsClient.js';
 export { CallsClient } from './ApiClient/CallsClient.js';
 
@@ -42,13 +46,40 @@ export { EventFactory, type RawEventData, type WSApiEvent } from './Events/Event
 export { type BaseEvent } from './Events/BaseEvent.js';
 
 // Session events
-export type { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent, InitialSyncFinishedEvent } from './Events/Session/SessionEvents.js';
+export type {
+  SessionLoggedInEvent,
+  SessionLoggedOutEvent,
+  SessionLoggedErrorEvent,
+  InitialSyncFinishedEvent,
+} from './Events/Session/SessionEvents.js';
 
 // Message events
-export type { MessageEvent, MessageDeleteEvent, MessageHistorySyncEvent, MessageReadEvent, MessageStarEvent, MessageType, ReceiptType } from './Events/Messages/MessageEvents.js';
+export type {
+  MessageEvent,
+  MessageDeleteEvent,
+  MessageHistorySyncEvent,
+  MessageReadEvent,
+  MessageStarEvent,
+  MessageType,
+  ReceiptType,
+} from './Events/Messages/MessageEvents.js';
 
 // Chat events
-export type { ChatPresenceEvent, ChatSettingEvent, ChatPushNameEvent, ChatStatusEvent, ChatPictureEvent, ChatPresenceState, ChatSettingType, EphemeralExpiration, ChatMuteSetting, ChatPinSetting, ChatReadSetting, ChatArchiveSetting, ChatEphemeralSetting } from './Events/Chats/ChatEvents.js';
+export type {
+  ChatPresenceEvent,
+  ChatSettingEvent,
+  ChatPushNameEvent,
+  ChatStatusEvent,
+  ChatPictureEvent,
+  ChatPresenceState,
+  ChatSettingType,
+  EphemeralExpiration,
+  ChatMuteSetting,
+  ChatPinSetting,
+  ChatReadSetting,
+  ChatArchiveSetting,
+  ChatEphemeralSetting,
+} from './Events/Chats/ChatEvents.js';
 
 // Contact events
 export type { ContactEvent } from './Events/Contacts/ContactEvents.js';
@@ -60,4 +91,12 @@ export type { UserPresenceEvent, UserPresenceStatus } from './Events/Users/UserE
 export type { GroupEvent, GroupDescriptionChange } from './Events/Groups/GroupEvents.js';
 
 // Call events
-export type { CallOfferEvent, CallAcceptEvent, CallTerminateEvent, CallTerminateReason } from './Events/Calls/CallEvents.js';
+export type {
+  CallOfferEvent,
+  CallAcceptEvent,
+  CallTerminateEvent,
+  CallTerminateReason,
+} from './Events/Calls/CallEvents.js';
+
+// Newsletter events
+export type { NewsletterEvent } from './Events/Newsletters/NewsletterEvents.js';

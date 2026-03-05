@@ -6,10 +6,13 @@ import { EventType } from './Constants/EventTypes';
 export interface BaseEvent {
   /** The instance ID that received this event */
   instanceId: string;
-  
+
   /** When this event was received by the server */
   receivedAt: Date;
-  
+
   /** The type of event */
   eventType: EventType;
+
+  /** Optional unique event identifier */
+  eventId?: string;
 }

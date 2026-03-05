@@ -31,4 +31,4 @@ export const ChatSettingTypes = {
 /**
  * Type for chat setting type values
  */
-export type ChatSettingType = typeof ChatSettingTypes[keyof typeof ChatSettingTypes];
+export type ChatSettingType = (typeof ChatSettingTypes)[keyof typeof ChatSettingTypes];

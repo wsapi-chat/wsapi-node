@@ -2,7 +2,7 @@ import type {
   ISSEClient,
   SSEClientOptions,
   SSEConnectionStateChangedHandler,
-  RawEventReceivedHandler
+  RawEventReceivedHandler,
 } from './ISSEClient.js';
 import { SSEConnectionState } from './SSEConnectionState.js';
 import type { SSEConnectionStateChangedEventArgs } from './SSEConnectionStateChangedEventArgs.js';
@@ -32,7 +32,7 @@ export class SSEClient implements ISSEClient {
       headers: options.headers || {},
       reconnectDelay: options.reconnectDelay || 5000,
       autoReconnect: options.autoReconnect ?? true,
-      maxReconnectAttempts: options.maxReconnectAttempts || 0
+      maxReconnectAttempts: options.maxReconnectAttempts || 0,
     };
   }
 
@@ -163,7 +163,7 @@ export class SSEClient implements ISSEClient {
       const url = new URL('/events/stream', this.options.baseUrl);
 
       // Create EventSource with headers (if browser supports it)
-      // Note: Standard EventSource doesn't support custom headers, 
+      // Note: Standard EventSource doesn't support custom headers,
       // but we can add them to the URL as query parameters for auth
       if (this.options.headers['Authorization']) {
         url.searchParams.set('authorization', this.options.headers['Authorization']);
@@ -186,7 +186,6 @@ export class SSEClient implements ISSEClient {
         console.error('SSE connection error:', event);
         this.handleConnectionError(new Error('SSE connection error'));
       };
-
     } catch (error) {
       this.handleConnectionError(error as Error);
     }
@@ -212,7 +211,7 @@ export class SSEClient implements ISSEClient {
     try {
       const args: RawEventReceivedEventArgs = {
         rawJson: data,
-        receivedAt: new Date()
+        receivedAt: new Date(),
       };
 
       for (const handler of this.rawEventHandlers) {
@@ -268,7 +267,7 @@ export class SSEClient implements ISSEClient {
     const args: SSEConnectionStateChangedEventArgs = {
       state,
       error,
-      timestamp: new Date()
+      timestamp: new Date(),
     };
 
     for (const handler of this.connectionStateHandlers) {

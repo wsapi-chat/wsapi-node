@@ -15,7 +15,17 @@ export type MessageType = 'text' | 'media' | 'reaction' | 'contact' | 'contactAr
 /**
  * Receipt type for message read events
  */
-export type ReceiptType = 'delivered' | 'read' | 'played' | 'readSelf' | 'sender' | 'retry' | 'serverError' | 'inactive' | 'peerMsg' | 'historySync';
+export type ReceiptType =
+  | 'delivered'
+  | 'read'
+  | 'played'
+  | 'readSelf'
+  | 'sender'
+  | 'retry'
+  | 'serverError'
+  | 'inactive'
+  | 'peerMsg'
+  | 'historySync';
 
 /**
  * Event fired when a new message is received
@@ -79,6 +89,12 @@ export interface MessageEvent extends BaseEvent {
 
   /** Pin information for pinInChat messages */
   pin?: MessagePin;
+
+  /** Whether this message was forwarded */
+  isForwarded?: boolean;
+
+  /** Whether this is a view-once message */
+  viewOnce?: boolean;
 }
 
 /**
@@ -114,6 +130,9 @@ export interface MessageDeleteEvent extends BaseEvent {
  */
 export interface MessageHistorySyncEvent extends BaseEvent {
   eventType: 'message_history_sync';
+
+  /** Chat ID for which history was synced */
+  chatId?: string;
 
   /** Array of synced messages */
   messages: MessageEvent[];

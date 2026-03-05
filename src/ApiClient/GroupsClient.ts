@@ -9,6 +9,7 @@ import type {
   GroupInviteLinkResponse,
   GroupJoinRequestInfo,
   GroupJoinedResponse,
+  GroupParticipantInfo,
 } from '../Models/Entities/Groups/index.js';
 import type {
   GroupCreateRequest,
@@ -107,6 +108,10 @@ export class GroupsClient implements IGroupsClient {
     return await this.httpClient.get<GroupInviteInfo>(`/groups/invite/${inviteCode}`);
   }
 
+  async getParticipantsAsync(groupId: string): Promise<GroupParticipantInfo[]> {
+    return await this.httpClient.get<GroupParticipantInfo[]>(`/groups/${groupId}/participants`);
+  }
+
   // Non-throwing methods (return ApiResponse with success/error info)
 
   async tryListAsync(): Promise<ApiResponse<GroupInfo[]>> {
@@ -133,7 +138,10 @@ export class GroupsClient implements IGroupsClient {
     return await this.httpClient.tryPutVoid(`/groups/${groupId}/name`, request);
   }
 
-  async tryUpdatePictureAsync(groupId: string, request: GroupUpdatePictureRequest): Promise<ApiResponse<GroupPictureUpdated>> {
+  async tryUpdatePictureAsync(
+    groupId: string,
+    request: GroupUpdatePictureRequest,
+  ): Promise<ApiResponse<GroupPictureUpdated>> {
     return await this.httpClient.tryPost<GroupPictureUpdated>(`/groups/${groupId}/picture`, request);
   }
 
@@ -174,11 +182,18 @@ export class GroupsClient implements IGroupsClient {
     return await this.httpClient.tryPutVoid(`/groups/${groupId}/requests`, request);
   }
 
-  async tryUpdateParticipantsAsync(groupId: string, request: GroupUpdateRequestParticipantsRequest): Promise<ApiResponse> {
+  async tryUpdateParticipantsAsync(
+    groupId: string,
+    request: GroupUpdateRequestParticipantsRequest,
+  ): Promise<ApiResponse> {
     return await this.httpClient.tryPutVoid(`/groups/${groupId}/participants`, request);
   }
 
   async tryGetInviteInfoAsync(inviteCode: string): Promise<ApiResponse<GroupInviteInfo>> {
     return await this.httpClient.tryGet<GroupInviteInfo>(`/groups/invite/${inviteCode}`);
+  }
+
+  async tryGetParticipantsAsync(groupId: string): Promise<ApiResponse<GroupParticipantInfo[]>> {
+    return await this.httpClient.tryGet<GroupParticipantInfo[]>(`/groups/${groupId}/participants`);
   }
 }

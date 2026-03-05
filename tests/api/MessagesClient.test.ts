@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { MessagesClient } from '../../src/ApiClient/MessagesClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
 import type { MessageCreated } from '../../src/Models/Entities/Messages/MessageCreated';
 
 describe('MessagesClient', () => {
@@ -36,7 +41,11 @@ describe('MessagesClient', () => {
 
       const result = await messagesClient.sendLinkAsync({ chatId, url: 'https://example.com', text: 'Check this out' });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/link', { chatId, url: 'https://example.com', text: 'Check this out' });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/link', {
+        chatId,
+        url: 'https://example.com',
+        text: 'Check this out',
+      });
       expect(result).toEqual(mockMessageCreated);
     });
   });
@@ -47,7 +56,11 @@ describe('MessagesClient', () => {
 
       const result = await messagesClient.sendImageAsync({ chatId, media: 'base64data', caption: 'Image' });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/image', { chatId, media: 'base64data', caption: 'Image' });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/image', {
+        chatId,
+        media: 'base64data',
+        caption: 'Image',
+      });
       expect(result).toEqual(mockMessageCreated);
     });
   });
@@ -58,7 +71,11 @@ describe('MessagesClient', () => {
 
       const result = await messagesClient.sendVideoAsync({ chatId, media: 'base64data', caption: 'Video' });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/video', { chatId, media: 'base64data', caption: 'Video' });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/video', {
+        chatId,
+        media: 'base64data',
+        caption: 'Video',
+      });
       expect(result).toEqual(mockMessageCreated);
     });
   });
@@ -102,7 +119,11 @@ describe('MessagesClient', () => {
 
       const result = await messagesClient.sendDocumentAsync({ chatId, media: 'base64data', fileName: 'doc.pdf' });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/document', { chatId, media: 'base64data', fileName: 'doc.pdf' });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/document', {
+        chatId,
+        media: 'base64data',
+        fileName: 'doc.pdf',
+      });
       expect(result).toEqual(mockMessageCreated);
     });
   });
@@ -111,9 +132,15 @@ describe('MessagesClient', () => {
     it('should send contact message', async () => {
       mockHttpClient.post.mockResolvedValue(mockMessageCreated);
 
-      const result = await messagesClient.sendContactAsync({ chatId, contact: { name: 'John', phoneNumber: '+1234567890' } });
+      const result = await messagesClient.sendContactAsync({
+        chatId,
+        contact: { name: 'John', phoneNumber: '+1234567890' },
+      });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/contact', { chatId, contact: { name: 'John', phoneNumber: '+1234567890' } });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/contact', {
+        chatId,
+        contact: { name: 'John', phoneNumber: '+1234567890' },
+      });
       expect(result).toEqual(mockMessageCreated);
     });
   });
@@ -122,9 +149,13 @@ describe('MessagesClient', () => {
     it('should send location message', async () => {
       mockHttpClient.post.mockResolvedValue(mockMessageCreated);
 
-      const result = await messagesClient.sendLocationAsync({ chatId, latitude: 40.7128, longitude: -74.0060 });
+      const result = await messagesClient.sendLocationAsync({ chatId, latitude: 40.7128, longitude: -74.006 });
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/location', { chatId, latitude: 40.7128, longitude: -74.0060 });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/location', {
+        chatId,
+        latitude: 40.7128,
+        longitude: -74.006,
+      });
       expect(result).toEqual(mockMessageCreated);
     });
   });
@@ -293,7 +324,10 @@ describe('MessagesClient', () => {
     it('should return success response', async () => {
       mockHttpClient.tryPost.mockResolvedValue(createSuccessResponse(mockMessageCreated));
 
-      const result = await messagesClient.trySendContactAsync({ chatId, contact: { name: 'John', phoneNumber: '+1234567890' } });
+      const result = await messagesClient.trySendContactAsync({
+        chatId,
+        contact: { name: 'John', phoneNumber: '+1234567890' },
+      });
 
       expect(result.isSuccess).toBe(true);
       expect(result.data).toEqual(mockMessageCreated);
@@ -304,7 +338,7 @@ describe('MessagesClient', () => {
     it('should return success response', async () => {
       mockHttpClient.tryPost.mockResolvedValue(createSuccessResponse(mockMessageCreated));
 
-      const result = await messagesClient.trySendLocationAsync({ chatId, latitude: 40.7128, longitude: -74.0060 });
+      const result = await messagesClient.trySendLocationAsync({ chatId, latitude: 40.7128, longitude: -74.006 });
 
       expect(result.isSuccess).toBe(true);
       expect(result.data).toEqual(mockMessageCreated);
@@ -368,6 +402,30 @@ describe('MessagesClient', () => {
       mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
 
       const result = await messagesClient.tryDeleteForMeAsync('msg123', { chatId });
+
+      expect(result.isSuccess).toBe(true);
+    });
+  });
+
+  describe('pinMessageAsync', () => {
+    it('should pin a message', async () => {
+      mockHttpClient.postVoid.mockResolvedValue(undefined);
+
+      await messagesClient.pinMessageAsync('msg123', { chatId, senderId: 'sender123', pinned: true });
+
+      expect(mockHttpClient.postVoid).toHaveBeenCalledWith('messages/msg123/pin', {
+        chatId,
+        senderId: 'sender123',
+        pinned: true,
+      });
+    });
+  });
+
+  describe('tryPinMessageAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryPostVoid.mockResolvedValue(createVoidSuccessResponse());
+
+      const result = await messagesClient.tryPinMessageAsync('msg123', { chatId, senderId: 'sender123', pinned: true });
 
       expect(result.isSuccess).toBe(true);
     });

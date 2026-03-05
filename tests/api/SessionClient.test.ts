@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { SessionClient } from '../../src/ApiClient/SessionClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
 import type { SessionStatus, SessionPairCode, SessionQRCode } from '../../src/Models/Entities/Session/index';
 
 describe('SessionClient', () => {
@@ -147,6 +152,28 @@ describe('SessionClient', () => {
       expect(mockHttpClient.tryGet).toHaveBeenCalledWith('/session/status');
       expect(result.isSuccess).toBe(true);
       expect(result.data).toEqual(mockSessionStatus);
+    });
+  });
+
+  describe('flushHistoryAsync', () => {
+    it('should flush history', async () => {
+      mockHttpClient.post.mockResolvedValue({ status: 'ok' });
+
+      const result = await sessionClient.flushHistoryAsync();
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/session/flush-history');
+      expect(result.status).toBe('ok');
+    });
+  });
+
+  describe('tryFlushHistoryAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryPost.mockResolvedValue(createSuccessResponse({ status: 'ok' }));
+
+      const result = await sessionClient.tryFlushHistoryAsync();
+
+      expect(mockHttpClient.tryPost).toHaveBeenCalledWith('/session/flush-history');
+      expect(result.isSuccess).toBe(true);
     });
   });
 });

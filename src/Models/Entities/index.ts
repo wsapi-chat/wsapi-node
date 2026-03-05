@@ -16,8 +16,14 @@ export * from './Accounts/index.js';
 // Chat entities
 export * from './Chats/index.js';
 
-// Instance entities
-export * from './Instance/index.js';
-
 // Session entities
 export * from './Session/index.js';
+
+// Community entities
+export * from './Communities/index.js';
+
+// Newsletter entities
+export * from './Newsletters/index.js';
+
+// Status entities
+export * from './Status/index.js';

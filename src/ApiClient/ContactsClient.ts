@@ -2,10 +2,8 @@ import type { HttpClient } from './HttpClient.js';
 import type { ApiResponse } from './ApiResponse.js';
 import type { IContactsClient } from './IContactsClient.js';
 import type { ContactInfo } from '../Models/Entities/Contacts/index.js';
-import type {
-  ContactCreateRequest,
-  ContactUpdateRequest,
-} from '../Models/Requests/Contacts/index.js';
+import type { ContactCreateRequest } from '../Models/Requests/Contacts/index.js';
+import type { Identity } from '../Models/Entities/Users/Identity.js';
 
 /**
  * WhatsApp contacts API client implementation.
@@ -28,8 +26,20 @@ export class ContactsClient implements IContactsClient {
     await this.httpClient.postVoid('/contacts', request);
   }
 
-  async updateAsync(contactId: string, request: ContactUpdateRequest): Promise<void> {
-    await this.httpClient.putVoid(`/contacts/${contactId}`, request);
+  async syncContactsAsync(): Promise<void> {
+    await this.httpClient.postVoid('/contacts/sync');
+  }
+
+  async getBlocklistAsync(): Promise<Identity[]> {
+    return await this.httpClient.get<Identity[]>('/contacts/blocklist');
+  }
+
+  async blockContactAsync(id: string): Promise<void> {
+    await this.httpClient.putVoid(`/contacts/${id}/block`);
+  }
+
+  async unblockContactAsync(id: string): Promise<void> {
+    await this.httpClient.putVoid(`/contacts/${id}/unblock`);
   }
 
   // Non-throwing methods (return ApiResponse with success/error info)
@@ -46,7 +56,19 @@ export class ContactsClient implements IContactsClient {
     return await this.httpClient.tryPostVoid('/contacts', request);
   }
 
-  async tryUpdateAsync(contactId: string, request: ContactUpdateRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/contacts/${contactId}`, request);
+  async trySyncContactsAsync(): Promise<ApiResponse<void>> {
+    return await this.httpClient.tryPostVoid('/contacts/sync');
+  }
+
+  async tryGetBlocklistAsync(): Promise<ApiResponse<Identity[]>> {
+    return await this.httpClient.tryGet<Identity[]>('/contacts/blocklist');
+  }
+
+  async tryBlockContactAsync(id: string): Promise<ApiResponse<void>> {
+    return await this.httpClient.tryPutVoid(`/contacts/${id}/block`);
+  }
+
+  async tryUnblockContactAsync(id: string): Promise<ApiResponse<void>> {
+    return await this.httpClient.tryPutVoid(`/contacts/${id}/unblock`);
   }
 }

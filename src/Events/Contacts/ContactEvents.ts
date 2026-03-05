@@ -1,4 +1,5 @@
 import { BaseEvent } from '../BaseEvent';
+import { Identity } from '../../Models/Entities/Users/Identity.js';
 
 /**
  * Event fired when contact information changes
@@ -6,8 +7,8 @@ import { BaseEvent } from '../BaseEvent';
 export interface ContactEvent extends BaseEvent {
   eventType: 'contact';
 
-  /** Contact's user ID (JID) */
-  id: string;
+  /** Contact's identity */
+  contact: Identity;
 
   /** Contact's full name */
   fullName: string;

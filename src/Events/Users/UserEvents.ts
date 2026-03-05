@@ -1,4 +1,5 @@
 import { BaseEvent } from '../BaseEvent';
+import { Identity } from '../../Models/Entities/Users/Identity.js';
 
 /**
  * User presence status
@@ -11,8 +12,8 @@ export type UserPresenceStatus = 'available' | 'unavailable';
 export interface UserPresenceEvent extends BaseEvent {
   eventType: 'user_presence';
 
-  /** User chat ID */
-  id: string;
+  /** User identity */
+  user: Identity;
 
   /** Presence status */
   status: UserPresenceStatus;

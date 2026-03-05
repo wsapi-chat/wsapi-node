@@ -1,18 +1,24 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { ChatsClient } from '../../src/ApiClient/ChatsClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
-import type { ChatInfo, ChatPicture, ChatBusinessProfile } from '../../src/Models/Entities/Chats/index';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
+import type { ChatListItem, ChatPicture, ChatBusinessProfile } from '../../src/Models/Entities/Chats/index';
 
 describe('ChatsClient', () => {
   let mockHttpClient: MockHttpClient;
   let chatsClient: ChatsClient;
 
-  const mockChatInfo: ChatInfo = {
+  const mockChatInfo: ChatListItem = {
     id: '1234567890@s.whatsapp.net',
-    name: 'Test Chat',
     isGroup: false,
-    unreadCount: 5,
-    lastMessage: 'Hello',
+    isArchived: false,
+    isPinned: false,
+    isMuted: false,
+    pushName: 'Test Chat',
   };
 
   const mockChatPicture: ChatPicture = {
@@ -82,10 +88,9 @@ describe('ChatsClient', () => {
 
       await chatsClient.setPresenceAsync('1234567890@s.whatsapp.net', { presence: 'composing' });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/chats/1234567890@s.whatsapp.net/presence/set',
-        { presence: 'composing' }
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/presence/set', {
+        presence: 'composing',
+      });
     });
   });
 
@@ -95,9 +100,7 @@ describe('ChatsClient', () => {
 
       await chatsClient.subscribePresenceAsync('1234567890@s.whatsapp.net');
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/chats/1234567890@s.whatsapp.net/presence/subscribe'
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/presence/subscribe');
     });
   });
 
@@ -107,10 +110,9 @@ describe('ChatsClient', () => {
 
       await chatsClient.updateEphemeralAsync('1234567890@s.whatsapp.net', { ephemeralExpiration: '24h' });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/chats/1234567890@s.whatsapp.net/ephemeral',
-        { ephemeralExpiration: '24h' }
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/ephemeral', {
+        ephemeralExpiration: '24h',
+      });
     });
   });
 
@@ -120,10 +122,10 @@ describe('ChatsClient', () => {
 
       await chatsClient.updateMuteAsync('1234567890@s.whatsapp.net', { mute: true, duration: '8h' });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/chats/1234567890@s.whatsapp.net/mute',
-        { mute: true, duration: '8h' }
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/mute', {
+        mute: true,
+        duration: '8h',
+      });
     });
   });
 
@@ -133,10 +135,7 @@ describe('ChatsClient', () => {
 
       await chatsClient.updatePinAsync('1234567890@s.whatsapp.net', { pin: true });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/chats/1234567890@s.whatsapp.net/pin',
-        { pin: true }
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/pin', { pin: true });
     });
   });
 
@@ -146,10 +145,9 @@ describe('ChatsClient', () => {
 
       await chatsClient.updateArchiveAsync('1234567890@s.whatsapp.net', { archive: true });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/chats/1234567890@s.whatsapp.net/archive',
-        { archive: true }
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/archive', {
+        archive: true,
+      });
     });
   });
 
@@ -159,10 +157,7 @@ describe('ChatsClient', () => {
 
       await chatsClient.updateReadAsync('1234567890@s.whatsapp.net', { read: true });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith(
-        '/chats/1234567890@s.whatsapp.net/read',
-        { read: true }
-      );
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/read', { read: true });
     });
   });
 
@@ -254,7 +249,9 @@ describe('ChatsClient', () => {
     it('should return success response', async () => {
       mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
 
-      const result = await chatsClient.tryUpdateEphemeralAsync('1234567890@s.whatsapp.net', { ephemeralExpiration: '7d' });
+      const result = await chatsClient.tryUpdateEphemeralAsync('1234567890@s.whatsapp.net', {
+        ephemeralExpiration: '7d',
+      });
 
       expect(result.isSuccess).toBe(true);
     });
@@ -305,6 +302,38 @@ describe('ChatsClient', () => {
       mockHttpClient.tryDeleteVoid.mockResolvedValue(createVoidSuccessResponse());
 
       const result = await chatsClient.tryDeleteChatAsync('1234567890@s.whatsapp.net');
+
+      expect(result.isSuccess).toBe(true);
+    });
+  });
+
+  describe('requestMessagesAsync', () => {
+    it('should request messages', async () => {
+      mockHttpClient.post.mockResolvedValue({ status: 'ok' });
+
+      const result = await chatsClient.requestMessagesAsync('1234567890@s.whatsapp.net', {
+        lastMessageId: 'msg123',
+        lastMessageSenderId: 'sender123',
+        count: 50,
+      });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/messages', {
+        lastMessageId: 'msg123',
+        lastMessageSenderId: 'sender123',
+        count: 50,
+      });
+      expect(result.status).toBe('ok');
+    });
+  });
+
+  describe('tryRequestMessagesAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryPost.mockResolvedValue(createSuccessResponse({ status: 'ok' }));
+
+      const result = await chatsClient.tryRequestMessagesAsync('1234567890@s.whatsapp.net', {
+        lastMessageId: 'msg123',
+        lastMessageSenderId: 'sender123',
+      });
 
       expect(result.isSuccess).toBe(true);
     });

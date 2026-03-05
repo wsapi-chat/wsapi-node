@@ -96,4 +96,21 @@ export class SessionClient implements ISessionClient {
   async tryGetSessionStatusAsync(): Promise<ApiResponse<SessionStatus>> {
     return await this.httpClient.tryGet<SessionStatus>('/session/status');
   }
+
+  /**
+   * Flushes the message history for the current session.
+   * @returns Promise that resolves to the status response
+   * @throws {ApiException} When the request fails
+   */
+  async flushHistoryAsync(): Promise<{ status: string }> {
+    return await this.httpClient.post<{ status: string }>('/session/flush-history');
+  }
+
+  /**
+   * Flushes the message history for the current session with error handling.
+   * @returns Promise that resolves to an ApiResponse containing the status response or error details
+   */
+  async tryFlushHistoryAsync(): Promise<ApiResponse<{ status: string }>> {
+    return await this.httpClient.tryPost<{ status: string }>('/session/flush-history');
+  }
 }

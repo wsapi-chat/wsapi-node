@@ -1,9 +1,7 @@
 import type { ApiResponse } from './ApiResponse.js';
 import type { ContactInfo } from '../Models/Entities/Contacts/index.js';
-import type {
-  ContactCreateRequest,
-  ContactUpdateRequest,
-} from '../Models/Requests/Contacts/index.js';
+import type { ContactCreateRequest } from '../Models/Requests/Contacts/index.js';
+import type { Identity } from '../Models/Entities/Users/Identity.js';
 
 /**
  * Interface for WhatsApp contacts API client operations.
@@ -14,11 +12,17 @@ export interface IContactsClient {
   listAsync(): Promise<ContactInfo[]>;
   getAsync(contactId: string): Promise<ContactInfo>;
   createAsync(request: ContactCreateRequest): Promise<void>;
-  updateAsync(contactId: string, request: ContactUpdateRequest): Promise<void>;
+  syncContactsAsync(): Promise<void>;
+  getBlocklistAsync(): Promise<Identity[]>;
+  blockContactAsync(id: string): Promise<void>;
+  unblockContactAsync(id: string): Promise<void>;
 
   // Non-throwing methods (return ApiResponse with success/error info)
   tryListAsync(): Promise<ApiResponse<ContactInfo[]>>;
   tryGetAsync(contactId: string): Promise<ApiResponse<ContactInfo>>;
   tryCreateAsync(request: ContactCreateRequest): Promise<ApiResponse>;
-  tryUpdateAsync(contactId: string, request: ContactUpdateRequest): Promise<ApiResponse>;
+  trySyncContactsAsync(): Promise<ApiResponse<void>>;
+  tryGetBlocklistAsync(): Promise<ApiResponse<Identity[]>>;
+  tryBlockContactAsync(id: string): Promise<ApiResponse<void>>;
+  tryUnblockContactAsync(id: string): Promise<ApiResponse<void>>;
 }

@@ -1,14 +1,31 @@
 import { EventTypes, EventType } from './Constants/EventTypes';
-import { BaseEvent } from './BaseEvent';
 
 // Import all event types
-import { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent, InitialSyncFinishedEvent } from './Session/SessionEvents';
-import { MessageEvent, MessageDeleteEvent, MessageHistorySyncEvent, MessageReadEvent, MessageStarEvent } from './Messages/MessageEvents';
-import { ChatPresenceEvent, ChatSettingEvent, ChatPushNameEvent, ChatStatusEvent, ChatPictureEvent } from './Chats/ChatEvents';
+import {
+  SessionLoggedInEvent,
+  SessionLoggedOutEvent,
+  SessionLoggedErrorEvent,
+  InitialSyncFinishedEvent,
+} from './Session/SessionEvents';
+import {
+  MessageEvent,
+  MessageDeleteEvent,
+  MessageHistorySyncEvent,
+  MessageReadEvent,
+  MessageStarEvent,
+} from './Messages/MessageEvents';
+import {
+  ChatPresenceEvent,
+  ChatSettingEvent,
+  ChatPushNameEvent,
+  ChatStatusEvent,
+  ChatPictureEvent,
+} from './Chats/ChatEvents';
 import { ContactEvent } from './Contacts/ContactEvents';
 import { UserPresenceEvent } from './Users/UserEvents';
 import { CallOfferEvent, CallAcceptEvent, CallTerminateEvent } from './Calls/CallEvents';
 import { GroupEvent } from './Groups/GroupEvents';
+import { NewsletterEvent } from './Newsletters/NewsletterEvents.js';
 
 /**
  * Union type of all possible WhatsApp Business API events
@@ -33,7 +50,8 @@ export type WSApiEvent =
   | GroupEvent
   | CallOfferEvent
   | CallAcceptEvent
-  | CallTerminateEvent;
+  | CallTerminateEvent
+  | NewsletterEvent;
 
 /**
  * Raw event data structure from SSE/Webhook
@@ -43,6 +61,7 @@ export interface RawEventData {
   instanceId: string;
   eventType: string;
   eventData: any;
+  eventId?: string;
 }
 
 /**
@@ -52,153 +71,210 @@ export class EventFactory {
   /**
    * Map of event types to their constructors/parsers
    */
-  private static readonly eventTypeMap: Record<string, (data: any, instanceId: string, receivedAt: Date, eventType: EventType) => WSApiEvent> = {
+  private static readonly eventTypeMap: Record<
+    string,
+    (data: any, instanceId: string, receivedAt: Date, eventType: EventType, eventId?: string) => WSApiEvent
+  > = {
     // Session events
-    [EventTypes.LOGGED_IN]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as SessionLoggedInEvent),
+    [EventTypes.LOGGED_IN]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as SessionLoggedInEvent,
 
-    [EventTypes.LOGGED_OUT]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as SessionLoggedOutEvent),
+    [EventTypes.LOGGED_OUT]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as SessionLoggedOutEvent,
 
-    [EventTypes.LOGGED_ERROR]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as SessionLoggedErrorEvent),
+    [EventTypes.LOGGED_ERROR]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as SessionLoggedErrorEvent,
 
-    [EventTypes.INITIAL_SYNC_FINISHED]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as InitialSyncFinishedEvent),
+    [EventTypes.INITIAL_SYNC_FINISHED]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as InitialSyncFinishedEvent,
 
     // Message events
-    [EventTypes.MESSAGE]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as MessageEvent),
+    [EventTypes.MESSAGE]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as MessageEvent,
 
-    [EventTypes.MESSAGE_DELETE]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as MessageDeleteEvent),
+    [EventTypes.MESSAGE_DELETE]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as MessageDeleteEvent,
 
-    [EventTypes.MESSAGE_HISTORY_SYNC]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as MessageHistorySyncEvent),
+    [EventTypes.MESSAGE_HISTORY_SYNC]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as MessageHistorySyncEvent,
 
-    [EventTypes.MESSAGE_READ]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as MessageReadEvent),
+    [EventTypes.MESSAGE_READ]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as MessageReadEvent,
 
-    [EventTypes.MESSAGE_STAR]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as MessageStarEvent),
+    [EventTypes.MESSAGE_STAR]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as MessageStarEvent,
 
     // Chat events
-    [EventTypes.CHAT_PRESENCE]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as ChatPresenceEvent),
+    [EventTypes.CHAT_PRESENCE]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as ChatPresenceEvent,
 
-    [EventTypes.CHAT_SETTING]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as ChatSettingEvent),
+    [EventTypes.CHAT_SETTING]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as ChatSettingEvent,
 
-    [EventTypes.CHAT_PUSH_NAME]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as ChatPushNameEvent),
+    [EventTypes.CHAT_PUSH_NAME]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as ChatPushNameEvent,
 
-    [EventTypes.CHAT_STATUS]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as ChatStatusEvent),
+    [EventTypes.CHAT_STATUS]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as ChatStatusEvent,
 
-    [EventTypes.CHAT_PICTURE]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as ChatPictureEvent),
+    [EventTypes.CHAT_PICTURE]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as ChatPictureEvent,
 
     // Contact events
-    [EventTypes.CONTACT]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as ContactEvent),
+    [EventTypes.CONTACT]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as ContactEvent,
 
     // User events
-    [EventTypes.USER_PRESENCE]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as UserPresenceEvent),
+    [EventTypes.USER_PRESENCE]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as UserPresenceEvent,
 
     // Group events
-    [EventTypes.GROUP]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as GroupEvent),
+    [EventTypes.GROUP]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as GroupEvent,
 
     // Call events
-    [EventTypes.CALL_OFFER]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as CallOfferEvent),
+    [EventTypes.CALL_OFFER]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as CallOfferEvent,
 
-    [EventTypes.CALL_ACCEPT]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as CallAcceptEvent),
+    [EventTypes.CALL_ACCEPT]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as CallAcceptEvent,
 
-    [EventTypes.CALL_TERMINATE]: (data, instanceId, receivedAt, eventType) => ({
-      ...data,
-      instanceId,
-      receivedAt,
-      eventType
-    } as CallTerminateEvent)
+    [EventTypes.CALL_TERMINATE]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        ...data,
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+      }) as CallTerminateEvent,
+
+    // Newsletter events
+    [EventTypes.NEWSLETTER]: (data, instanceId, receivedAt, eventType, eventId) =>
+      ({
+        instanceId,
+        receivedAt,
+        eventType,
+        eventId,
+        id: data.id,
+        action: data.action,
+        name: data.name,
+        role: data.role,
+        mute: data.mute,
+      }) as NewsletterEvent,
   };
 
   /**
@@ -233,15 +309,15 @@ export class EventFactory {
     if (!rawData.receivedAt) {
       throw new Error('Missing required property: receivedAt');
     }
-    
+
     if (!rawData.instanceId) {
       throw new Error('Missing required property: instanceId');
     }
-    
+
     if (!rawData.eventType) {
       throw new Error('Missing required property: eventType');
     }
-    
+
     if (rawData.eventData === undefined || rawData.eventData === null) {
       throw new Error('Missing required property: eventData');
     }
@@ -260,9 +336,17 @@ export class EventFactory {
 
     // Parse the event
     try {
-      return eventParser(rawData.eventData, rawData.instanceId, receivedAt, rawData.eventType as EventType);
+      return eventParser(
+        rawData.eventData,
+        rawData.instanceId,
+        receivedAt,
+        rawData.eventType as EventType,
+        rawData.eventId,
+      );
     } catch (error) {
-      throw new Error(`Failed to parse ${rawData.eventType} event: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to parse ${rawData.eventType} event: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      );
     }
   }
 

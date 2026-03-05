@@ -1,5 +1,6 @@
 import { BaseEvent } from '../BaseEvent';
 import { Sender } from '../../Models/Entities/Users/Sender';
+import { Identity } from '../../Models/Entities/Users/Identity.js';
 
 /**
  * Chat presence state type
@@ -103,8 +104,8 @@ export interface ChatSettingEvent extends BaseEvent {
 export interface ChatPushNameEvent extends BaseEvent {
   eventType: 'chat_push_name';
 
-  /** Chat ID */
-  id: string;
+  /** User identity */
+  user: Identity;
 
   /** The chat's push name */
   pushName: string;
@@ -116,8 +117,8 @@ export interface ChatPushNameEvent extends BaseEvent {
 export interface ChatStatusEvent extends BaseEvent {
   eventType: 'chat_status';
 
-  /** Chat ID */
-  id: string;
+  /** User identity */
+  user: Identity;
 
   /** The chat's status message */
   status: string;

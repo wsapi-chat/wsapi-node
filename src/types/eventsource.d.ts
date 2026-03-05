@@ -1,5 +1,5 @@
 declare module 'eventsource' {
-    const EventSource: any;
-    export default EventSource;
-    export { EventSource };
+  const EventSource: any;
+  export default EventSource;
+  export { EventSource };
 }

@@ -31,7 +31,7 @@ export class HttpClient {
   constructor(options: WSApiClientOptions);
   constructor(options: HttpClientOptions | WSApiClientOptions) {
     if (isWSApiOptions(options)) {
-      const base = (options.baseUrl ?? DEFAULT_WSAPI_BASE_URL);
+      const base = options.baseUrl ?? DEFAULT_WSAPI_BASE_URL;
       this.baseUrl = base.endsWith('/') ? base.slice(0, -1) : base;
       this.headers = {
         'Content-Type': 'application/json',
@@ -43,9 +43,7 @@ export class HttpClient {
     }
 
     // Backwards-compatible constructor
-    this.baseUrl = options.baseUrl.endsWith('/')
-      ? options.baseUrl.slice(0, -1)
-      : options.baseUrl;
+    this.baseUrl = options.baseUrl.endsWith('/') ? options.baseUrl.slice(0, -1) : options.baseUrl;
     this.headers = {
       'Content-Type': 'application/json',
       ...options.headers,
@@ -197,7 +195,7 @@ export class HttpClient {
   async postBinary<TRequest>(path: string, body: TRequest): Promise<ArrayBuffer> {
     const requestOptions: RequestInit = {
       method: 'POST',
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     };
     const response = await this.makeRequest(path, requestOptions);
     return HttpClientExtensions.ensureSuccessOrThrowByteArrayAsync(response);
@@ -212,7 +210,7 @@ export class HttpClient {
   async tryPostBinary<TRequest>(path: string, body: TRequest): Promise<ApiResponse<ArrayBuffer>> {
     const requestOptions: RequestInit = {
       method: 'POST',
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     };
     const response = await this.makeRequest(path, requestOptions);
     return HttpClientExtensions.readAsApiResponseByteArrayAsync(response);
@@ -229,9 +227,9 @@ export class HttpClient {
         ...options,
         headers: {
           ...this.headers,
-          ...options.headers
+          ...options.headers,
         },
-        signal: controller.signal
+        signal: controller.signal,
       });
 
       return response;
@@ -243,7 +241,6 @@ export class HttpClient {
 
 function isWSApiOptions(options: HttpClientOptions | WSApiClientOptions): options is WSApiClientOptions {
   return (
-    (options as WSApiClientOptions).instanceId !== undefined &&
-    (options as WSApiClientOptions).apiKey !== undefined
+    (options as WSApiClientOptions).instanceId !== undefined && (options as WSApiClientOptions).apiKey !== undefined
   );
 }

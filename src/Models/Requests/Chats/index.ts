@@ -5,3 +5,4 @@ export { type ChatUpdateArchiveRequest } from './ChatUpdateArchiveRequest.js';
 export { type ChatUpdateMuteRequest } from './ChatUpdateMuteRequest.js';
 export { type ChatUpdatePinRequest } from './ChatUpdatePinRequest.js';
 export { type ChatUpdateEphemeralExpirationRequest } from './ChatUpdateEphemeralExpirationRequest.js';
+export { type RequestMessagesRequest } from './RequestMessagesRequest.js';

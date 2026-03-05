@@ -26,4 +26,4 @@ export const MessagePinExpirations = {
 /**
  * Type for message pin expiration values
  */
-export type MessagePinExpiration = typeof MessagePinExpirations[keyof typeof MessagePinExpirations];
+export type MessagePinExpiration = (typeof MessagePinExpirations)[keyof typeof MessagePinExpirations];

@@ -1,13 +1,31 @@
 import { describe, it, expect } from 'vitest';
 import { EventFactory, type RawEventData } from '../../src/Events/EventFactory';
 import { EventTypes } from '../../src/Models/Constants/EventTypes';
-import type { SessionLoggedInEvent, SessionLoggedOutEvent, SessionLoggedErrorEvent, InitialSyncFinishedEvent } from '../../src/Events/Session/SessionEvents';
-import type { MessageEvent, MessageDeleteEvent, MessageHistorySyncEvent, MessageReadEvent, MessageStarEvent } from '../../src/Events/Messages/MessageEvents';
-import type { ChatPresenceEvent, ChatSettingEvent, ChatPushNameEvent, ChatStatusEvent, ChatPictureEvent } from '../../src/Events/Chats/ChatEvents';
+import type {
+  SessionLoggedInEvent,
+  SessionLoggedOutEvent,
+  SessionLoggedErrorEvent,
+  InitialSyncFinishedEvent,
+} from '../../src/Events/Session/SessionEvents';
+import type {
+  MessageEvent,
+  MessageDeleteEvent,
+  MessageHistorySyncEvent,
+  MessageReadEvent,
+  MessageStarEvent,
+} from '../../src/Events/Messages/MessageEvents';
+import type {
+  ChatPresenceEvent,
+  ChatSettingEvent,
+  ChatPushNameEvent,
+  ChatStatusEvent,
+  ChatPictureEvent,
+} from '../../src/Events/Chats/ChatEvents';
 import type { ContactEvent } from '../../src/Events/Contacts/ContactEvents';
 import type { UserPresenceEvent } from '../../src/Events/Users/UserEvents';
 import type { GroupEvent } from '../../src/Events/Groups/GroupEvents';
 import type { CallOfferEvent, CallAcceptEvent, CallTerminateEvent } from '../../src/Events/Calls/CallEvents';
+import type { NewsletterEvent } from '../../src/Events/Newsletters/NewsletterEvents';
 
 describe('EventFactory', () => {
   const instanceId = 'instance123';
@@ -345,7 +363,7 @@ describe('EventFactory', () => {
         instanceId,
         eventType: EventTypes.CHAT_PUSH_NAME,
         eventData: {
-          id: '1234567890@s.whatsapp.net',
+          user: { id: '1234567890@s.whatsapp.net', phone: '1234567890' },
           pushName: 'John Doe',
         },
       };
@@ -353,7 +371,7 @@ describe('EventFactory', () => {
       const event = EventFactory.parseRawEvent(rawEvent) as ChatPushNameEvent;
 
       expect(event.eventType).toBe(EventTypes.CHAT_PUSH_NAME);
-      expect(event.id).toBe('1234567890@s.whatsapp.net');
+      expect(event.user.id).toBe('1234567890@s.whatsapp.net');
       expect(event.pushName).toBe('John Doe');
     });
 
@@ -363,7 +381,7 @@ describe('EventFactory', () => {
         instanceId,
         eventType: EventTypes.CHAT_STATUS,
         eventData: {
-          id: '1234567890@s.whatsapp.net',
+          user: { id: '1234567890@s.whatsapp.net', phone: '1234567890' },
           status: 'Available',
         },
       };
@@ -371,7 +389,7 @@ describe('EventFactory', () => {
       const event = EventFactory.parseRawEvent(rawEvent) as ChatStatusEvent;
 
       expect(event.eventType).toBe(EventTypes.CHAT_STATUS);
-      expect(event.id).toBe('1234567890@s.whatsapp.net');
+      expect(event.user.id).toBe('1234567890@s.whatsapp.net');
       expect(event.status).toBe('Available');
     });
 
@@ -402,7 +420,7 @@ describe('EventFactory', () => {
         instanceId,
         eventType: EventTypes.CONTACT,
         eventData: {
-          id: '1234567890@s.whatsapp.net',
+          contact: { id: '1234567890@s.whatsapp.net', phone: '1234567890' },
           fullName: 'Test Contact',
           inPhoneAddressBook: true,
         },
@@ -411,7 +429,7 @@ describe('EventFactory', () => {
       const event = EventFactory.parseRawEvent(rawEvent) as ContactEvent;
 
       expect(event.eventType).toBe(EventTypes.CONTACT);
-      expect(event.id).toBe('1234567890@s.whatsapp.net');
+      expect(event.contact.id).toBe('1234567890@s.whatsapp.net');
       expect(event.fullName).toBe('Test Contact');
       expect(event.inPhoneAddressBook).toBe(true);
     });
@@ -445,15 +463,16 @@ describe('EventFactory', () => {
         eventType: EventTypes.GROUP,
         eventData: {
           id: '1234567890-1234567890@g.us',
-          sender: { id: '1234567890@s.whatsapp.net', user: '1234567890', isMe: false },
-          join: ['9876543210@s.whatsapp.net'],
+          sender: { id: '1234567890@s.whatsapp.net', phone: '1234567890', isMe: false },
+          join: [{ id: '9876543210@s.whatsapp.net', phone: '9876543210' }],
         },
       };
 
       const event = EventFactory.parseRawEvent(rawEvent) as GroupEvent;
 
       expect(event.eventType).toBe(EventTypes.GROUP);
-      expect(event.join).toContain('9876543210@s.whatsapp.net');
+      expect(event.join).toHaveLength(1);
+      expect(event.join![0].id).toBe('9876543210@s.whatsapp.net');
     });
 
     it('should parse group event with member leave', () => {
@@ -463,15 +482,16 @@ describe('EventFactory', () => {
         eventType: EventTypes.GROUP,
         eventData: {
           id: '1234567890-1234567890@g.us',
-          sender: { id: '9876543210@s.whatsapp.net', user: '9876543210', isMe: false },
-          leave: ['9876543210@s.whatsapp.net'],
+          sender: { id: '9876543210@s.whatsapp.net', phone: '9876543210', isMe: false },
+          leave: [{ id: '9876543210@s.whatsapp.net', phone: '9876543210' }],
         },
       };
 
       const event = EventFactory.parseRawEvent(rawEvent) as GroupEvent;
 
       expect(event.eventType).toBe(EventTypes.GROUP);
-      expect(event.leave).toContain('9876543210@s.whatsapp.net');
+      expect(event.leave).toHaveLength(1);
+      expect(event.leave![0].id).toBe('9876543210@s.whatsapp.net');
     });
   });
 
@@ -482,7 +502,7 @@ describe('EventFactory', () => {
         instanceId,
         eventType: EventTypes.USER_PRESENCE,
         eventData: {
-          id: '1234567890@s.whatsapp.net',
+          user: { id: '1234567890@s.whatsapp.net', phone: '1234567890' },
           status: 'available',
           lastSeen: '2025-01-01T11:00:00Z',
         },
@@ -491,7 +511,7 @@ describe('EventFactory', () => {
       const event = EventFactory.parseRawEvent(rawEvent) as UserPresenceEvent;
 
       expect(event.eventType).toBe(EventTypes.USER_PRESENCE);
-      expect(event.id).toBe('1234567890@s.whatsapp.net');
+      expect(event.user.id).toBe('1234567890@s.whatsapp.net');
       expect(event.status).toBe('available');
       expect(event.lastSeen).toBe('2025-01-01T11:00:00Z');
     });
@@ -505,7 +525,7 @@ describe('EventFactory', () => {
         eventType: EventTypes.CALL_OFFER,
         eventData: {
           id: 'call123',
-          caller: '1234567890@s.whatsapp.net',
+          caller: { id: '1234567890@s.whatsapp.net', phone: '1234567890' },
           chatId: '1234567890@s.whatsapp.net',
           time: '2025-01-01T11:00:00Z',
           isGroup: false,
@@ -517,7 +537,7 @@ describe('EventFactory', () => {
 
       expect(event.eventType).toBe(EventTypes.CALL_OFFER);
       expect(event.id).toBe('call123');
-      expect(event.caller).toBe('1234567890@s.whatsapp.net');
+      expect(event.caller.id).toBe('1234567890@s.whatsapp.net');
       expect(event.chatId).toBe('1234567890@s.whatsapp.net');
       expect(event.isVideo).toBe(false);
       expect(event.time).toBe('2025-01-01T11:00:00Z');
@@ -530,7 +550,7 @@ describe('EventFactory', () => {
         eventType: EventTypes.CALL_ACCEPT,
         eventData: {
           id: 'call123',
-          caller: '1234567890@s.whatsapp.net',
+          caller: { id: '1234567890@s.whatsapp.net', phone: '1234567890' },
           time: '2025-01-01T11:00:00Z',
         },
       };
@@ -539,7 +559,7 @@ describe('EventFactory', () => {
 
       expect(event.eventType).toBe(EventTypes.CALL_ACCEPT);
       expect(event.id).toBe('call123');
-      expect(event.caller).toBe('1234567890@s.whatsapp.net');
+      expect(event.caller.id).toBe('1234567890@s.whatsapp.net');
       expect(event.time).toBe('2025-01-01T11:00:00Z');
     });
 
@@ -550,7 +570,7 @@ describe('EventFactory', () => {
         eventType: EventTypes.CALL_TERMINATE,
         eventData: {
           id: 'call123',
-          caller: '1234567890@s.whatsapp.net',
+          caller: { id: '1234567890@s.whatsapp.net', phone: '1234567890' },
           time: '2025-01-01T11:02:00Z',
           reason: 'ended',
         },
@@ -560,7 +580,7 @@ describe('EventFactory', () => {
 
       expect(event.eventType).toBe(EventTypes.CALL_TERMINATE);
       expect(event.id).toBe('call123');
-      expect(event.caller).toBe('1234567890@s.whatsapp.net');
+      expect(event.caller.id).toBe('1234567890@s.whatsapp.net');
       expect(event.reason).toBe('ended');
       expect(event.time).toBe('2025-01-01T11:02:00Z');
     });
@@ -611,8 +631,62 @@ describe('EventFactory', () => {
       expect(supportedTypes).toContain(EventTypes.CALL_ACCEPT);
       expect(supportedTypes).toContain(EventTypes.CALL_TERMINATE);
 
-      // Should have 20 event types total
-      expect(supportedTypes.length).toBe(20);
+      // Newsletter events
+      expect(supportedTypes).toContain(EventTypes.NEWSLETTER);
+
+      // Should have 21 event types total
+      expect(supportedTypes.length).toBe(21);
+    });
+  });
+
+  describe('Newsletter Events', () => {
+    it('should parse newsletter event', () => {
+      const rawEvent: RawEventData = {
+        receivedAt,
+        instanceId,
+        eventType: EventTypes.NEWSLETTER,
+        eventData: {
+          id: 'newsletter123@newsletter',
+          action: 'update',
+          name: 'Test Newsletter',
+          role: 'subscriber',
+          mute: false,
+        },
+      };
+
+      const event = EventFactory.parseRawEvent(rawEvent) as NewsletterEvent;
+
+      expect(event.eventType).toBe(EventTypes.NEWSLETTER);
+      expect(event.id).toBe('newsletter123@newsletter');
+      expect(event.action).toBe('update');
+      expect(event.name).toBe('Test Newsletter');
+      expect(event.role).toBe('subscriber');
+      expect(event.mute).toBe(false);
+    });
+  });
+
+  describe('eventId support', () => {
+    it('should pass eventId through to parsed events', () => {
+      const rawEvent: RawEventData = {
+        receivedAt,
+        instanceId,
+        eventType: EventTypes.MESSAGE,
+        eventId: 'evt-123',
+        eventData: {
+          id: 'msg123',
+          chatId: '1234567890@s.whatsapp.net',
+          sender: { id: '1234567890@s.whatsapp.net', phone: '1234567890', isMe: false },
+          time: '2025-01-01T11:00:00Z',
+          isGroup: false,
+          isStatus: false,
+          type: 'text',
+          text: 'Hello',
+        },
+      };
+
+      const event = EventFactory.parseRawEvent(rawEvent) as MessageEvent;
+
+      expect(event.eventId).toBe('evt-123');
     });
   });
 });

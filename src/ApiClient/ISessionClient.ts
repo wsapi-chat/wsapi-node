@@ -72,4 +72,17 @@ export interface ISessionClient {
    * @returns Promise that resolves to an ApiResponse containing the session status or error details
    */
   tryGetSessionStatusAsync(): Promise<ApiResponse<SessionStatus>>;
+
+  /**
+   * Flushes the message history for the current session.
+   * @returns Promise that resolves to the status response
+   * @throws {ApiException} When the request fails
+   */
+  flushHistoryAsync(): Promise<{ status: string }>;
+
+  /**
+   * Flushes the message history for the current session with error handling.
+   * @returns Promise that resolves to an ApiResponse containing the status response or error details
+   */
+  tryFlushHistoryAsync(): Promise<ApiResponse<{ status: string }>>;
 }

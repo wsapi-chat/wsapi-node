@@ -1,5 +1,5 @@
 import type { ApiResponse } from './ApiResponse.js';
-import type { ChatInfo, ChatPicture, ChatBusinessProfile } from '../Models/Entities/Chats/index.js';
+import type { ChatListItem, ChatPicture, ChatBusinessProfile } from '../Models/Entities/Chats/index.js';
 import type {
   ChatUpdatePresenceRequest,
   ChatUpdateEphemeralExpirationRequest,
@@ -7,6 +7,7 @@ import type {
   ChatUpdatePinRequest,
   ChatUpdateArchiveRequest,
   ChatUpdateReadRequest,
+  RequestMessagesRequest,
 } from '../Models/Requests/Chats/index.js';
 
 /**
@@ -15,8 +16,8 @@ import type {
  */
 export interface IChatsClient {
   // Throwing methods (throw ApiException on error)
-  listAsync(): Promise<ChatInfo[]>;
-  getAsync(chatId: string): Promise<ChatInfo>;
+  listAsync(): Promise<ChatListItem[]>;
+  getAsync(chatId: string): Promise<ChatListItem>;
   getPictureAsync(chatId: string): Promise<ChatPicture>;
   getBusinessProfileAsync(chatId: string): Promise<ChatBusinessProfile>;
   setPresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<void>;
@@ -29,10 +30,11 @@ export interface IChatsClient {
   deleteChatAsync(chatId: string): Promise<void>;
   /** Clear all messages from a chat */
   clearAsync(chatId: string): Promise<void>;
+  requestMessagesAsync(chatId: string, request: RequestMessagesRequest): Promise<{ status: string }>;
 
   // Non-throwing methods (return ApiResponse with success/error info)
-  tryListAsync(): Promise<ApiResponse<ChatInfo[]>>;
-  tryGetAsync(chatId: string): Promise<ApiResponse<ChatInfo>>;
+  tryListAsync(): Promise<ApiResponse<ChatListItem[]>>;
+  tryGetAsync(chatId: string): Promise<ApiResponse<ChatListItem>>;
   tryGetPictureAsync(chatId: string): Promise<ApiResponse<ChatPicture>>;
   tryGetBusinessProfileAsync(chatId: string): Promise<ApiResponse<ChatBusinessProfile>>;
   trySetPresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<ApiResponse>;
@@ -44,4 +46,5 @@ export interface IChatsClient {
   tryUpdateReadAsync(chatId: string, request: ChatUpdateReadRequest): Promise<ApiResponse>;
   tryDeleteChatAsync(chatId: string): Promise<ApiResponse>;
   tryClearAsync(chatId: string): Promise<ApiResponse>;
+  tryRequestMessagesAsync(chatId: string, request: RequestMessagesRequest): Promise<ApiResponse<{ status: string }>>;
 }

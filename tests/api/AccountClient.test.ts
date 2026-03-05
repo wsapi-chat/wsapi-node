@@ -1,23 +1,55 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { AccountClient } from '../../src/ApiClient/AccountClient';
-import { MockHttpClient, createSuccessResponse, createVoidSuccessResponse, createErrorResponse } from '../mocks/MockHttpClient';
-import type { AccountInfo } from '../../src/Models/Entities/Accounts/AccountInfo';
-import type { AccountUpdatePictureResponse } from '../../src/Models/Requests/Account/AccountUpdatePictureResponse';
+import {
+  MockHttpClient,
+  createSuccessResponse,
+  createVoidSuccessResponse,
+  createErrorResponse,
+} from '../mocks/MockHttpClient';
+import type {
+  AccountInstance,
+  AccountInstanceDetail,
+  AccountInstanceSettings,
+  AccountSubscription,
+  AccountInstanceDefaults,
+  PagedResponse,
+} from '../../src/Models/Entities/Accounts/index';
 
 describe('AccountClient', () => {
   let mockHttpClient: MockHttpClient;
   let accountClient: AccountClient;
 
-  const mockAccountInfo: AccountInfo = {
-    id: '1234567890@s.whatsapp.net',
-    name: 'Test User',
-    pushName: 'Test',
-    status: 'Available',
-    pictureUrl: 'https://example.com/picture.jpg',
+  const mockInstance: AccountInstance = {
+    id: 'inst-123',
+    name: 'Test Instance',
+    status: 'active',
   };
 
-  const mockPictureResponse: AccountUpdatePictureResponse = {
-    pictureId: 'pic123',
+  const mockInstanceDetail: AccountInstanceDetail = {
+    id: 'inst-123',
+    name: 'Test Instance',
+    status: 'active',
+    apiKey: 'key-123',
+  };
+
+  const mockSettings: AccountInstanceSettings = {
+    webhookUrl: 'https://example.com/webhook',
+  };
+
+  const mockSubscription: AccountSubscription = {
+    id: 'sub-123',
+    plan: 'pro',
+  };
+
+  const mockDefaults: AccountInstanceDefaults = {
+    webhookUrl: 'https://default.example.com/webhook',
+  };
+
+  const mockPagedInstances: PagedResponse<AccountInstance> = {
+    items: [mockInstance],
+    totalCount: 1,
+    pageNumber: 1,
+    pageSize: 10,
   };
 
   beforeEach(() => {
@@ -25,121 +57,202 @@ describe('AccountClient', () => {
     accountClient = new AccountClient(mockHttpClient as any);
   });
 
-  describe('getInfoAsync', () => {
-    it('should get account info', async () => {
-      mockHttpClient.get.mockResolvedValue(mockAccountInfo);
+  describe('listInstancesAsync', () => {
+    it('should list instances', async () => {
+      mockHttpClient.get.mockResolvedValue(mockPagedInstances);
 
-      const result = await accountClient.getInfoAsync();
+      const result = await accountClient.listInstancesAsync();
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith('/account/info');
-      expect(result).toEqual(mockAccountInfo);
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/account/instances');
+      expect(result).toEqual(mockPagedInstances);
+    });
+
+    it('should list instances with query params', async () => {
+      mockHttpClient.get.mockResolvedValue(mockPagedInstances);
+
+      await accountClient.listInstancesAsync(1, 20, '2025-01-01', '2025-12-31', 'active');
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        '/account/instances?pageNumber=1&pageSize=20&createdFrom=2025-01-01&createdTo=2025-12-31&status=active',
+      );
     });
   });
 
-  describe('updateNameAsync', () => {
-    it('should update account name', async () => {
+  describe('getInstanceAsync', () => {
+    it('should get instance by id', async () => {
+      mockHttpClient.get.mockResolvedValue(mockInstanceDetail);
+
+      const result = await accountClient.getInstanceAsync('inst-123');
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/account/instances/inst-123');
+      expect(result).toEqual(mockInstanceDetail);
+    });
+  });
+
+  describe('updateInstanceNameAsync', () => {
+    it('should update instance name', async () => {
       mockHttpClient.putVoid.mockResolvedValue(undefined);
 
-      await accountClient.updateNameAsync({ name: 'New Name' });
+      await accountClient.updateInstanceNameAsync('inst-123', { name: 'New Name' });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/account/name', { name: 'New Name' });
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/account/instances/inst-123/name', { name: 'New Name' });
     });
   });
 
-  describe('updateStatusAsync', () => {
-    it('should update account status', async () => {
+  describe('updateInstanceSettingsAsync', () => {
+    it('should update instance settings', async () => {
       mockHttpClient.putVoid.mockResolvedValue(undefined);
 
-      await accountClient.updateStatusAsync({ status: 'Busy' });
+      await accountClient.updateInstanceSettingsAsync('inst-123', mockSettings);
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/account/status', { status: 'Busy' });
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/account/instances/inst-123/settings', mockSettings);
     });
   });
 
-  describe('updatePictureAsync', () => {
-    it('should update account picture', async () => {
-      mockHttpClient.post.mockResolvedValue(mockPictureResponse);
+  describe('regenerateInstanceApiKeyAsync', () => {
+    it('should regenerate API key', async () => {
+      mockHttpClient.put.mockResolvedValue('new-api-key');
 
-      const result = await accountClient.updatePictureAsync({ picture: 'base64data' });
+      const result = await accountClient.regenerateInstanceApiKeyAsync('inst-123');
 
-      expect(mockHttpClient.post).toHaveBeenCalledWith('/account/picture', { picture: 'base64data' });
-      expect(result).toEqual(mockPictureResponse);
+      expect(mockHttpClient.put).toHaveBeenCalledWith('/account/instances/inst-123/apikey');
+      expect(result).toBe('new-api-key');
     });
   });
 
-  describe('updatePresenceAsync', () => {
-    it('should update account presence', async () => {
+  describe('restartInstanceAsync', () => {
+    it('should restart instance', async () => {
       mockHttpClient.putVoid.mockResolvedValue(undefined);
 
-      await accountClient.updatePresenceAsync({ presence: 'available' });
+      await accountClient.restartInstanceAsync('inst-123');
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/account/presence', { presence: 'available' });
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/account/instances/inst-123/restart');
+    });
+  });
+
+  describe('listSubscriptionsAsync', () => {
+    it('should list subscriptions', async () => {
+      const mockPaged: PagedResponse<AccountSubscription> = {
+        items: [mockSubscription],
+        totalCount: 1,
+        pageNumber: 1,
+        pageSize: 10,
+      };
+      mockHttpClient.get.mockResolvedValue(mockPaged);
+
+      const result = await accountClient.listSubscriptionsAsync();
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/account/subscriptions');
+      expect(result).toEqual(mockPaged);
+    });
+  });
+
+  describe('getInstanceDefaultsAsync', () => {
+    it('should get instance defaults', async () => {
+      mockHttpClient.get.mockResolvedValue(mockDefaults);
+
+      const result = await accountClient.getInstanceDefaultsAsync();
+
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/account/instances/defaults');
+      expect(result).toEqual(mockDefaults);
+    });
+  });
+
+  describe('updateInstanceDefaultsAsync', () => {
+    it('should update instance defaults', async () => {
+      mockHttpClient.putVoid.mockResolvedValue(undefined);
+
+      await accountClient.updateInstanceDefaultsAsync(mockDefaults);
+
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/account/instances/defaults', mockDefaults);
     });
   });
 
   // Non-throwing methods
-  describe('tryGetInfoAsync', () => {
-    it('should return success response with account info', async () => {
-      mockHttpClient.tryGet.mockResolvedValue(createSuccessResponse(mockAccountInfo));
+  describe('tryListInstancesAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryGet.mockResolvedValue(createSuccessResponse(mockPagedInstances));
 
-      const result = await accountClient.tryGetInfoAsync();
+      const result = await accountClient.tryListInstancesAsync();
 
-      expect(mockHttpClient.tryGet).toHaveBeenCalledWith('/account/info');
+      expect(mockHttpClient.tryGet).toHaveBeenCalledWith('/account/instances');
       expect(result.isSuccess).toBe(true);
-      expect(result.data).toEqual(mockAccountInfo);
+      expect(result.data).toEqual(mockPagedInstances);
     });
 
     it('should return error response on failure', async () => {
-      mockHttpClient.tryGet.mockResolvedValue(createErrorResponse(404, 'Not found'));
+      mockHttpClient.tryGet.mockResolvedValue(createErrorResponse(401, 'Unauthorized'));
 
-      const result = await accountClient.tryGetInfoAsync();
+      const result = await accountClient.tryListInstancesAsync();
 
       expect(result.isSuccess).toBe(false);
-      expect(result.statusCode).toBe(404);
+      expect(result.statusCode).toBe(401);
     });
   });
 
-  describe('tryUpdateNameAsync', () => {
+  describe('tryGetInstanceAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryGet.mockResolvedValue(createSuccessResponse(mockInstanceDetail));
+
+      const result = await accountClient.tryGetInstanceAsync('inst-123');
+
+      expect(mockHttpClient.tryGet).toHaveBeenCalledWith('/account/instances/inst-123');
+      expect(result.isSuccess).toBe(true);
+      expect(result.data).toEqual(mockInstanceDetail);
+    });
+  });
+
+  describe('tryUpdateInstanceNameAsync', () => {
     it('should return success response', async () => {
       mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
 
-      const result = await accountClient.tryUpdateNameAsync({ name: 'New Name' });
+      const result = await accountClient.tryUpdateInstanceNameAsync('inst-123', { name: 'New Name' });
 
-      expect(mockHttpClient.tryPutVoid).toHaveBeenCalledWith('/account/name', { name: 'New Name' });
+      expect(mockHttpClient.tryPutVoid).toHaveBeenCalledWith('/account/instances/inst-123/name', { name: 'New Name' });
       expect(result.isSuccess).toBe(true);
     });
   });
 
-  describe('tryUpdateStatusAsync', () => {
+  describe('tryRegenerateInstanceApiKeyAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryPut.mockResolvedValue(createSuccessResponse('new-api-key'));
+
+      const result = await accountClient.tryRegenerateInstanceApiKeyAsync('inst-123');
+
+      expect(mockHttpClient.tryPut).toHaveBeenCalledWith('/account/instances/inst-123/apikey');
+      expect(result.isSuccess).toBe(true);
+      expect(result.data).toBe('new-api-key');
+    });
+  });
+
+  describe('tryRestartInstanceAsync', () => {
     it('should return success response', async () => {
       mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
 
-      const result = await accountClient.tryUpdateStatusAsync({ status: 'Busy' });
+      const result = await accountClient.tryRestartInstanceAsync('inst-123');
 
-      expect(mockHttpClient.tryPutVoid).toHaveBeenCalledWith('/account/status', { status: 'Busy' });
       expect(result.isSuccess).toBe(true);
     });
   });
 
-  describe('tryUpdatePictureAsync', () => {
-    it('should return success response with picture info', async () => {
-      mockHttpClient.tryPost.mockResolvedValue(createSuccessResponse(mockPictureResponse));
+  describe('tryGetInstanceDefaultsAsync', () => {
+    it('should return success response', async () => {
+      mockHttpClient.tryGet.mockResolvedValue(createSuccessResponse(mockDefaults));
 
-      const result = await accountClient.tryUpdatePictureAsync({ picture: 'base64data' });
+      const result = await accountClient.tryGetInstanceDefaultsAsync();
 
-      expect(mockHttpClient.tryPost).toHaveBeenCalledWith('/account/picture', { picture: 'base64data' });
+      expect(mockHttpClient.tryGet).toHaveBeenCalledWith('/account/instances/defaults');
       expect(result.isSuccess).toBe(true);
-      expect(result.data).toEqual(mockPictureResponse);
+      expect(result.data).toEqual(mockDefaults);
     });
   });
 
-  describe('tryUpdatePresenceAsync', () => {
+  describe('tryUpdateInstanceDefaultsAsync', () => {
     it('should return success response', async () => {
       mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
 
-      const result = await accountClient.tryUpdatePresenceAsync({ presence: 'available' });
+      const result = await accountClient.tryUpdateInstanceDefaultsAsync(mockDefaults);
 
-      expect(mockHttpClient.tryPutVoid).toHaveBeenCalledWith('/account/presence', { presence: 'available' });
       expect(result.isSuccess).toBe(true);
     });
   });

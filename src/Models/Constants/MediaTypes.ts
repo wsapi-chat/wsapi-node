@@ -41,4 +41,4 @@ export const MediaTypes = {
 /**
  * Type for media type values
  */
-export type MediaType = typeof MediaTypes[keyof typeof MediaTypes];
+export type MediaType = (typeof MediaTypes)[keyof typeof MediaTypes];
