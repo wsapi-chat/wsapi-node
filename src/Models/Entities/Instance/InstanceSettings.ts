@@ -18,7 +18,7 @@ export type EventFilterType =
   | 'call_offer'
   | 'call_terminate'
   | 'call_accept'
-  | 'logged_error'
+  | 'login_error'
   | 'logged_out'
   | 'logged_in'
   | 'initial_sync_finished';

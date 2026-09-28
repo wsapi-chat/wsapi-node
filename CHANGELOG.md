@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+
+- SSE: the stream now sends `X-API-Key` and `X-Instance-Id`. Previously `/events/stream` went out without credentials, so the connection was always rejected. Custom `sseConfig.headers` now extend the credentials instead of replacing them.
+- `EventTypes.LOGGED_ERROR` is now `'login_error'`, the name the API sends. Handlers and event filters registered for it never matched before.
+
 ## [3.0.0]
 
 Breaking changes: requires Node.js >=20; response types use the current REST field names, and join-by-invite returns void instead of an object. Update consumers of the previous response shapes before upgrading.
