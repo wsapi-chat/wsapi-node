@@ -153,7 +153,7 @@ describe('EventFactory', () => {
       expect(event.reason).toBe('user_logged_out');
     });
 
-    it('should parse logged_error event', () => {
+    it('should parse login_error event', () => {
       const rawEvent: RawEventData = {
         receivedAt,
         instanceId,
@@ -163,6 +163,8 @@ describe('EventFactory', () => {
 
       const event = EventFactory.parseRawEvent(rawEvent) as SessionLoggedErrorEvent;
 
+      // Literal on purpose: the wire name, not the constant, is what the API sends.
+      expect(EventTypes.LOGGED_ERROR).toBe('login_error');
       expect(event.eventType).toBe(EventTypes.LOGGED_ERROR);
       expect(event.error).toBe('Connection failed');
       expect(event.id).toBe('device123');

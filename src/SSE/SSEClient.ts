@@ -161,16 +161,20 @@ export class SSEClient implements ISSEClient {
 
     try {
       const url = new URL('/events/stream', this.options.baseUrl);
+      const headers = this.options.headers;
 
-      // Create EventSource with headers (if browser supports it)
-      // Note: Standard EventSource doesn't support custom headers,
-      // but we can add them to the URL as query parameters for auth
-      if (this.options.headers['Authorization']) {
-        url.searchParams.set('authorization', this.options.headers['Authorization']);
+      if (Object.keys(headers).length > 0) {
+        // Native EventSource cannot send headers, and the API authenticates by
+        // header only, so use the fetch-based polyfill and inject them there.
+        const ES = await this.getEventSourcePolyfill();
+        this.eventSource = new ES(url.toString(), {
+          fetch: (input: any, init: any) =>
+            fetch(input, { ...init, headers: { ...init?.headers, ...headers } }),
+        });
+      } else {
+        const ES = await this.getEventSourceCtor();
+        this.eventSource = new ES(url.toString());
       }
-
-      const ES = await this.getEventSourceCtor();
-      this.eventSource = new ES(url.toString());
 
       this.eventSource.onopen = () => {
         this.reconnectAttempts = 0;
@@ -198,9 +202,12 @@ export class SSEClient implements ISSEClient {
     if (typeof (globalThis as any).EventSource !== 'undefined') {
       return (globalThis as any).EventSource;
     }
-    // Lazy-load the polyfill only in Node.js environments
+    return this.getEventSourcePolyfill();
+  }
+
+  private async getEventSourcePolyfill(): Promise<any> {
     const mod: any = await import('eventsource');
-    return mod?.default ?? mod?.EventSource ?? mod;
+    return mod?.EventSource ?? mod?.default ?? mod;
   }
 
   private handleRawEvent(data: string): void {

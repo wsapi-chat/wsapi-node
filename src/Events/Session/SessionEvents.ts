@@ -24,7 +24,7 @@ export interface SessionLoggedOutEvent extends BaseEvent {
  * Event fired when a session encounters a login error
  */
 export interface SessionLoggedErrorEvent extends BaseEvent {
-  eventType: 'logged_error';
+  eventType: 'login_error';
 
   /** Error message describing what went wrong */
   error?: string;

@@ -104,11 +104,13 @@ export class WSApiClient implements IWSApiClient {
     // Initialize SSE client
     const sseOptions = {
       baseUrl: options.baseUrl,
+      ...options.sseOptions?.sseConfig,
+      // Custom headers extend the credentials rather than replacing them.
       headers: {
         'X-API-Key': options.apiKey,
         'X-Instance-Id': options.instanceId,
+        ...options.sseOptions?.sseConfig?.headers,
       },
-      ...options.sseOptions?.sseConfig,
     };
 
     this.sse = new SSEClient(sseOptions);

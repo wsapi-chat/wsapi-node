@@ -2,7 +2,7 @@ export const EventTypes = {
   // Session events
   LOGGED_IN: 'logged_in',
   LOGGED_OUT: 'logged_out',
-  LOGGED_ERROR: 'logged_error',
+  LOGGED_ERROR: 'login_error',
   INITIAL_SYNC_FINISHED: 'initial_sync_finished',
 
   // Chat events
