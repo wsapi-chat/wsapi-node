@@ -6,5 +6,7 @@ export interface GroupSetAnnounceRequest {
   /**
    * Whether to enable announce mode (only admins can send messages).
    */
-  announce: boolean;
+  /** @deprecated Use enabled. */
+  announce?: boolean;
+  enabled?: boolean;
 }

@@ -117,12 +117,12 @@ describe('MessagesClient', () => {
     it('should send document message', async () => {
       mockHttpClient.post.mockResolvedValue(mockMessageCreated);
 
-      const result = await messagesClient.sendDocumentAsync({ chatId, media: 'base64data', fileName: 'doc.pdf' });
+      const result = await messagesClient.sendDocumentAsync({ chatId, media: 'base64data', filename: 'doc.pdf' });
 
       expect(mockHttpClient.post).toHaveBeenCalledWith('messages/document', {
         chatId,
         media: 'base64data',
-        fileName: 'doc.pdf',
+        filename: 'doc.pdf',
       });
       expect(result).toEqual(mockMessageCreated);
     });
@@ -173,52 +173,52 @@ describe('MessagesClient', () => {
 
   describe('sendEditTextAsync', () => {
     it('should edit text message', async () => {
-      mockHttpClient.put.mockResolvedValue(mockMessageCreated);
+      mockHttpClient.post.mockResolvedValue(mockMessageCreated);
 
       const result = await messagesClient.sendEditTextAsync('msg123', { chatId, text: 'Edited text' });
 
-      expect(mockHttpClient.put).toHaveBeenCalledWith('messages/msg123/text', { chatId, text: 'Edited text' });
+      expect(mockHttpClient.post).toHaveBeenCalledWith('messages/msg123/edit', { chatId, text: 'Edited text' });
       expect(result).toEqual(mockMessageCreated);
     });
   });
 
   describe('markAsReadAsync', () => {
     it('should mark message as read', async () => {
-      mockHttpClient.putVoid.mockResolvedValue(undefined);
+      mockHttpClient.postVoid.mockResolvedValue(undefined);
 
       await messagesClient.markAsReadAsync('msg123', { chatId });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('messages/msg123/read', { chatId });
+      expect(mockHttpClient.postVoid).toHaveBeenCalledWith('messages/msg123/read', { chatId });
     });
   });
 
   describe('starAsync', () => {
     it('should star a message', async () => {
-      mockHttpClient.putVoid.mockResolvedValue(undefined);
+      mockHttpClient.postVoid.mockResolvedValue(undefined);
 
       await messagesClient.starAsync('msg123', { chatId, star: true });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('messages/msg123/star', { chatId, star: true });
+      expect(mockHttpClient.postVoid).toHaveBeenCalledWith('messages/msg123/star', { chatId, star: true });
     });
   });
 
   describe('deleteAsync', () => {
     it('should delete a message', async () => {
-      mockHttpClient.putVoid.mockResolvedValue(undefined);
+      mockHttpClient.postVoid.mockResolvedValue(undefined);
 
       await messagesClient.deleteAsync('msg123', { chatId });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('messages/msg123/delete', { chatId });
+      expect(mockHttpClient.postVoid).toHaveBeenCalledWith('messages/msg123/delete', { chatId });
     });
   });
 
   describe('deleteForMeAsync', () => {
     it('should delete message for me', async () => {
-      mockHttpClient.putVoid.mockResolvedValue(undefined);
+      mockHttpClient.postVoid.mockResolvedValue(undefined);
 
       await messagesClient.deleteForMeAsync('msg123', { chatId });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('messages/msg123/delete/forme', { chatId });
+      expect(mockHttpClient.postVoid).toHaveBeenCalledWith('messages/msg123/delete-for-me', { chatId });
     });
   });
 
@@ -313,7 +313,7 @@ describe('MessagesClient', () => {
     it('should return success response', async () => {
       mockHttpClient.tryPost.mockResolvedValue(createSuccessResponse(mockMessageCreated));
 
-      const result = await messagesClient.trySendDocumentAsync({ chatId, media: 'base64', fileName: 'doc.pdf' });
+      const result = await messagesClient.trySendDocumentAsync({ chatId, media: 'base64', filename: 'doc.pdf' });
 
       expect(result.isSuccess).toBe(true);
       expect(result.data).toEqual(mockMessageCreated);
@@ -358,7 +358,7 @@ describe('MessagesClient', () => {
 
   describe('trySendEditTextAsync', () => {
     it('should return success response', async () => {
-      mockHttpClient.tryPut.mockResolvedValue(createSuccessResponse(mockMessageCreated));
+      mockHttpClient.tryPost.mockResolvedValue(createSuccessResponse(mockMessageCreated));
 
       const result = await messagesClient.trySendEditTextAsync('msg123', { chatId, text: 'Edited' });
 
@@ -369,7 +369,7 @@ describe('MessagesClient', () => {
 
   describe('tryMarkAsReadAsync', () => {
     it('should return success response', async () => {
-      mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
+      mockHttpClient.tryPostVoid.mockResolvedValue(createVoidSuccessResponse());
 
       const result = await messagesClient.tryMarkAsReadAsync('msg123', { chatId });
 
@@ -379,7 +379,7 @@ describe('MessagesClient', () => {
 
   describe('tryStarAsync', () => {
     it('should return success response', async () => {
-      mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
+      mockHttpClient.tryPostVoid.mockResolvedValue(createVoidSuccessResponse());
 
       const result = await messagesClient.tryStarAsync('msg123', { chatId, star: true });
 
@@ -389,7 +389,7 @@ describe('MessagesClient', () => {
 
   describe('tryDeleteAsync', () => {
     it('should return success response', async () => {
-      mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
+      mockHttpClient.tryPostVoid.mockResolvedValue(createVoidSuccessResponse());
 
       const result = await messagesClient.tryDeleteAsync('msg123', { chatId });
 
@@ -399,7 +399,7 @@ describe('MessagesClient', () => {
 
   describe('tryDeleteForMeAsync', () => {
     it('should return success response', async () => {
-      mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
+      mockHttpClient.tryPostVoid.mockResolvedValue(createVoidSuccessResponse());
 
       const result = await messagesClient.tryDeleteForMeAsync('msg123', { chatId });
 

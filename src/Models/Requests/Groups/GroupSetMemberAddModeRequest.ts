@@ -5,5 +5,7 @@ export interface GroupSetMemberAddModeRequest {
   /**
    * When true, only admins can add members. When false, all members can add.
    */
-  onlyAdmins: boolean;
+  /** @deprecated Use onlyAdminAdd. */
+  onlyAdmins?: boolean;
+  onlyAdminAdd?: boolean;
 }

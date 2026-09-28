@@ -71,7 +71,7 @@ export interface IGroupsClient {
   joinByLinkAsync(request: GroupJoinByLinkRequest): Promise<GroupJoinedResponse>;
 
   /** Join group via invite message */
-  joinByInviteAsync(request: GroupJoinByInviteRequest): Promise<GroupJoinedResponse>;
+  joinByInviteAsync(request: GroupJoinByInviteRequest): Promise<void>;
 
   /** List pending join requests for a group */
   getJoinRequestsAsync(groupId: string): Promise<GroupJoinRequestInfo[]>;
@@ -103,7 +103,7 @@ export interface IGroupsClient {
   trySetJoinApprovalAsync(groupId: string, request: GroupSetJoinApprovalRequest): Promise<ApiResponse>;
   trySetMemberAddModeAsync(groupId: string, request: GroupSetMemberAddModeRequest): Promise<ApiResponse>;
   tryJoinByLinkAsync(request: GroupJoinByLinkRequest): Promise<ApiResponse<GroupJoinedResponse>>;
-  tryJoinByInviteAsync(request: GroupJoinByInviteRequest): Promise<ApiResponse<GroupJoinedResponse>>;
+  tryJoinByInviteAsync(request: GroupJoinByInviteRequest): Promise<ApiResponse>;
   tryGetJoinRequestsAsync(groupId: string): Promise<ApiResponse<GroupJoinRequestInfo[]>>;
   tryApproveRejectRequestsAsync(groupId: string, request: GroupApproveRejectRequest): Promise<ApiResponse>;
   tryUpdateParticipantsAsync(groupId: string, request: GroupUpdateRequestParticipantsRequest): Promise<ApiResponse>;

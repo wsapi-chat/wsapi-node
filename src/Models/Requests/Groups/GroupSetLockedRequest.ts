@@ -6,5 +6,7 @@ export interface GroupSetLockedRequest {
   /**
    * Whether to lock group settings (only admins can edit group info).
    */
-  locked: boolean;
+  /** @deprecated Use enabled. */
+  locked?: boolean;
+  enabled?: boolean;
 }

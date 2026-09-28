@@ -1,3 +1,4 @@
+import type { AdReferral } from '../../Models/Entities/Messages/AdReferral.js';
 import { BaseEvent } from '../BaseEvent';
 import { Sender } from '../../Models/Entities/Users/Sender';
 import { MessageReplyTo } from '../../Models/Entities/Messages/MessageReplyTo';
@@ -32,6 +33,7 @@ export type ReceiptType =
  */
 export interface MessageEvent extends BaseEvent {
   eventType: 'message';
+  adReferral?: AdReferral;
 
   /** Unique message ID */
   id: string;

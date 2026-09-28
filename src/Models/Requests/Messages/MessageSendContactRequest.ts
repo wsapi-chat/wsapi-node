@@ -1,7 +1,8 @@
+import type { MessageRequestBase } from './MessageRequestBase.js';
 /**
  * Request to send a contact message
  */
-export interface MessageSendContactRequest {
+export interface MessageSendContactRequest extends MessageRequestBase {
   /**
    * The recipient of the message. This could be a phone number, group ID, or broadcast list ID.
    */
@@ -10,10 +11,12 @@ export interface MessageSendContactRequest {
   /**
    * The vCard data of the contact.
    */
-  vCard: string;
+  /** @deprecated Use vcard. */
+  vCard?: string;
+  vcard?: string;
 
   /**
    * The display name of the contact.
    */
-  displayName: string;
+  displayName?: string;
 }

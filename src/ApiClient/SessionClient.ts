@@ -16,7 +16,7 @@ export class SessionClient implements ISessionClient {
    * @throws {ApiException} When the request fails
    */
   async getLoginQRImageAsync(): Promise<ArrayBuffer> {
-    return await this.httpClient.getBinary('/session/login/qr/image');
+    return await this.httpClient.getBinary('/session/qr');
   }
 
   /**
@@ -25,7 +25,7 @@ export class SessionClient implements ISessionClient {
    * @throws {ApiException} When the request fails
    */
   async getLoginQRCodeAsync(): Promise<SessionQRCode> {
-    return await this.httpClient.get<SessionQRCode>('/session/login/qr/code');
+    return await this.httpClient.get<SessionQRCode>('/session/qr/text');
   }
 
   /**
@@ -35,7 +35,7 @@ export class SessionClient implements ISessionClient {
    * @throws {ApiException} When the request fails
    */
   async getLoginPairCodeAsync(phoneNumber: string): Promise<SessionPairCode> {
-    return await this.httpClient.get<SessionPairCode>(`/session/login/code/${phoneNumber}`);
+    return await this.httpClient.get<SessionPairCode>(`/session/pair-code/${phoneNumber}`);
   }
 
   /**
@@ -61,7 +61,7 @@ export class SessionClient implements ISessionClient {
    * @returns Promise that resolves to an ApiResponse containing the QR code image or error details
    */
   async tryGetLoginQRImageAsync(): Promise<ApiResponse<ArrayBuffer>> {
-    return await this.httpClient.tryGetBinary('/session/login/qr/image');
+    return await this.httpClient.tryGetBinary('/session/qr');
   }
 
   /**
@@ -69,7 +69,7 @@ export class SessionClient implements ISessionClient {
    * @returns Promise that resolves to an ApiResponse containing the QR code response or error details
    */
   async tryGetLoginQRCodeAsync(): Promise<ApiResponse<SessionQRCode>> {
-    return await this.httpClient.tryGet<SessionQRCode>('/session/login/qr/code');
+    return await this.httpClient.tryGet<SessionQRCode>('/session/qr/text');
   }
 
   /**
@@ -78,7 +78,7 @@ export class SessionClient implements ISessionClient {
    * @returns Promise that resolves to an ApiResponse containing the pairing code or error details
    */
   async tryGetLoginPairCodeAsync(phoneNumber: string): Promise<ApiResponse<SessionPairCode>> {
-    return await this.httpClient.tryGet<SessionPairCode>(`/session/login/code/${phoneNumber}`);
+    return await this.httpClient.tryGet<SessionPairCode>(`/session/pair-code/${phoneNumber}`);
   }
 
   /**

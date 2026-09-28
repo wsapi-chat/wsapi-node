@@ -22,7 +22,7 @@ describe('SessionClient', () => {
   };
 
   const mockQRCode: SessionQRCode = {
-    qrCode: 'data:image/png;base64,ABC123...',
+    code: 'data:image/png;base64,ABC123...',
   };
 
   const mockQRImage = new ArrayBuffer(100);
@@ -38,7 +38,7 @@ describe('SessionClient', () => {
 
       const result = await sessionClient.getLoginQRImageAsync();
 
-      expect(mockHttpClient.getBinary).toHaveBeenCalledWith('/session/login/qr/image');
+      expect(mockHttpClient.getBinary).toHaveBeenCalledWith('/session/qr');
       expect(result).toBe(mockQRImage);
     });
   });
@@ -49,7 +49,7 @@ describe('SessionClient', () => {
 
       const result = await sessionClient.getLoginQRCodeAsync();
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith('/session/login/qr/code');
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/session/qr/text');
       expect(result).toEqual(mockQRCode);
     });
   });
@@ -60,7 +60,7 @@ describe('SessionClient', () => {
 
       const result = await sessionClient.getLoginPairCodeAsync('+1234567890');
 
-      expect(mockHttpClient.get).toHaveBeenCalledWith('/session/login/code/+1234567890');
+      expect(mockHttpClient.get).toHaveBeenCalledWith('/session/pair-code/+1234567890');
       expect(result).toEqual(mockPairCode);
     });
   });
@@ -93,7 +93,7 @@ describe('SessionClient', () => {
 
       const result = await sessionClient.tryGetLoginQRImageAsync();
 
-      expect(mockHttpClient.tryGetBinary).toHaveBeenCalledWith('/session/login/qr/image');
+      expect(mockHttpClient.tryGetBinary).toHaveBeenCalledWith('/session/qr');
       expect(result.isSuccess).toBe(true);
       expect(result.data).toBe(mockQRImage);
     });
@@ -105,7 +105,7 @@ describe('SessionClient', () => {
 
       const result = await sessionClient.tryGetLoginQRCodeAsync();
 
-      expect(mockHttpClient.tryGet).toHaveBeenCalledWith('/session/login/qr/code');
+      expect(mockHttpClient.tryGet).toHaveBeenCalledWith('/session/qr/text');
       expect(result.isSuccess).toBe(true);
       expect(result.data).toEqual(mockQRCode);
     });
@@ -126,7 +126,7 @@ describe('SessionClient', () => {
 
       const result = await sessionClient.tryGetLoginPairCodeAsync('+1234567890');
 
-      expect(mockHttpClient.tryGet).toHaveBeenCalledWith('/session/login/code/+1234567890');
+      expect(mockHttpClient.tryGet).toHaveBeenCalledWith('/session/pair-code/+1234567890');
       expect(result.isSuccess).toBe(true);
       expect(result.data).toEqual(mockPairCode);
     });

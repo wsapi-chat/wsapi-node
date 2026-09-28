@@ -71,8 +71,10 @@ export class AccountClient implements IAccountClient {
     );
   }
 
-  async createSubscriptionInstanceAsync(subscriptionId: string): Promise<string> {
-    return await this.httpClient.post<string>(`/account/subscriptions/${subscriptionId}/instances`);
+  async createSubscriptionInstanceAsync(subscriptionId: string, name?: string): Promise<string> {
+    return await this.httpClient.post<string>(
+      `/account/subscriptions/${subscriptionId}/instances${this.buildQuery({ name })}`,
+    );
   }
 
   async deleteSubscriptionInstanceAsync(subscriptionId: string, instanceId: string): Promise<void> {
@@ -157,8 +159,10 @@ export class AccountClient implements IAccountClient {
     );
   }
 
-  async tryCreateSubscriptionInstanceAsync(subscriptionId: string): Promise<ApiResponse<string>> {
-    return await this.httpClient.tryPost<string>(`/account/subscriptions/${subscriptionId}/instances`);
+  async tryCreateSubscriptionInstanceAsync(subscriptionId: string, name?: string): Promise<ApiResponse<string>> {
+    return await this.httpClient.tryPost<string>(
+      `/account/subscriptions/${subscriptionId}/instances${this.buildQuery({ name })}`,
+    );
   }
 
   async tryDeleteSubscriptionInstanceAsync(subscriptionId: string, instanceId: string): Promise<ApiResponse<void>> {

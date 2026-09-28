@@ -13,29 +13,33 @@ describe('CallsClient', () => {
 
   describe('rejectCallAsync', () => {
     it('should reject a call', async () => {
-      mockHttpClient.putVoid.mockResolvedValue(undefined);
+      mockHttpClient.postVoid.mockResolvedValue(undefined);
 
-      await callsClient.rejectCallAsync('call123', { reason: 'busy' });
+      await callsClient.rejectCallAsync('call123', { callerId: '12025550123@s.whatsapp.net' });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/calls/call123/reject', { reason: 'busy' });
+      expect(mockHttpClient.postVoid).toHaveBeenCalledWith('/calls/call123/reject', {
+        callerId: '12025550123@s.whatsapp.net',
+      });
     });
   });
 
   // Non-throwing methods
   describe('tryRejectCallAsync', () => {
     it('should return success response', async () => {
-      mockHttpClient.tryPutVoid.mockResolvedValue(createVoidSuccessResponse());
+      mockHttpClient.tryPostVoid.mockResolvedValue(createVoidSuccessResponse());
 
-      const result = await callsClient.tryRejectCallAsync('call123', { reason: 'busy' });
+      const result = await callsClient.tryRejectCallAsync('call123', { callerId: '12025550123@s.whatsapp.net' });
 
-      expect(mockHttpClient.tryPutVoid).toHaveBeenCalledWith('/calls/call123/reject', { reason: 'busy' });
+      expect(mockHttpClient.tryPostVoid).toHaveBeenCalledWith('/calls/call123/reject', {
+        callerId: '12025550123@s.whatsapp.net',
+      });
       expect(result.isSuccess).toBe(true);
     });
 
     it('should return error response on failure', async () => {
-      mockHttpClient.tryPutVoid.mockResolvedValue(createErrorResponse(404, 'Call not found'));
+      mockHttpClient.tryPostVoid.mockResolvedValue(createErrorResponse(404, 'Call not found'));
 
-      const result = await callsClient.tryRejectCallAsync('invalid', { reason: 'busy' });
+      const result = await callsClient.tryRejectCallAsync('invalid', { callerId: '12025550123@s.whatsapp.net' });
 
       expect(result.isSuccess).toBe(false);
       expect(result.statusCode).toBe(404);

@@ -4,6 +4,10 @@ import { MessageRequestBase } from './MessageRequestBase.js';
  * Request to send a voice message
  */
 export interface MessageSendVoiceRequest extends MessageRequestBase {
+  caption?: string;
+  mimeType?: string;
+  data?: string;
+  url?: string;
   /**
    * Base64 encoded voice data. It should be OGG format
    */

@@ -8,6 +8,8 @@ export interface MessageRequestBase {
    * Group IDs should be in the format 12345678@g.us format
    */
   to: string;
+  replyToSenderId?: string;
+  ephemeralExpiration?: string;
 
   /**
    * An array of phone numbers that are mentioned in the message.

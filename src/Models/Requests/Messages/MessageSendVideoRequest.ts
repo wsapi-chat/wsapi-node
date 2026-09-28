@@ -4,6 +4,8 @@ import { MessageRequestBase } from './MessageRequestBase.js';
  * Request to send a video message
  */
 export interface MessageSendVideoRequest extends MessageRequestBase {
+  data?: string;
+  url?: string;
   /**
    * Base64 encoded video data. It should be in a supported video format.
    */
@@ -17,7 +19,7 @@ export interface MessageSendVideoRequest extends MessageRequestBase {
   /**
    * MIME type of the video file, e.g., "video/mp4", "video/avi".
    */
-  mimeType: string;
+  mimeType?: string;
 
   /**
    * Caption for the video, which can be displayed alongside the video.

@@ -6,5 +6,7 @@ export interface GroupSetJoinApprovalRequest {
   /**
    * Whether to require admin approval for join requests.
    */
-  joinApproval: boolean;
+  /** @deprecated Use enabled. */
+  joinApproval?: boolean;
+  enabled?: boolean;
 }

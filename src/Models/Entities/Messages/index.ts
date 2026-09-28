@@ -7,3 +7,5 @@ export { type MessageEdit } from './MessageEdit.js';
 export { type MessageReplyTo } from './MessageReplyTo.js';
 export { type MessagePin } from './MessagePin.js';
 export { type MessageExtendedText } from './MessageExtendedText.js';
+
+export type { AdReferral } from './AdReferral.js';

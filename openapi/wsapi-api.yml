@@ -258,7 +258,13 @@ paths:
       security:
         - CustomerApiKey: []
       parameters:
-        - $ref: '#/components/parameters/SubscriptionId'
+        - $ref: "#/components/parameters/SubscriptionId"
+        - name: name
+          in: query
+          required: false
+          description: Optional label for the new instance, useful for referencing your own customer records
+          schema:
+            type: string
       responses:
         '200':
           description: Instance ID
@@ -1246,6 +1252,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: "#/components/responses/NotFound"
         '409':
           $ref: '#/components/responses/DeviceNotPaired'
         '503':
@@ -1679,6 +1687,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: "#/components/responses/NotFound"
         '409':
           $ref: '#/components/responses/DeviceNotPaired'
         '503':
@@ -1706,6 +1716,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: "#/components/responses/NotFound"
         '409':
           $ref: '#/components/responses/DeviceNotPaired'
         '503':
@@ -1821,6 +1833,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: "#/components/responses/NotFound"
         '409':
           $ref: '#/components/responses/DeviceNotPaired'
         '503':
@@ -1984,6 +1998,8 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+        "404":
+          $ref: "#/components/responses/NotFound"
         '409':
           $ref: '#/components/responses/DeviceNotPaired'
         '503':

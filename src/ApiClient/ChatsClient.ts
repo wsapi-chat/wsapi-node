@@ -1,3 +1,4 @@
+import { toWireRequest } from './wire.js';
 import type { HttpClient } from './HttpClient.js';
 import type { ApiResponse } from './ApiResponse.js';
 import type { IChatsClient } from './IChatsClient.js';
@@ -38,7 +39,7 @@ export class ChatsClient implements IChatsClient {
   }
 
   async setPresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<void> {
-    await this.httpClient.putVoid(`/chats/${chatId}/presence/set`, request);
+    await this.httpClient.putVoid(`/chats/${chatId}/presence`, request);
   }
 
   async subscribePresenceAsync(chatId: string): Promise<void> {
@@ -46,7 +47,10 @@ export class ChatsClient implements IChatsClient {
   }
 
   async updateEphemeralAsync(chatId: string, request: ChatUpdateEphemeralExpirationRequest): Promise<void> {
-    await this.httpClient.putVoid(`/chats/${chatId}/ephemeral`, request);
+    await this.httpClient.putVoid(
+      `/chats/${chatId}/ephemeral`,
+      toWireRequest(request, { ephemeralExpiration: 'expiration' }),
+    );
   }
 
   async updateMuteAsync(chatId: string, request: ChatUpdateMuteRequest): Promise<void> {
@@ -70,7 +74,7 @@ export class ChatsClient implements IChatsClient {
   }
 
   async clearAsync(chatId: string): Promise<void> {
-    await this.httpClient.putVoid(`/chats/${chatId}/clear`);
+    await this.httpClient.postVoid(`/chats/${chatId}/clear`);
   }
 
   async requestMessagesAsync(chatId: string, request: RequestMessagesRequest): Promise<{ status: string }> {
@@ -96,7 +100,7 @@ export class ChatsClient implements IChatsClient {
   }
 
   async trySetPresenceAsync(chatId: string, request: ChatUpdatePresenceRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/chats/${chatId}/presence/set`, request);
+    return await this.httpClient.tryPutVoid(`/chats/${chatId}/presence`, request);
   }
 
   async trySubscribePresenceAsync(chatId: string): Promise<ApiResponse> {
@@ -104,7 +108,10 @@ export class ChatsClient implements IChatsClient {
   }
 
   async tryUpdateEphemeralAsync(chatId: string, request: ChatUpdateEphemeralExpirationRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/chats/${chatId}/ephemeral`, request);
+    return await this.httpClient.tryPutVoid(
+      `/chats/${chatId}/ephemeral`,
+      toWireRequest(request, { ephemeralExpiration: 'expiration' }),
+    );
   }
 
   async tryUpdateMuteAsync(chatId: string, request: ChatUpdateMuteRequest): Promise<ApiResponse> {
@@ -128,7 +135,7 @@ export class ChatsClient implements IChatsClient {
   }
 
   async tryClearAsync(chatId: string): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/chats/${chatId}/clear`);
+    return await this.httpClient.tryPostVoid(`/chats/${chatId}/clear`);
   }
 
   async tryRequestMessagesAsync(

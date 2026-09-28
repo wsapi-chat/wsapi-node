@@ -1,3 +1,4 @@
+import { toWireRequest } from './wire.js';
 import type { HttpClient } from './HttpClient.js';
 import type { ApiResponse } from './ApiResponse.js';
 import type { IGroupsClient } from './IGroupsClient.js';
@@ -44,52 +45,134 @@ export class GroupsClient implements IGroupsClient {
   }
 
   async createAsync(request: GroupCreateRequest): Promise<GroupCreated> {
-    return await this.httpClient.post<GroupCreated>('/groups', request);
+    return await this.httpClient.post<GroupCreated>(
+      '/groups',
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async leaveAsync(groupId: string): Promise<void> {
-    await this.httpClient.putVoid(`/groups/${groupId}/leave`);
+    await this.httpClient.postVoid(`/groups/${groupId}/leave`);
   }
 
   async updateDescriptionAsync(groupId: string, request: GroupUpdateDescriptionRequest): Promise<void> {
-    await this.httpClient.putVoid(`/groups/${groupId}/description`, request);
+    await this.httpClient.putVoid(
+      `/groups/${groupId}/description`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async updateNameAsync(groupId: string, request: GroupUpdateNameRequest): Promise<void> {
-    await this.httpClient.putVoid(`/groups/${groupId}/name`, request);
+    await this.httpClient.putVoid(
+      `/groups/${groupId}/name`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async updatePictureAsync(groupId: string, request: GroupUpdatePictureRequest): Promise<GroupPictureUpdated> {
-    return await this.httpClient.post<GroupPictureUpdated>(`/groups/${groupId}/picture`, request);
+    return await this.httpClient.post<GroupPictureUpdated>(
+      `/groups/${groupId}/picture`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async getInviteLinkAsync(groupId: string, reset?: boolean): Promise<GroupInviteLinkResponse> {
-    const query = reset ? '?reset=1' : '';
-    return await this.httpClient.get<GroupInviteLinkResponse>(`/groups/${groupId}/invite-link${query}`);
+    return reset
+      ? this.httpClient.post<GroupInviteLinkResponse>(`/groups/${groupId}/invite-link/reset`)
+      : this.httpClient.get<GroupInviteLinkResponse>(`/groups/${groupId}/invite-link`);
   }
 
   async setAnnounceAsync(groupId: string, request: GroupSetAnnounceRequest): Promise<void> {
-    await this.httpClient.putVoid(`/groups/${groupId}/announce`, request);
+    await this.httpClient.putVoid(
+      `/groups/${groupId}/settings/announce`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async setLockedAsync(groupId: string, request: GroupSetLockedRequest): Promise<void> {
-    await this.httpClient.putVoid(`/groups/${groupId}/locked`, request);
+    await this.httpClient.putVoid(
+      `/groups/${groupId}/settings/locked`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async setJoinApprovalAsync(groupId: string, request: GroupSetJoinApprovalRequest): Promise<void> {
-    await this.httpClient.putVoid(`/groups/${groupId}/join-approval`, request);
+    await this.httpClient.putVoid(
+      `/groups/${groupId}/settings/join-approval`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async setMemberAddModeAsync(groupId: string, request: GroupSetMemberAddModeRequest): Promise<void> {
-    await this.httpClient.putVoid(`/groups/${groupId}/member-add-mode`, request);
+    await this.httpClient.putVoid(
+      `/groups/${groupId}/settings/member-add-mode`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async joinByLinkAsync(request: GroupJoinByLinkRequest): Promise<GroupJoinedResponse> {
-    return await this.httpClient.post<GroupJoinedResponse>('/groups/join/link', request);
+    return await this.httpClient.post<GroupJoinedResponse>(
+      '/groups/join/link',
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
-  async joinByInviteAsync(request: GroupJoinByInviteRequest): Promise<GroupJoinedResponse> {
-    return await this.httpClient.post<GroupJoinedResponse>('/groups/join/invite', request);
+  async joinByInviteAsync(request: GroupJoinByInviteRequest): Promise<void> {
+    await this.httpClient.postVoid('/groups/join/invite', request);
   }
 
   async getJoinRequestsAsync(groupId: string): Promise<GroupJoinRequestInfo[]> {
@@ -97,11 +180,29 @@ export class GroupsClient implements IGroupsClient {
   }
 
   async approveRejectRequestsAsync(groupId: string, request: GroupApproveRejectRequest): Promise<void> {
-    await this.httpClient.putVoid(`/groups/${groupId}/requests`, request);
+    await this.httpClient.putVoid(
+      `/groups/${groupId}/requests`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async updateParticipantsAsync(groupId: string, request: GroupUpdateRequestParticipantsRequest): Promise<void> {
-    await this.httpClient.putVoid(`/groups/${groupId}/participants`, request);
+    await this.httpClient.putVoid(
+      `/groups/${groupId}/participants`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async getInviteInfoAsync(inviteCode: string): Promise<GroupInviteInfo> {
@@ -123,55 +224,137 @@ export class GroupsClient implements IGroupsClient {
   }
 
   async tryCreateAsync(request: GroupCreateRequest): Promise<ApiResponse<GroupCreated>> {
-    return await this.httpClient.tryPost<GroupCreated>('/groups', request);
+    return await this.httpClient.tryPost<GroupCreated>(
+      '/groups',
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async tryLeaveAsync(groupId: string): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/groups/${groupId}/leave`);
+    return await this.httpClient.tryPostVoid(`/groups/${groupId}/leave`);
   }
 
   async tryUpdateDescriptionAsync(groupId: string, request: GroupUpdateDescriptionRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/groups/${groupId}/description`, request);
+    return await this.httpClient.tryPutVoid(
+      `/groups/${groupId}/description`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async tryUpdateNameAsync(groupId: string, request: GroupUpdateNameRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/groups/${groupId}/name`, request);
+    return await this.httpClient.tryPutVoid(
+      `/groups/${groupId}/name`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async tryUpdatePictureAsync(
     groupId: string,
     request: GroupUpdatePictureRequest,
   ): Promise<ApiResponse<GroupPictureUpdated>> {
-    return await this.httpClient.tryPost<GroupPictureUpdated>(`/groups/${groupId}/picture`, request);
+    return await this.httpClient.tryPost<GroupPictureUpdated>(
+      `/groups/${groupId}/picture`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async tryGetInviteLinkAsync(groupId: string, reset?: boolean): Promise<ApiResponse<GroupInviteLinkResponse>> {
-    const query = reset ? '?reset=1' : '';
-    return await this.httpClient.tryGet<GroupInviteLinkResponse>(`/groups/${groupId}/invite-link${query}`);
+    return reset
+      ? this.httpClient.tryPost<GroupInviteLinkResponse>(`/groups/${groupId}/invite-link/reset`)
+      : this.httpClient.tryGet<GroupInviteLinkResponse>(`/groups/${groupId}/invite-link`);
   }
 
   async trySetAnnounceAsync(groupId: string, request: GroupSetAnnounceRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/groups/${groupId}/announce`, request);
+    return await this.httpClient.tryPutVoid(
+      `/groups/${groupId}/settings/announce`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async trySetLockedAsync(groupId: string, request: GroupSetLockedRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/groups/${groupId}/locked`, request);
+    return await this.httpClient.tryPutVoid(
+      `/groups/${groupId}/settings/locked`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async trySetJoinApprovalAsync(groupId: string, request: GroupSetJoinApprovalRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/groups/${groupId}/join-approval`, request);
+    return await this.httpClient.tryPutVoid(
+      `/groups/${groupId}/settings/join-approval`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async trySetMemberAddModeAsync(groupId: string, request: GroupSetMemberAddModeRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/groups/${groupId}/member-add-mode`, request);
+    return await this.httpClient.tryPutVoid(
+      `/groups/${groupId}/settings/member-add-mode`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async tryJoinByLinkAsync(request: GroupJoinByLinkRequest): Promise<ApiResponse<GroupJoinedResponse>> {
-    return await this.httpClient.tryPost<GroupJoinedResponse>('/groups/join/link', request);
+    return await this.httpClient.tryPost<GroupJoinedResponse>(
+      '/groups/join/link',
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
-  async tryJoinByInviteAsync(request: GroupJoinByInviteRequest): Promise<ApiResponse<GroupJoinedResponse>> {
-    return await this.httpClient.tryPost<GroupJoinedResponse>('/groups/join/invite', request);
+  async tryJoinByInviteAsync(request: GroupJoinByInviteRequest): Promise<ApiResponse> {
+    return this.httpClient.tryPostVoid('/groups/join/invite', request);
   }
 
   async tryGetJoinRequestsAsync(groupId: string): Promise<ApiResponse<GroupJoinRequestInfo[]>> {
@@ -179,14 +362,32 @@ export class GroupsClient implements IGroupsClient {
   }
 
   async tryApproveRejectRequestsAsync(groupId: string, request: GroupApproveRejectRequest): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/groups/${groupId}/requests`, request);
+    return await this.httpClient.tryPutVoid(
+      `/groups/${groupId}/requests`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async tryUpdateParticipantsAsync(
     groupId: string,
     request: GroupUpdateRequestParticipantsRequest,
   ): Promise<ApiResponse> {
-    return await this.httpClient.tryPutVoid(`/groups/${groupId}/participants`, request);
+    return await this.httpClient.tryPutVoid(
+      `/groups/${groupId}/participants`,
+      toWireRequest(request, {
+        pictureBase64: 'data',
+        announce: 'enabled',
+        locked: 'enabled',
+        joinApproval: 'enabled',
+        onlyAdmins: 'onlyAdminAdd',
+      }),
+    );
   }
 
   async tryGetInviteInfoAsync(inviteCode: string): Promise<ApiResponse<GroupInviteInfo>> {

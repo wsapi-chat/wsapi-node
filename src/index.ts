@@ -103,3 +103,5 @@ export type {
 
 // Newsletter events
 export type { NewsletterEvent } from './Events/Newsletters/NewsletterEvents.js';
+
+export type { AdReferral } from './Models/Entities/Messages/AdReferral.js';

@@ -4,6 +4,8 @@ import { MessageRequestBase } from './MessageRequestBase.js';
  * Request to send an image message
  */
 export interface MessageSendImageRequest extends MessageRequestBase {
+  data?: string;
+  url?: string;
   /**
    * Base64 encoded image data.
    */
@@ -17,7 +19,7 @@ export interface MessageSendImageRequest extends MessageRequestBase {
   /**
    * MIME type of the image, e.g., "image/jpeg", "image/png".
    */
-  mimeType: string;
+  mimeType?: string;
 
   /**
    * Caption for the image, which can be displayed alongside the image.

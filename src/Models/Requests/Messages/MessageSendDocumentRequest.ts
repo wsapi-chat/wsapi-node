@@ -4,6 +4,10 @@ import { MessageRequestBase } from './MessageRequestBase.js';
  * Request to send a document message
  */
 export interface MessageSendDocumentRequest extends MessageRequestBase {
+  mimeType?: string;
+  viewOnce?: boolean;
+  data?: string;
+  url?: string;
   /**
    * The document to send, encoded in base64.
    */
@@ -17,7 +21,8 @@ export interface MessageSendDocumentRequest extends MessageRequestBase {
   /**
    * The name of the file being sent.
    */
-  fileName: string;
+  fileName?: string;
+  filename?: string;
 
   /**
    * Caption for the document, which can be displayed alongside the document.

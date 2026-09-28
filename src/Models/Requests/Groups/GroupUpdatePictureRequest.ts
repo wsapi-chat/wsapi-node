@@ -5,5 +5,7 @@ export interface GroupUpdatePictureRequest {
   /**
    * Base64 encoded picture data for the group.
    */
-  pictureBase64: string;
+  /** @deprecated Use data. */
+  pictureBase64?: string;
+  data?: string;
 }

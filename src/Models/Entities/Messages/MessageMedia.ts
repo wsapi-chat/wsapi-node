@@ -2,6 +2,7 @@
  * Media information for a message
  */
 export interface MessageMedia {
+  filename?: string;
   /**
    * The media ID that should be used to download the binary content
    */

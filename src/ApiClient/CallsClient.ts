@@ -18,7 +18,7 @@ export class CallsClient implements ICallsClient {
    * @throws {ApiException} When the request fails
    */
   async rejectCallAsync(callId: string, rejectCallRequest: RejectCallRequest): Promise<void> {
-    await this.httpClient.putVoid(`/calls/${callId}/reject`, rejectCallRequest);
+    await this.httpClient.postVoid(`/calls/${callId}/reject`, rejectCallRequest);
   }
 
   /**
@@ -28,6 +28,6 @@ export class CallsClient implements ICallsClient {
    * @returns Promise that resolves to an ApiResponse containing success or error details
    */
   async tryRejectCallAsync(callId: string, rejectCallRequest: RejectCallRequest): Promise<ApiResponse<void>> {
-    return await this.httpClient.tryPutVoid(`/calls/${callId}/reject`, rejectCallRequest);
+    return await this.httpClient.tryPostVoid(`/calls/${callId}/reject`, rejectCallRequest);
   }
 }

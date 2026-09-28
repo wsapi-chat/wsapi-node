@@ -4,6 +4,7 @@ import { Sender } from '../Users/Sender.js';
  * Information about a message being replied to
  */
 export interface MessageReplyTo {
+  text?: string;
   /**
    * The ID of the message being replied to.
    */

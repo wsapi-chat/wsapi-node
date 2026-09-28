@@ -4,6 +4,8 @@ import { MessageRequestBase } from './MessageRequestBase.js';
  * Request to send a sticker message
  */
 export interface MessageSendStickerRequest extends MessageRequestBase {
+  data?: string;
+  url?: string;
   /**
    * The sticker to send, encoded in base64. The file should be in a WebP supported sticker format.
    */

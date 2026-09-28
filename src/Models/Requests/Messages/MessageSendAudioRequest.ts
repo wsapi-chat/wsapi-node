@@ -4,6 +4,9 @@ import { MessageRequestBase } from './MessageRequestBase.js';
  * Request to send an audio message
  */
 export interface MessageSendAudioRequest extends MessageRequestBase {
+  caption?: string;
+  data?: string;
+  url?: string;
   /**
    * Base64 encoded audio data.
    */
@@ -17,7 +20,7 @@ export interface MessageSendAudioRequest extends MessageRequestBase {
   /**
    * MIME type of the audio file, e.g., "audio/mpeg", "audio/ogg".
    */
-  mimeType: string;
+  mimeType?: string;
 
   /**
    * Indicates whether the audio should be sent as a view once message.

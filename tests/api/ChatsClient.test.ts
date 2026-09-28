@@ -88,7 +88,7 @@ describe('ChatsClient', () => {
 
       await chatsClient.setPresenceAsync('1234567890@s.whatsapp.net', { presence: 'composing' });
 
-      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/presence/set', {
+      expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/presence', {
         presence: 'composing',
       });
     });
@@ -108,10 +108,10 @@ describe('ChatsClient', () => {
     it('should update ephemeral settings', async () => {
       mockHttpClient.putVoid.mockResolvedValue(undefined);
 
-      await chatsClient.updateEphemeralAsync('1234567890@s.whatsapp.net', { ephemeralExpiration: '24h' });
+      await chatsClient.updateEphemeralAsync('1234567890@s.whatsapp.net', { expiration: '24h' });
 
       expect(mockHttpClient.putVoid).toHaveBeenCalledWith('/chats/1234567890@s.whatsapp.net/ephemeral', {
-        ephemeralExpiration: '24h',
+        expiration: '24h',
       });
     });
   });

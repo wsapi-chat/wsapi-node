@@ -40,7 +40,7 @@ export interface IAccountClient {
     createdTo?: string,
     status?: string,
   ): Promise<PagedResponse<AccountInstance>>;
-  createSubscriptionInstanceAsync(subscriptionId: string): Promise<string>;
+  createSubscriptionInstanceAsync(subscriptionId: string, name?: string): Promise<string>;
   deleteSubscriptionInstanceAsync(subscriptionId: string, instanceId: string): Promise<void>;
   listSubscriptionChangesAsync(
     subscriptionId: string,
@@ -82,7 +82,7 @@ export interface IAccountClient {
     createdTo?: string,
     status?: string,
   ): Promise<ApiResponse<PagedResponse<AccountInstance>>>;
-  tryCreateSubscriptionInstanceAsync(subscriptionId: string): Promise<ApiResponse<string>>;
+  tryCreateSubscriptionInstanceAsync(subscriptionId: string, name?: string): Promise<ApiResponse<string>>;
   tryDeleteSubscriptionInstanceAsync(subscriptionId: string, instanceId: string): Promise<ApiResponse<void>>;
   tryListSubscriptionChangesAsync(
     subscriptionId: string,

@@ -10,15 +10,17 @@ export interface MessageDeleteForMeRequest {
   /**
    * The sender ID of the message.
    */
-  senderId: string;
+  senderId?: string;
 
   /**
    * Whether the message is from me.
    */
-  isFromMe: boolean;
+  isFromMe?: boolean;
 
   /**
    * The timestamp of the message.
    */
-  time: Date;
+  /** @deprecated Use timestamp. */
+  time?: Date;
+  timestamp?: string | Date;
 }

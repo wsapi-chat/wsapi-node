@@ -6,4 +6,5 @@ export interface GroupUpdateRequestParticipantsRequest {
    * Array of participant phone numbers in WhatsApp format.
    */
   participants: string[];
+  action: 'add' | 'remove' | 'promote' | 'demote';
 }
