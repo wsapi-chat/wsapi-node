@@ -168,8 +168,7 @@ export class SSEClient implements ISSEClient {
         // header only, so use the fetch-based polyfill and inject them there.
         const ES = await this.getEventSourcePolyfill();
         this.eventSource = new ES(url.toString(), {
-          fetch: (input: any, init: any) =>
-            fetch(input, { ...init, headers: { ...init?.headers, ...headers } }),
+          fetch: (input: any, init: any) => fetch(input, { ...init, headers: { ...init?.headers, ...headers } }),
         });
       } else {
         const ES = await this.getEventSourceCtor();
