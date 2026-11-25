@@ -8,7 +8,8 @@ export interface GroupCreateRequest {
   name: string;
 
   /**
-   * Array of participant phone numbers in WhatsApp format (e.g., 1234567890@s.whatsapp.net).
+   * Initial participant JIDs in WhatsApp format (e.g., 1234567890@s.whatsapp.net).
+   * Omit or pass an empty array to create a group with only the paired account.
    */
-  participants: string[];
+  participants?: string[];
 }

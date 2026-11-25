@@ -13,3 +13,4 @@ export { MediaTypes, type MediaType } from './MediaTypes.js';
 export { MessagePinExpirations, type MessagePinExpiration } from './MessagePinExpirations.js';
 export { MessageReceiptTypes, type MessageReceiptType } from './MessageReceiptTypes.js';
 export { PresenceStatuses, type PresenceStatus } from './PresenceStatuses.js';
+export { PasskeyStatuses, type PasskeyStatus, PasskeySources, type PasskeySource } from './PasskeyStatuses.js';

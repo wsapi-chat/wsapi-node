@@ -80,6 +80,14 @@ describe('GroupsClient', () => {
       });
       expect(result).toEqual(mockGroupCreated);
     });
+
+    it('should create a group without participants', async () => {
+      mockHttpClient.post.mockResolvedValue(mockGroupCreated);
+
+      await groupsClient.createAsync({ name: 'Solo Group' });
+
+      expect(mockHttpClient.post).toHaveBeenCalledWith('/groups', { name: 'Solo Group' });
+    });
   });
 
   describe('updateDescriptionAsync', () => {
