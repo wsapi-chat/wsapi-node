@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [3.2.0] - 2026-11-25
 
 ### Added
 
@@ -18,6 +18,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - `GroupCreateRequest.participants` is now optional: omit it or pass `[]` to create a group with only the paired account.
 - The QR and pair-code methods can now fail with HTTP 409 while a passkey verification step is pending; stop polling them until the step completes, fails or expires.
 - `openapi/wsapi-api.yml` updated with the passkey routes and schemas.
+
+### Fixed
+
+- The bundled OpenAPI spec documented the `DeviceNotPaired` response with status 403; the API returns 409
 
 ## [3.0.1]
 
