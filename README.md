@@ -179,6 +179,6 @@ The step expires 5 minutes after it is requested (`expiresAt`); after that the s
 
 MIT
 
-## Unreleased contract update
+## Scope
 
-The working source includes current REST routes and payloads, optional ad attribution on message/history events, and the optional name when creating a Cloud subscription instance. These changes are not published yet. See [CHANGELOG.md](CHANGELOG.md) for compatibility details. Cloud Account management and SSE are not the OSS administrative API; OSS uses `/admin/instances` and webhook/Redis event delivery.
+The SDK covers the current REST routes and payloads, optional ad attribution on message/history events, and the optional name when creating a Cloud subscription instance. See [CHANGELOG.md](CHANGELOG.md) for compatibility details. Cloud Account management and SSE are not the OSS administrative API; OSS uses `/admin/instances` and webhook/Redis event delivery.
