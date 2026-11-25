@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Passkey pairing (Session): `getPasskeyStateAsync()`, `submitPasskeyAsync(assertion)`, `requestPasskeyAsync()` and `confirmPasskeyAsync()` with `try*` variants, for `GET/POST /session/passkey`, `POST /session/passkey/request` and `POST /session/passkey/confirm`. `confirmPasskeyAsync()` is compatibility only: the server now sends the confirmation automatically.
+- New types `PasskeyState`, `PasskeyChallenge`, `PasskeyAllowCredential`, `PasskeyAssertion`, `PasskeyAssertionResponse` and constants `PasskeyStatuses` / `PasskeySources`.
+- `SessionStatus.passkeyStatus` (optional).
+- `UserInfo.verifiedName` (optional verified business name).
+
+### Changed
+
+- `GroupCreateRequest.participants` is now optional: omit it or pass `[]` to create a group with only the paired account.
+- The QR and pair-code methods can now fail with HTTP 409 while a passkey verification step is pending; stop polling them until the step completes, fails or expires.
+- `openapi/wsapi-api.yml` updated with the passkey routes and schemas.
+
 ## [3.0.1]
 
 ### Fixed

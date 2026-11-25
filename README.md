@@ -152,6 +152,29 @@ const event = EventFactory.parseEvent(rawBody.toString());
 
 > **Important:** The signature must be verified against the raw request body bytes, before any JSON parsing. Use constant-time comparison (handled internally by the SDK) to prevent timing attacks.
 
+### 5. Passkey Pairing
+
+Some WhatsApp accounts ask the owner to verify with their passkey (WebAuthn) before a device is linked. While that step is pending, `getLoginQRCodeAsync()`, `getLoginQRImageAsync()` and `getLoginPairCodeAsync()` fail with HTTP 409 (`ApiException.problem.status`, or `response.error?.status` on the `try*` variants) — stop polling them and poll the passkey state instead. `getSessionStatusAsync()` also reports it as `passkeyStatus`.
+
+```typescript
+import { PasskeyStatuses } from '@wsapichat/client';
+
+const state = await client.session.getPasskeyStateAsync();
+// or start a passkey-only link: await client.session.requestPasskeyAsync();
+
+if (state.status === PasskeyStatuses.REQUIRED) {
+  // Sign state.challenge with navigator.credentials.get() on state.origin (https://web.whatsapp.com),
+  // e.g. from a browser extension, then send the result of credential.toJSON():
+  const updated = await client.session.submitPasskeyAsync(assertion);
+  if (updated.status === PasskeyStatuses.CONFIRMATION_REQUIRED) {
+    // Show updated.confirmationCode so the owner can compare it and approve on their phone.
+    // The confirmation is sent automatically; confirmPasskeyAsync() exists only for compatibility.
+  }
+}
+```
+
+The step expires 5 minutes after it is requested (`expiresAt`); after that the status becomes `error` and a new QR or pair code must be generated.
+
 ## License
 
 MIT

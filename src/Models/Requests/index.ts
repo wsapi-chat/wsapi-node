@@ -27,3 +27,6 @@ export * from './Newsletters/index.js';
 
 // Status requests
 export * from './Status/index.js';
+
+// Session requests
+export * from './Session/index.js';

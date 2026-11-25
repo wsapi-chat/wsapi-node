@@ -158,6 +158,45 @@ describe('current REST contract through the real HTTP serializer', () => {
     expect(JSON.parse(calls[3][1].body as string)).toEqual({ expiration: 'off' });
   });
 
+  it('uses passkey session routes in both variants', async () => {
+    const { http, fetch } = transport(200, { status: 'required' });
+    const session = new SessionClient(http);
+    const assertion = { rawId: 'cmF3', response: { clientDataJSON: 'e30', signature: 'c2ln' } };
+    await session.getPasskeyStateAsync();
+    await session.trySubmitPasskeyAsync(assertion);
+    await session.requestPasskeyAsync();
+    const calls = fetch.mock.calls as unknown as [string, RequestInit][];
+    expect(calls.map(([u, o]) => [o.method, u.replace('https://contract.invalid', '')])).toEqual([
+      ['GET', '/session/passkey'],
+      ['POST', '/session/passkey'],
+      ['POST', '/session/passkey/request'],
+    ]);
+    expect(JSON.parse(calls[1][1].body as string)).toEqual(assertion);
+
+    const { http: http204, fetch: fetch204 } = transport(204);
+    await new SessionClient(http204).confirmPasskeyAsync();
+    expect((await new SessionClient(http204).tryConfirmPasskeyAsync()).isSuccess).toBe(true);
+    expect(fetch204.mock.calls[0]).toEqual([
+      'https://contract.invalid/session/passkey/confirm',
+      expect.objectContaining({ method: 'POST' }),
+    ]);
+  });
+
+  it('surfaces 409 from QR polling while a passkey step is pending', async () => {
+    const { http } = transport(409, { status: 409, detail: 'passkey verification pending' });
+    const response = await new SessionClient(http).tryGetLoginQRCodeAsync();
+    expect(response.isSuccess).toBe(false);
+    expect(response.error?.status).toBe(409);
+  });
+
+  it('creates a group without participants', async () => {
+    const { http, fetch } = transport(200, { id: 'g@g.us' });
+    await new GroupsClient(http).createAsync({ name: 'Solo' });
+    expect(JSON.parse((fetch.mock.calls[0] as unknown as [string, RequestInit])[1].body as string)).toEqual({
+      name: 'Solo',
+    });
+  });
+
   it('encodes optional instance names in both variants', async () => {
     const { http, fetch } = transport(200, 'instance');
     const account = new AccountClient(http);

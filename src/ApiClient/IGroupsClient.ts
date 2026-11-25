@@ -37,7 +37,7 @@ export interface IGroupsClient {
   /** Get group information */
   getAsync(groupId: string): Promise<GroupInfo>;
 
-  /** Create a new WhatsApp group */
+  /** Create a new WhatsApp group. `participants` is optional: omit it or pass `[]` to create a group with only the paired account. */
   createAsync(request: GroupCreateRequest): Promise<GroupCreated>;
 
   /** Leave a group */
